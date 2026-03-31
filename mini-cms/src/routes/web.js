@@ -1,0 +1,34 @@
+/**
+ * Web Routes
+ * Các route public cho website
+ */
+
+const express = require('express');
+const router = express.Router();
+
+const PostController = require('../controllers/postController');
+const DocumentController = require('../controllers/documentController');
+const PostModel = require('../models/postModel');
+const DocumentModel = require('../models/documentModel');
+
+// Trang chủ
+router.get('/', (req, res) => {
+  const latestPosts = PostModel.getLatest(6);
+  const latestDocuments = DocumentModel.getLatest(5);
+  
+  res.render('web/home', {
+    title: 'Trang chủ',
+    posts: latestPosts,
+    documents: latestDocuments
+  });
+});
+
+// Bài viết
+router.get('/posts', PostController.index);
+router.get('/posts/:slug', PostController.show);
+
+// Tài liệu
+router.get('/documents', DocumentController.index);
+router.get('/documents/:id/download', DocumentController.download);
+
+module.exports = router;

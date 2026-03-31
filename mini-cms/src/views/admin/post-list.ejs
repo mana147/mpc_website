@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <a href="/admin" class="sidebar-logo">Mini CMS</a>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin" class="nav-item">📊 Dashboard</a>
+        <a href="/admin/posts" class="nav-item active">📝 Bài viết</a>
+        <a href="/admin/documents" class="nav-item">📄 Tài liệu</a>
+        <hr>
+        <a href="/" class="nav-item" target="_blank">🌐 Xem website</a>
+        <form action="/admin/logout" method="POST" style="margin: 0;">
+          <button type="submit" class="nav-item nav-logout">🚪 Đăng xuất</button>
+        </form>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <a href="/admin/posts/create" class="btn btn-primary">+ Tạo bài viết mới</a>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <% if (posts && posts.length > 0) { %>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Thumbnail</th>
+                <th>Tiêu đề</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% posts.forEach(post => { %>
+                <tr>
+                  <td><%= post.id %></td>
+                  <td>
+                    <% if (post.thumbnail) { %>
+                      <img src="<%= post.thumbnail %>" alt="" class="table-thumbnail">
+                    <% } else { %>
+                      <span class="no-image">-</span>
+                    <% } %>
+                  </td>
+                  <td>
+                    <strong><%= post.title %></strong>
+                    <br><small class="text-muted">/<%= post.slug %></small>
+                  </td>
+                  <td>
+                    <span class="status-badge status-<%= post.status %>">
+                      <%= post.status === 'published' ? 'Đã xuất bản' : 'Nháp' %>
+                    </span>
+                  </td>
+                  <td><%= new Date(post.created_at).toLocaleDateString('vi-VN') %></td>
+                  <td class="actions">
+                    <% if (post.status === 'published') { %>
+                      <a href="/posts/<%= post.slug %>" target="_blank" class="btn btn-small">Xem</a>
+                    <% } %>
+                    <a href="/admin/posts/<%= post.id %>/edit" class="btn btn-small">Sửa</a>
+                    <form action="/admin/posts/<%= post.id %>/delete" method="POST" style="display:inline;" 
+                          onsubmit="return confirm('Bạn có chắc muốn xóa bài viết này?');">
+                      <button type="submit" class="btn btn-small btn-danger">Xóa</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <p class="empty-state">
+            Chưa có bài viết nào.
+            <a href="/admin/posts/create">Tạo bài viết đầu tiên →</a>
+          </p>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

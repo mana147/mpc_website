@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <a href="/admin" class="sidebar-logo">Mini CMS</a>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin" class="nav-item">📊 Dashboard</a>
+        <a href="/admin/posts" class="nav-item">📝 Bài viết</a>
+        <a href="/admin/documents" class="nav-item active">📄 Tài liệu</a>
+        <hr>
+        <a href="/" class="nav-item" target="_blank">🌐 Xem website</a>
+        <form action="/admin/logout" method="POST" style="margin: 0;">
+          <button type="submit" class="nav-item nav-logout">🚪 Đăng xuất</button>
+        </form>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <a href="/admin/documents" class="btn">← Quay lại</a>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <form action="/admin/documents/create" method="POST" enctype="multipart/form-data" class="admin-form">
+          <div class="form-group">
+            <label for="title">Tiêu đề tài liệu *</label>
+            <input type="text" id="title" name="title" required placeholder="Ví dụ: Báo cáo tài chính Q1 2024">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Mô tả</label>
+            <textarea id="description" name="description" rows="3" placeholder="Mô tả ngắn về tài liệu"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="file">File PDF *</label>
+            <input type="file" id="file" name="file" accept="application/pdf" required>
+            <small>Chỉ chấp nhận file PDF. Tối đa 20MB.</small>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Upload tài liệu</button>
+            <a href="/admin/documents" class="btn">Hủy</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

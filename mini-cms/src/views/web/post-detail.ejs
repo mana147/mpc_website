@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<article class="post-detail">
+  <header class="post-header">
+    <h1><%= post.title %></h1>
+    <p class="post-meta">
+      Đăng ngày <%= new Date(post.created_at).toLocaleDateString('vi-VN') %>
+      <% if (post.updated_at && post.updated_at !== post.created_at) { %>
+        | Cập nhật <%= new Date(post.updated_at).toLocaleDateString('vi-VN') %>
+      <% } %>
+    </p>
+  </header>
+
+  <% if (post.thumbnail) { %>
+    <img src="<%= post.thumbnail %>" alt="<%= post.title %>" class="post-featured-image">
+  <% } %>
+
+  <% if (post.excerpt) { %>
+    <p class="post-excerpt"><%= post.excerpt %></p>
+  <% } %>
+
+  <div class="post-content">
+    <%- post.content.replace(/\n/g, '<br>') %>
+  </div>
+
+  <footer class="post-footer">
+    <a href="/posts" class="btn">← Quay lại danh sách bài viết</a>
+  </footer>
+</article>
+
+<%- include('../partials/footer') %>

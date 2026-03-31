@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <a href="/admin" class="sidebar-logo">Mini CMS</a>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin" class="nav-item">📊 Dashboard</a>
+        <a href="/admin/posts" class="nav-item active">📝 Bài viết</a>
+        <a href="/admin/documents" class="nav-item">📄 Tài liệu</a>
+        <hr>
+        <a href="/" class="nav-item" target="_blank">🌐 Xem website</a>
+        <form action="/admin/logout" method="POST" style="margin: 0;">
+          <button type="submit" class="nav-item nav-logout">🚪 Đăng xuất</button>
+        </form>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <a href="/admin/posts" class="btn">← Quay lại</a>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <form action="/admin/posts/<%= post.id %>/edit" method="POST" enctype="multipart/form-data" class="admin-form">
+          <div class="form-group">
+            <label for="title">Tiêu đề *</label>
+            <input type="text" id="title" name="title" required value="<%= post.title %>">
+          </div>
+
+          <div class="form-group">
+            <label for="excerpt">Mô tả ngắn</label>
+            <textarea id="excerpt" name="excerpt" rows="3"><%= post.excerpt || '' %></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="content">Nội dung</label>
+            <textarea id="content" name="content" rows="15"><%= post.content || '' %></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="thumbnail">Ảnh đại diện</label>
+            <% if (post.thumbnail) { %>
+              <div class="current-thumbnail">
+                <img src="<%= post.thumbnail %>" alt="Ảnh hiện tại">
+                <p>Ảnh hiện tại. Upload ảnh mới để thay thế.</p>
+              </div>
+            <% } %>
+            <input type="file" id="thumbnail" name="thumbnail" accept="image/jpeg,image/png,image/webp">
+            <small>Chỉ chấp nhận: JPG, JPEG, PNG, WEBP. Tối đa 5MB.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="status">Trạng thái</label>
+            <select id="status" name="status">
+              <option value="draft" <%= post.status === 'draft' ? 'selected' : '' %>>Nháp</option>
+              <option value="published" <%= post.status === 'published' ? 'selected' : '' %>>Xuất bản</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Cập nhật bài viết</button>
+            <a href="/admin/posts" class="btn">Hủy</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

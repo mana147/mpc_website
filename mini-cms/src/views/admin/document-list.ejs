@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <a href="/admin" class="sidebar-logo">Mini CMS</a>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin" class="nav-item">📊 Dashboard</a>
+        <a href="/admin/posts" class="nav-item">📝 Bài viết</a>
+        <a href="/admin/documents" class="nav-item active">📄 Tài liệu</a>
+        <hr>
+        <a href="/" class="nav-item" target="_blank">🌐 Xem website</a>
+        <form action="/admin/logout" method="POST" style="margin: 0;">
+          <button type="submit" class="nav-item nav-logout">🚪 Đăng xuất</button>
+        </form>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <a href="/admin/documents/create" class="btn btn-primary">+ Upload tài liệu mới</a>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <% if (documents && documents.length > 0) { %>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tiêu đề</th>
+                <th>Tên file</th>
+                <th>Mô tả</th>
+                <th>Ngày tạo</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% documents.forEach(doc => { %>
+                <tr>
+                  <td><%= doc.id %></td>
+                  <td><strong><%= doc.title %></strong></td>
+                  <td><%= doc.filename %></td>
+                  <td><%= doc.description ? doc.description.substring(0, 50) + (doc.description.length > 50 ? '...' : '') : '-' %></td>
+                  <td><%= new Date(doc.created_at).toLocaleDateString('vi-VN') %></td>
+                  <td class="actions">
+                    <a href="/documents/<%= doc.id %>/download" class="btn btn-small" target="_blank">Tải</a>
+                    <form action="/admin/documents/<%= doc.id %>/delete" method="POST" style="display:inline;" 
+                          onsubmit="return confirm('Bạn có chắc muốn xóa tài liệu này?');">
+                      <button type="submit" class="btn btn-small btn-danger">Xóa</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <p class="empty-state">
+            Chưa có tài liệu nào.
+            <a href="/admin/documents/create">Upload tài liệu đầu tiên →</a>
+          </p>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

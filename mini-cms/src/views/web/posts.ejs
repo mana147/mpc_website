@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+<h1>Bài viết</h1>
+
+<% if (posts && posts.length > 0) { %>
+  <div class="post-grid">
+    <% posts.forEach(post => { %>
+      <article class="post-card">
+        <% if (post.thumbnail) { %>
+          <img src="<%= post.thumbnail %>" alt="<%= post.title %>" class="post-thumbnail">
+        <% } else { %>
+          <div class="post-thumbnail-placeholder"></div>
+        <% } %>
+        <div class="post-card-content">
+          <h3><a href="/posts/<%= post.slug %>"><%= post.title %></a></h3>
+          <% if (post.excerpt) { %>
+            <p><%= post.excerpt.substring(0, 200) %><%= post.excerpt.length > 200 ? '...' : '' %></p>
+          <% } %>
+          <small><%= new Date(post.created_at).toLocaleDateString('vi-VN') %></small>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="empty-state">Chưa có bài viết nào.</p>
+<% } %>
+
+<%- include('../partials/footer') %>

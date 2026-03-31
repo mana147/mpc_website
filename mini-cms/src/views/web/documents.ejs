@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+<h1>Tài liệu</h1>
+
+<% if (documents && documents.length > 0) { %>
+  <div class="document-grid">
+    <% documents.forEach(doc => { %>
+      <div class="document-card">
+        <div class="doc-icon-large">📄</div>
+        <h3><%= doc.title %></h3>
+        <% if (doc.description) { %>
+          <p><%= doc.description %></p>
+        <% } %>
+        <p class="doc-meta">
+          <small>Đăng ngày <%= new Date(doc.created_at).toLocaleDateString('vi-VN') %></small>
+        </p>
+        <a href="/documents/<%= doc.id %>/download" class="btn">Tải xuống PDF</a>
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="empty-state">Chưa có tài liệu nào.</p>
+<% } %>
+
+<%- include('../partials/footer') %>

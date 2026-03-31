@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <a href="/admin" class="sidebar-logo">Mini CMS</a>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin" class="nav-item">📊 Dashboard</a>
+        <a href="/admin/posts" class="nav-item">📝 Bài viết</a>
+        <a href="/admin/documents" class="nav-item">📄 Tài liệu</a>
+        <hr>
+        <a href="/" class="nav-item" target="_blank">🌐 Xem website</a>
+        <form action="/admin/logout" method="POST" style="margin: 0;">
+          <button type="submit" class="nav-item nav-logout">🚪 Đăng xuất</button>
+        </form>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <span class="admin-user">👤 <%= user.username %></span>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <!-- Dashboard Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-number"><%= stats.totalPosts %></span>
+            <span class="stat-label">Tổng bài viết</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number"><%= stats.publishedPosts %></span>
+            <span class="stat-label">Đã xuất bản</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number"><%= stats.totalDocuments %></span>
+            <span class="stat-label">Tài liệu</span>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <a href="/admin/posts/create" class="btn btn-primary">+ Tạo bài viết mới</a>
+          <a href="/admin/documents/create" class="btn btn-primary">+ Upload tài liệu</a>
+        </div>
+
+        <!-- Latest Posts -->
+        <section class="admin-section">
+          <h2>Bài viết mới nhất</h2>
+          <% if (latestPosts && latestPosts.length > 0) { %>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Tiêu đề</th>
+                  <th>Trạng thái</th>
+                  <th>Ngày tạo</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% latestPosts.forEach(post => { %>
+                  <tr>
+                    <td><%= post.title %></td>
+                    <td>
+                      <span class="status-badge status-<%= post.status %>">
+                        <%= post.status === 'published' ? 'Đã xuất bản' : 'Nháp' %>
+                      </span>
+                    </td>
+                    <td><%= new Date(post.created_at).toLocaleDateString('vi-VN') %></td>
+                    <td>
+                      <a href="/admin/posts/<%= post.id %>/edit" class="btn btn-small">Sửa</a>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          <% } else { %>
+            <p class="empty-state">Chưa có bài viết nào.</p>
+          <% } %>
+        </section>
+
+        <!-- Latest Documents -->
+        <section class="admin-section">
+          <h2>Tài liệu mới nhất</h2>
+          <% if (latestDocuments && latestDocuments.length > 0) { %>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Tiêu đề</th>
+                  <th>File</th>
+                  <th>Ngày tạo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% latestDocuments.forEach(doc => { %>
+                  <tr>
+                    <td><%= doc.title %></td>
+                    <td><%= doc.filename %></td>
+                    <td><%= new Date(doc.created_at).toLocaleDateString('vi-VN') %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          <% } else { %>
+            <p class="empty-state">Chưa có tài liệu nào.</p>
+          <% } %>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

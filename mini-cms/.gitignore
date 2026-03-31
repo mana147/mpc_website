@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+
+# Database
+database/*.sqlite
+
+# Uploads (keep folders but ignore content)
+public/uploads/images/*
+!public/uploads/images/.gitkeep
+public/uploads/pdfs/*
+!public/uploads/pdfs/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
