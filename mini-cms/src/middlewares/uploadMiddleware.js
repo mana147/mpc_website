@@ -111,6 +111,7 @@ function handleUploadError(uploadMiddleware) {
 
 module.exports = {
   uploadImage: handleUploadError(uploadImage.single('thumbnail')),
+  uploadGallery: handleUploadError(uploadImage.array('images', 20)), // Upload tối đa 20 ảnh
   uploadPdf: handleUploadError(uploadPdf.single('file')),
   imageDir,
   pdfDir

@@ -7,12 +7,13 @@ const express = require('express');
 const router = express.Router();
 
 const { requireAuth, redirectIfAuth } = require('../middlewares/authMiddleware');
-const { uploadImage, uploadPdf } = require('../middlewares/uploadMiddleware');
+const { uploadImage, uploadGallery, uploadPdf } = require('../middlewares/uploadMiddleware');
 
 const AuthController = require('../controllers/authController');
 const AdminController = require('../controllers/adminController');
 const PostController = require('../controllers/postController');
 const DocumentController = require('../controllers/documentController');
+const GalleryController = require('../controllers/galleryController');
 
 // ============================================
 // AUTH ROUTES (không cần đăng nhập)
@@ -42,5 +43,10 @@ router.get('/documents', DocumentController.adminIndex);
 router.get('/documents/create', DocumentController.create);
 router.post('/documents/create', uploadPdf, DocumentController.store);
 router.post('/documents/:id/delete', DocumentController.destroy);
+
+// Gallery
+router.get('/gallery', GalleryController.adminIndex);
+router.post('/gallery/upload', uploadGallery, GalleryController.upload);
+router.post('/gallery/:id/delete', GalleryController.destroy);
 
 module.exports = router;

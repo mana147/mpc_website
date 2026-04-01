@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <a href="/admin" class="sidebar-logo">Mini CMS</a>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin" class="nav-item">📊 Dashboard</a>
+        <a href="/admin/posts" class="nav-item">📝 Bài viết</a>
+        <a href="/admin/documents" class="nav-item">📄 Tài liệu</a>
+        <a href="/admin/gallery" class="nav-item active">🖼️ Thư viện ảnh</a>
+        <hr>
+        <a href="/" class="nav-item" target="_blank">🌐 Xem website</a>
+        <form action="/admin/logout" method="POST" style="margin: 0;">
+          <button type="submit" class="nav-item nav-logout">🚪 Đăng xuất</button>
+        </form>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <span class="admin-user">Tổng: <%= totalImages %> ảnh</span>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <!-- Upload Form -->
+        <section class="admin-section">
+          <h2>📤 Upload ảnh mới</h2>
+          <form action="/admin/gallery/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+            <div class="form-group">
+              <label for="images">Chọn ảnh (có thể chọn nhiều ảnh)</label>
+              <input 
+                type="file" 
+                id="images" 
+                name="images" 
+                accept="image/jpeg,image/png,image/webp" 
+                multiple 
+                required
+              >
+              <small>Chỉ chấp nhận: JPG, JPEG, PNG, WEBP. Tối đa 5MB/ảnh. Tối đa 20 ảnh/lần.</small>
+            </div>
+            <div id="preview-container" class="upload-preview-grid"></div>
+            <button type="submit" class="btn btn-primary">Upload ảnh</button>
+          </form>
+        </section>
+
+        <!-- Gallery List -->
+        <section class="admin-section">
+          <h2>🖼️ Danh sách ảnh</h2>
+          <% if (images && images.length > 0) { %>
+            <div class="admin-gallery-grid">
+              <% images.forEach(image => { %>
+                <div class="admin-gallery-item">
+                  <img src="<%= image.filepath %>" alt="<%= image.alt_text || image.filename %>">
+                  <div class="admin-gallery-info">
+                    <small><%= image.filename %></small>
+                    <small class="text-muted"><%= new Date(image.created_at).toLocaleDateString('vi-VN') %></small>
+                  </div>
+                  <form action="/admin/gallery/<%= image.id %>/delete" method="POST" class="admin-gallery-delete"
+                        onsubmit="return confirm('Bạn có chắc muốn xóa ảnh này?');">
+                    <button type="submit" class="btn btn-small btn-danger">Xóa</button>
+                  </form>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <p class="empty-state">Chưa có ảnh nào trong thư viện.</p>
+          <% } %>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Preview ảnh trước khi upload
+    document.getElementById('images').addEventListener('change', function(e) {
+      const container = document.getElementById('preview-container');
+      container.innerHTML = '';
+      
+      const files = Array.from(e.target.files);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const div = document.createElement('div');
+          div.className = 'upload-preview-item';
+          div.innerHTML = `<img src="${e.target.result}" alt="${file.name}"><span>${file.name}</span>`;
+          container.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+  </script>
+</body>
+</html>

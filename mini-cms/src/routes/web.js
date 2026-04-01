@@ -8,6 +8,7 @@ const router = express.Router();
 
 const PostController = require('../controllers/postController');
 const DocumentController = require('../controllers/documentController');
+const GalleryController = require('../controllers/galleryController');
 const PostModel = require('../models/postModel');
 const DocumentModel = require('../models/documentModel');
 
@@ -30,5 +31,8 @@ router.get('/posts/:slug', PostController.show);
 // Tài liệu
 router.get('/documents', DocumentController.index);
 router.get('/documents/:id/download', DocumentController.download);
+
+// Thư viện ảnh
+router.get('/gallery', GalleryController.index);
 
 module.exports = router;

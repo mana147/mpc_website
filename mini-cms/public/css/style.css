@@ -802,3 +802,242 @@ img {
     overflow-x: auto;
   }
 }
+
+/* ============================================
+   GALLERY - PUBLIC
+   ============================================ */
+.gallery-hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  margin: -40px -20px 40px -20px;
+}
+
+.gallery-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.gallery-hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Masonry Layout */
+.gallery-masonry {
+  column-count: 4;
+  column-gap: 16px;
+  padding: 0 20px;
+}
+
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #f0f0f0;
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 12px;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.gallery-zoom-icon {
+  font-size: 2rem;
+  color: #fff;
+}
+
+/* Lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 8px;
+  box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.lightbox-close:hover {
+  color: #ff6b6b;
+}
+
+#lightbox-caption {
+  color: #fff;
+  margin-top: 15px;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* Gallery Responsive */
+@media (max-width: 1200px) {
+  .gallery-masonry {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-masonry {
+    column-count: 2;
+    column-gap: 12px;
+    padding: 0 10px;
+  }
+  
+  .gallery-item {
+    margin-bottom: 12px;
+  }
+  
+  .gallery-hero {
+    padding: 40px 20px;
+    margin: -40px -20px 30px -20px;
+  }
+  
+  .gallery-hero h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-masonry {
+    column-count: 1;
+  }
+}
+
+/* ============================================
+   GALLERY - ADMIN
+   ============================================ */
+.upload-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.upload-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.upload-preview-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.upload-preview-item img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+}
+
+.upload-preview-item span {
+  display: block;
+  font-size: 10px;
+  padding: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #666;
+}
+
+.admin-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.admin-gallery-item {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.admin-gallery-item:hover {
+  transform: translateY(-3px);
+}
+
+.admin-gallery-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.admin-gallery-info {
+  padding: 10px;
+}
+
+.admin-gallery-info small {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-gallery-delete {
+  padding: 0 10px 10px;
+}
+
+.admin-gallery-delete .btn {
+  width: 100%;
+}

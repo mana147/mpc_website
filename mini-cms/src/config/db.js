@@ -67,6 +67,17 @@ function initDatabase() {
     )
   `);
 
+  // Tạo bảng gallery_images
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS gallery_images (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      filename TEXT NOT NULL,
+      filepath TEXT NOT NULL,
+      alt_text TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
   // Tạo admin mặc định nếu chưa có
   const adminExists = db.prepare('SELECT id FROM users WHERE username = ?').get('admin');
   

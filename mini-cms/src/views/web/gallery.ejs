@@ -1,0 +1,66 @@
+<%- include('../partials/header') %>
+
+<section class="gallery-hero">
+  <h1>THƯ VIỆN HÌNH ẢNH</h1>
+  <p>Khám phá những khoảnh khắc đáng nhớ của chúng tôi</p>
+</section>
+
+<% if (images && images.length > 0) { %>
+  <div class="gallery-masonry">
+    <% images.forEach((image, index) => { %>
+      <div class="gallery-item" onclick="openLightbox('<%= image.filepath %>', '<%= image.alt_text || image.filename %>')">
+        <img 
+          src="<%= image.filepath %>" 
+          alt="<%= image.alt_text || image.filename %>"
+          loading="lazy"
+        >
+        <div class="gallery-overlay">
+          <span class="gallery-zoom-icon">🔍</span>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  
+  <p class="text-center mt-2">
+    <a href="/" class="btn">← Về trang chủ</a>
+  </p>
+<% } else { %>
+  <div class="empty-state">
+    <p>Chưa có hình ảnh nào trong thư viện.</p>
+    <a href="/" class="btn">← Về trang chủ</a>
+  </div>
+<% } %>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+  <p id="lightbox-caption"></p>
+</div>
+
+<script>
+function openLightbox(src, alt) {
+  const lightbox = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  const caption = document.getElementById('lightbox-caption');
+  
+  img.src = src;
+  img.alt = alt;
+  caption.textContent = alt;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
+</script>
+
+<%- include('../partials/footer') %>
