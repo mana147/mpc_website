@@ -77,6 +77,36 @@ img {
   color: #0066cc;
 }
 
+/* Language Switcher */
+.lang-switcher {
+  margin-left: 25px;
+  padding-left: 20px;
+  border-left: 1px solid #ddd;
+}
+
+.lang-switcher a {
+  margin-left: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #666;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lang-switcher a:first-child {
+  margin-left: 0;
+}
+
+.lang-switcher a:hover {
+  background: #f0f0f0;
+  text-decoration: none;
+}
+
+.lang-switcher a.active {
+  background: #0066cc;
+  color: #fff;
+}
+
 /* ============================================
    MAIN CONTENT
    ============================================ */
@@ -719,6 +749,22 @@ img {
   background: #fff;
   padding: 30px;
   border-radius: 8px;
+}
+
+/* Language fieldset */
+.lang-fieldset {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: #fafafa;
+}
+
+.lang-fieldset legend {
+  font-weight: 600;
+  padding: 0 10px;
+  font-size: 1.1rem;
+  color: #333;
 }
 
 .current-thumbnail {

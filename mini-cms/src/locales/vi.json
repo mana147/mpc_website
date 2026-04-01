@@ -1,0 +1,126 @@
+{
+  "lang_code": "vi",
+  "lang_name": "Tiếng Việt",
+  
+  "site": {
+    "name": "Mini CMS",
+    "description": "Hệ thống quản lý nội dung đơn giản"
+  },
+  
+  "nav": {
+    "home": "Trang chủ",
+    "posts": "Bài viết",
+    "gallery": "Thư viện ảnh",
+    "documents": "Tài liệu",
+    "language": "Ngôn ngữ"
+  },
+  
+  "home": {
+    "welcome": "Chào mừng đến với Mini CMS",
+    "description": "Hệ thống quản lý nội dung đơn giản cho doanh nghiệp nhỏ",
+    "latest_posts": "Bài viết mới nhất",
+    "latest_documents": "Tài liệu mới nhất",
+    "view_all_posts": "Xem tất cả bài viết →",
+    "view_all_documents": "Xem tất cả tài liệu →"
+  },
+  
+  "posts": {
+    "title": "Bài viết",
+    "empty": "Chưa có bài viết nào.",
+    "read_more": "Đọc thêm",
+    "back_to_list": "← Quay lại danh sách bài viết",
+    "published_on": "Đăng ngày",
+    "updated_on": "Cập nhật"
+  },
+  
+  "gallery": {
+    "title": "THƯ VIỆN HÌNH ẢNH",
+    "description": "Khám phá những khoảnh khắc đáng nhớ của chúng tôi",
+    "empty": "Chưa có hình ảnh nào trong thư viện."
+  },
+  
+  "documents": {
+    "title": "Tài liệu",
+    "empty": "Chưa có tài liệu nào.",
+    "download": "Tải xuống",
+    "download_pdf": "Tải xuống PDF",
+    "uploaded_at": "Đăng ngày"
+  },
+  
+  "common": {
+    "back_home": "← Về trang chủ",
+    "learn_more": "Tìm hiểu thêm",
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "not_found": "Không tìm thấy trang",
+    "not_found_desc": "Không tìm thấy trang bạn yêu cầu.",
+    "system_error": "Lỗi hệ thống"
+  },
+  
+  "footer": {
+    "copyright": "Hệ thống quản lý nội dung đơn giản cho doanh nghiệp."
+  },
+  
+  "admin": {
+    "dashboard": "Dashboard",
+    "posts": "Bài viết",
+    "documents": "Tài liệu",
+    "gallery": "Thư viện ảnh",
+    "view_website": "Xem website",
+    "logout": "Đăng xuất",
+    "login": "Đăng nhập",
+    "login_title": "Đăng nhập Admin",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "login_btn": "Đăng nhập",
+    "back_to_home": "← Về trang chủ",
+    "please_login": "Vui lòng đăng nhập để tiếp tục",
+    
+    "post_management": "Quản lý bài viết",
+    "create_post": "Tạo bài viết mới",
+    "edit_post": "Sửa bài viết",
+    "post_title": "Tiêu đề",
+    "post_title_en": "Tiêu đề (English)",
+    "post_excerpt": "Mô tả ngắn",
+    "post_excerpt_en": "Mô tả ngắn (English)",
+    "post_content": "Nội dung",
+    "post_content_en": "Nội dung (English)",
+    "post_thumbnail": "Ảnh đại diện",
+    "post_status": "Trạng thái",
+    "status_draft": "Nháp",
+    "status_published": "Xuất bản",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "delete": "Xóa",
+    "edit": "Sửa",
+    "view": "Xem",
+    "back": "← Quay lại",
+    "confirm_delete": "Bạn có chắc muốn xóa?",
+    "create_success": "Tạo thành công",
+    "update_success": "Cập nhật thành công",
+    "delete_success": "Xóa thành công",
+    
+    "vietnamese_content": "Nội dung tiếng Việt",
+    "english_content": "Nội dung tiếng Anh",
+    "image_accepted": "Chỉ chấp nhận: JPG, JPEG, PNG, WEBP. Tối đa 5MB.",
+    "current_thumbnail": "Ảnh hiện tại",
+    "upload_new": "Upload ảnh mới để thay thế.",
+    
+    "doc_management": "Quản lý tài liệu",
+    "upload_document": "Upload tài liệu mới",
+    "doc_title": "Tiêu đề tài liệu",
+    "doc_description": "Mô tả",
+    "doc_file": "File PDF",
+    "pdf_accepted": "Chỉ chấp nhận file PDF. Tối đa 20MB.",
+    "upload": "Upload",
+    
+    "gallery_management": "Quản lý thư viện ảnh",
+    "upload_images": "Upload ảnh mới",
+    "select_images": "Chọn ảnh (có thể chọn nhiều ảnh)",
+    "gallery_accepted": "Chỉ chấp nhận: JPG, JPEG, PNG, WEBP. Tối đa 5MB/ảnh. Tối đa 20 ảnh/lần.",
+    "image_list": "Danh sách ảnh",
+    "total_images": "Tổng",
+    "images": "ảnh"
+  }
+}

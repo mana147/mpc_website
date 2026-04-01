@@ -75,7 +75,7 @@ const PostController = {
       return res.redirect('/admin/posts/create');
     }
 
-    const { title, excerpt, content, status } = req.body;
+    const { title, excerpt, content, status, title_en, excerpt_en, content_en } = req.body;
 
     // Validate
     if (!title || !title.trim()) {
@@ -101,7 +101,10 @@ const PostController = {
         excerpt: excerpt ? excerpt.trim() : '',
         content: content ? content.trim() : '',
         thumbnail,
-        status: status || 'draft'
+        status: status || 'draft',
+        title_en: title_en ? title_en.trim() : '',
+        excerpt_en: excerpt_en ? excerpt_en.trim() : '',
+        content_en: content_en ? content_en.trim() : ''
       });
 
       req.session.success = 'Tạo bài viết thành công';
@@ -149,7 +152,7 @@ const PostController = {
       return res.redirect(`/admin/posts/${id}/edit`);
     }
 
-    const { title, excerpt, content, status } = req.body;
+    const { title, excerpt, content, status, title_en, excerpt_en, content_en } = req.body;
 
     // Validate
     if (!title || !title.trim()) {
@@ -185,7 +188,10 @@ const PostController = {
         excerpt: excerpt ? excerpt.trim() : '',
         content: content ? content.trim() : '',
         thumbnail,
-        status: status || 'draft'
+        status: status || 'draft',
+        title_en: title_en ? title_en.trim() : '',
+        excerpt_en: excerpt_en ? excerpt_en.trim() : '',
+        content_en: content_en ? content_en.trim() : ''
       });
 
       req.session.success = 'Cập nhật bài viết thành công';

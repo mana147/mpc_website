@@ -70,8 +70,8 @@ const PostModel = {
    */
   create(data) {
     const stmt = db.prepare(`
-      INSERT INTO posts (title, slug, excerpt, content, thumbnail, status) 
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO posts (title, slug, excerpt, content, thumbnail, status, title_en, excerpt_en, content_en) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     const result = stmt.run(
       data.title,
@@ -79,7 +79,10 @@ const PostModel = {
       data.excerpt || '',
       data.content || '',
       data.thumbnail || null,
-      data.status || 'draft'
+      data.status || 'draft',
+      data.title_en || '',
+      data.excerpt_en || '',
+      data.content_en || ''
     );
     return result.lastInsertRowid;
   },
@@ -90,7 +93,8 @@ const PostModel = {
   update(id, data) {
     const stmt = db.prepare(`
       UPDATE posts 
-      SET title = ?, slug = ?, excerpt = ?, content = ?, thumbnail = ?, status = ?, updated_at = CURRENT_TIMESTAMP
+      SET title = ?, slug = ?, excerpt = ?, content = ?, thumbnail = ?, status = ?, 
+          title_en = ?, excerpt_en = ?, content_en = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
     `);
     return stmt.run(
@@ -100,6 +104,9 @@ const PostModel = {
       data.content || '',
       data.thumbnail,
       data.status || 'draft',
+      data.title_en || '',
+      data.excerpt_en || '',
+      data.content_en || '',
       id
     );
   },

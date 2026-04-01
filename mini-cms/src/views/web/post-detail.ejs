@@ -1,30 +1,38 @@
 <%- include('../partials/header') %>
 
+<%
+  // Chọn nội dung theo ngôn ngữ
+  const displayTitle = (lang === 'en' && post.title_en) ? post.title_en : post.title;
+  const displayExcerpt = (lang === 'en' && post.excerpt_en) ? post.excerpt_en : post.excerpt;
+  const displayContent = (lang === 'en' && post.content_en) ? post.content_en : post.content;
+  const dateLocale = lang === 'en' ? 'en-US' : 'vi-VN';
+%>
+
 <article class="post-detail">
   <header class="post-header">
-    <h1><%= post.title %></h1>
+    <h1><%= displayTitle %></h1>
     <p class="post-meta">
-      Đăng ngày <%= new Date(post.created_at).toLocaleDateString('vi-VN') %>
+      <%= t.posts.published_on %> <%= new Date(post.created_at).toLocaleDateString(dateLocale) %>
       <% if (post.updated_at && post.updated_at !== post.created_at) { %>
-        | Cập nhật <%= new Date(post.updated_at).toLocaleDateString('vi-VN') %>
+        | <%= t.posts.updated_on %> <%= new Date(post.updated_at).toLocaleDateString(dateLocale) %>
       <% } %>
     </p>
   </header>
 
   <% if (post.thumbnail) { %>
-    <img src="<%= post.thumbnail %>" alt="<%= post.title %>" class="post-featured-image">
+    <img src="<%= post.thumbnail %>" alt="<%= displayTitle %>" class="post-featured-image">
   <% } %>
 
-  <% if (post.excerpt) { %>
-    <p class="post-excerpt"><%= post.excerpt %></p>
+  <% if (displayExcerpt) { %>
+    <p class="post-excerpt"><%= displayExcerpt %></p>
   <% } %>
 
   <div class="post-content">
-    <%- post.content.replace(/\n/g, '<br>') %>
+    <%- displayContent.replace(/\n/g, '<br>') %>
   </div>
 
   <footer class="post-footer">
-    <a href="/posts" class="btn">← Quay lại danh sách bài viết</a>
+    <a href="/posts" class="btn"><%= t.posts.back_to_list %></a>
   </footer>
 </article>
 

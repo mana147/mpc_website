@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 
-<h1>Tài liệu</h1>
+<h1><%= t.documents.title %></h1>
 
 <% if (documents && documents.length > 0) { %>
   <div class="document-grid">
@@ -12,14 +12,14 @@
           <p><%= doc.description %></p>
         <% } %>
         <p class="doc-meta">
-          <small>Đăng ngày <%= new Date(doc.created_at).toLocaleDateString('vi-VN') %></small>
+          <small><%= t.posts.published_on %> <%= new Date(doc.created_at).toLocaleDateString(lang === 'en' ? 'en-US' : 'vi-VN') %></small>
         </p>
-        <a href="/documents/<%= doc.id %>/download" class="btn">Tải xuống PDF</a>
+        <a href="/documents/<%= doc.id %>/download" class="btn"><%= t.documents.download_pdf %></a>
       </div>
     <% }) %>
   </div>
 <% } else { %>
-  <p class="empty-state">Chưa có tài liệu nào.</p>
+  <p class="empty-state"><%= t.documents.empty %></p>
 <% } %>
 
 <%- include('../partials/footer') %>

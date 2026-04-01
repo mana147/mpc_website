@@ -24,32 +24,58 @@
         <% } %>
 
         <form action="/admin/posts/create" method="POST" enctype="multipart/form-data" class="admin-form">
-          <div class="form-group">
-            <label for="title">Tiêu đề *</label>
-            <input type="text" id="title" name="title" required placeholder="Nhập tiêu đề bài viết">
-          </div>
+          <!-- Vietnamese Content -->
+          <fieldset class="lang-fieldset">
+            <legend>🇻🇳 Nội dung Tiếng Việt</legend>
+            
+            <div class="form-group">
+              <label for="title">Tiêu đề *</label>
+              <input type="text" id="title" name="title" required placeholder="Nhập tiêu đề bài viết">
+            </div>
 
-          <div class="form-group">
-            <label for="excerpt">Mô tả ngắn</label>
-            <textarea id="excerpt" name="excerpt" rows="3" placeholder="Mô tả ngắn hiển thị ở danh sách bài viết"></textarea>
-          </div>
+            <div class="form-group">
+              <label for="excerpt">Mô tả ngắn</label>
+              <textarea id="excerpt" name="excerpt" rows="3" placeholder="Mô tả ngắn hiển thị ở danh sách bài viết"></textarea>
+            </div>
 
-          <div class="form-group">
-            <label for="content">Nội dung</label>
-            <textarea id="content" name="content" rows="15" placeholder="Nội dung đầy đủ của bài viết"></textarea>
-          </div>
+            <div class="form-group">
+              <label for="content">Nội dung</label>
+              <textarea id="content" name="content" rows="10" placeholder="Nội dung đầy đủ của bài viết"></textarea>
+            </div>
+          </fieldset>
 
+          <!-- English Content -->
+          <fieldset class="lang-fieldset">
+            <legend>🇺🇸 English Content</legend>
+            
+            <div class="form-group">
+              <label for="title_en">Title (English)</label>
+              <input type="text" id="title_en" name="title_en" placeholder="Enter post title in English">
+            </div>
+
+            <div class="form-group">
+              <label for="excerpt_en">Short Description (English)</label>
+              <textarea id="excerpt_en" name="excerpt_en" rows="3" placeholder="Short description for post listing"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="content_en">Content (English)</label>
+              <textarea id="content_en" name="content_en" rows="10" placeholder="Full content of the post"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- Common Fields -->
           <div class="form-group">
-            <label for="thumbnail">Ảnh đại diện</label>
+            <label for="thumbnail">Ảnh đại diện / Thumbnail</label>
             <input type="file" id="thumbnail" name="thumbnail" accept="image/jpeg,image/png,image/webp">
             <small>Chỉ chấp nhận: JPG, JPEG, PNG, WEBP. Tối đa 5MB.</small>
           </div>
 
           <div class="form-group">
-            <label for="status">Trạng thái</label>
+            <label for="status">Trạng thái / Status</label>
             <select id="status" name="status">
-              <option value="draft">Nháp</option>
-              <option value="published">Xuất bản</option>
+              <option value="draft">Nháp / Draft</option>
+              <option value="published">Xuất bản / Published</option>
             </select>
           </div>
 

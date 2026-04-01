@@ -1,6 +1,6 @@
 <!-- Header Partial -->
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="<%= typeof lang !== 'undefined' ? lang : 'vi' %>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +12,14 @@
     <div class="container">
       <a href="/" class="logo">Mini CMS</a>
       <nav class="main-nav">
-        <a href="/">Trang chủ</a>
-        <a href="/posts">Bài viết</a>
-        <a href="/gallery">Thư viện ảnh</a>
-        <a href="/documents">Tài liệu</a>
+        <a href="/"><%= typeof t !== 'undefined' ? t.nav.home : 'Trang chủ' %></a>
+        <a href="/posts"><%= typeof t !== 'undefined' ? t.nav.posts : 'Bài viết' %></a>
+        <a href="/gallery"><%= typeof t !== 'undefined' ? t.nav.gallery : 'Thư viện ảnh' %></a>
+        <a href="/documents"><%= typeof t !== 'undefined' ? t.nav.documents : 'Tài liệu' %></a>
+        <span class="lang-switcher">
+          <a href="/lang/vi" class="<%= (typeof lang !== 'undefined' && lang === 'vi') ? 'active' : '' %>">🇻🇳 VI</a>
+          <a href="/lang/en" class="<%= (typeof lang !== 'undefined' && lang === 'en') ? 'active' : '' %>">🇺🇸 EN</a>
+        </span>
       </nav>
     </div>
   </header>

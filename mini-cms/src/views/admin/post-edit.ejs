@@ -24,23 +24,49 @@
         <% } %>
 
         <form action="/admin/posts/<%= post.id %>/edit" method="POST" enctype="multipart/form-data" class="admin-form">
-          <div class="form-group">
-            <label for="title">Tiêu đề *</label>
-            <input type="text" id="title" name="title" required value="<%= post.title %>">
-          </div>
+          <!-- Vietnamese Content -->
+          <fieldset class="lang-fieldset">
+            <legend>🇻🇳 Nội dung Tiếng Việt</legend>
+            
+            <div class="form-group">
+              <label for="title">Tiêu đề *</label>
+              <input type="text" id="title" name="title" required value="<%= post.title %>">
+            </div>
 
-          <div class="form-group">
-            <label for="excerpt">Mô tả ngắn</label>
-            <textarea id="excerpt" name="excerpt" rows="3"><%= post.excerpt || '' %></textarea>
-          </div>
+            <div class="form-group">
+              <label for="excerpt">Mô tả ngắn</label>
+              <textarea id="excerpt" name="excerpt" rows="3"><%= post.excerpt || '' %></textarea>
+            </div>
 
-          <div class="form-group">
-            <label for="content">Nội dung</label>
-            <textarea id="content" name="content" rows="15"><%= post.content || '' %></textarea>
-          </div>
+            <div class="form-group">
+              <label for="content">Nội dung</label>
+              <textarea id="content" name="content" rows="10"><%= post.content || '' %></textarea>
+            </div>
+          </fieldset>
 
+          <!-- English Content -->
+          <fieldset class="lang-fieldset">
+            <legend>🇺🇸 English Content</legend>
+            
+            <div class="form-group">
+              <label for="title_en">Title (English)</label>
+              <input type="text" id="title_en" name="title_en" value="<%= post.title_en || '' %>">
+            </div>
+
+            <div class="form-group">
+              <label for="excerpt_en">Short Description (English)</label>
+              <textarea id="excerpt_en" name="excerpt_en" rows="3"><%= post.excerpt_en || '' %></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="content_en">Content (English)</label>
+              <textarea id="content_en" name="content_en" rows="10"><%= post.content_en || '' %></textarea>
+            </div>
+          </fieldset>
+
+          <!-- Common Fields -->
           <div class="form-group">
-            <label for="thumbnail">Ảnh đại diện</label>
+            <label for="thumbnail">Ảnh đại diện / Thumbnail</label>
             <% if (post.thumbnail) { %>
               <div class="current-thumbnail">
                 <img src="<%= post.thumbnail %>" alt="Ảnh hiện tại">
@@ -52,10 +78,10 @@
           </div>
 
           <div class="form-group">
-            <label for="status">Trạng thái</label>
+            <label for="status">Trạng thái / Status</label>
             <select id="status" name="status">
-              <option value="draft" <%= post.status === 'draft' ? 'selected' : '' %>>Nháp</option>
-              <option value="published" <%= post.status === 'published' ? 'selected' : '' %>>Xuất bản</option>
+              <option value="draft" <%= post.status === 'draft' ? 'selected' : '' %>>Nháp / Draft</option>
+              <option value="published" <%= post.status === 'published' ? 'selected' : '' %>>Xuất bản / Published</option>
             </select>
           </div>
 

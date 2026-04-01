@@ -1,28 +1,33 @@
 <%- include('../partials/header') %>
 
-<h1>Bài viết</h1>
+<h1><%= t.posts.title %></h1>
 
 <% if (posts && posts.length > 0) { %>
   <div class="post-grid">
     <% posts.forEach(post => { %>
+      <%
+        // Chọn nội dung theo ngôn ngữ
+        const displayTitle = (lang === 'en' && post.title_en) ? post.title_en : post.title;
+        const displayExcerpt = (lang === 'en' && post.excerpt_en) ? post.excerpt_en : post.excerpt;
+      %>
       <article class="post-card">
         <% if (post.thumbnail) { %>
-          <img src="<%= post.thumbnail %>" alt="<%= post.title %>" class="post-thumbnail">
+          <img src="<%= post.thumbnail %>" alt="<%= displayTitle %>" class="post-thumbnail">
         <% } else { %>
           <div class="post-thumbnail-placeholder"></div>
         <% } %>
         <div class="post-card-content">
-          <h3><a href="/posts/<%= post.slug %>"><%= post.title %></a></h3>
-          <% if (post.excerpt) { %>
-            <p><%= post.excerpt.substring(0, 200) %><%= post.excerpt.length > 200 ? '...' : '' %></p>
+          <h3><a href="/posts/<%= post.slug %>"><%= displayTitle %></a></h3>
+          <% if (displayExcerpt) { %>
+            <p><%= displayExcerpt.substring(0, 200) %><%= displayExcerpt.length > 200 ? '...' : '' %></p>
           <% } %>
-          <small><%= new Date(post.created_at).toLocaleDateString('vi-VN') %></small>
+          <small><%= new Date(post.created_at).toLocaleDateString(lang === 'en' ? 'en-US' : 'vi-VN') %></small>
         </div>
       </article>
     <% }) %>
   </div>
 <% } else { %>
-  <p class="empty-state">Chưa có bài viết nào.</p>
+  <p class="empty-state"><%= t.posts.empty %></p>
 <% } %>
 
 <%- include('../partials/footer') %>

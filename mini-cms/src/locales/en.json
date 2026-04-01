@@ -1,0 +1,126 @@
+{
+  "lang_code": "en",
+  "lang_name": "English",
+  
+  "site": {
+    "name": "Mini CMS",
+    "description": "Simple Content Management System"
+  },
+  
+  "nav": {
+    "home": "Home",
+    "posts": "Posts",
+    "gallery": "Gallery",
+    "documents": "Documents",
+    "language": "Language"
+  },
+  
+  "home": {
+    "welcome": "Welcome to Mini CMS",
+    "description": "Simple content management system for small business",
+    "latest_posts": "Latest Posts",
+    "latest_documents": "Latest Documents",
+    "view_all_posts": "View all posts →",
+    "view_all_documents": "View all documents →"
+  },
+  
+  "posts": {
+    "title": "Posts",
+    "empty": "No posts yet.",
+    "read_more": "Read more",
+    "back_to_list": "← Back to posts",
+    "published_on": "Published on",
+    "updated_on": "Updated on"
+  },
+  
+  "gallery": {
+    "title": "IMAGE GALLERY",
+    "description": "Explore our memorable moments",
+    "empty": "No images in gallery yet."
+  },
+  
+  "documents": {
+    "title": "Documents",
+    "empty": "No documents yet.",
+    "download": "Download",
+    "download_pdf": "Download PDF",
+    "uploaded_at": "Uploaded on"
+  },
+  
+  "common": {
+    "back_home": "← Back to home",
+    "learn_more": "Learn more",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "not_found": "Page Not Found",
+    "not_found_desc": "The page you requested could not be found.",
+    "system_error": "System Error"
+  },
+  
+  "footer": {
+    "copyright": "Simple CMS for small business."
+  },
+  
+  "admin": {
+    "dashboard": "Dashboard",
+    "posts": "Posts",
+    "documents": "Documents",
+    "gallery": "Gallery",
+    "view_website": "View website",
+    "logout": "Logout",
+    "login": "Login",
+    "login_title": "Admin Login",
+    "username": "Username",
+    "password": "Password",
+    "login_btn": "Login",
+    "back_to_home": "← Back to home",
+    "please_login": "Please login to continue",
+    
+    "post_management": "Post Management",
+    "create_post": "Create new post",
+    "edit_post": "Edit post",
+    "post_title": "Title",
+    "post_title_en": "Title (English)",
+    "post_excerpt": "Excerpt",
+    "post_excerpt_en": "Excerpt (English)",
+    "post_content": "Content",
+    "post_content_en": "Content (English)",
+    "post_thumbnail": "Thumbnail",
+    "post_status": "Status",
+    "status_draft": "Draft",
+    "status_published": "Published",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "back": "← Back",
+    "confirm_delete": "Are you sure you want to delete?",
+    "create_success": "Created successfully",
+    "update_success": "Updated successfully",
+    "delete_success": "Deleted successfully",
+    
+    "vietnamese_content": "Vietnamese Content",
+    "english_content": "English Content",
+    "image_accepted": "Accepted: JPG, JPEG, PNG, WEBP. Max 5MB.",
+    "current_thumbnail": "Current thumbnail",
+    "upload_new": "Upload new image to replace.",
+    
+    "doc_management": "Document Management",
+    "upload_document": "Upload new document",
+    "doc_title": "Document title",
+    "doc_description": "Description",
+    "doc_file": "PDF File",
+    "pdf_accepted": "Only PDF files accepted. Max 20MB.",
+    "upload": "Upload",
+    
+    "gallery_management": "Gallery Management",
+    "upload_images": "Upload new images",
+    "select_images": "Select images (multiple allowed)",
+    "gallery_accepted": "Accepted: JPG, JPEG, PNG, WEBP. Max 5MB/image. Max 20 images.",
+    "image_list": "Image list",
+    "total_images": "Total",
+    "images": "images"
+  }
+}

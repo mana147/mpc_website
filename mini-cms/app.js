@@ -15,6 +15,10 @@ const { initDatabase } = require('./src/config/db');
 const webRoutes = require('./src/routes/web');
 const adminRoutes = require('./src/routes/admin');
 const authRoutes = require('./src/routes/auth');
+const languageRoutes = require('./src/routes/language');
+
+// Import middleware
+const { languageMiddleware } = require('./src/middlewares/languageMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -56,10 +60,14 @@ app.use((req, res, next) => {
   next();
 });
 
+// Language middleware - phải đặt sau session
+app.use(languageMiddleware);
+
 // ============================================
 // ROUTES
 // ============================================
 
+app.use('/lang', languageRoutes);
 app.use('/', webRoutes);
 app.use('/admin', adminRoutes);
 app.use('/auth', authRoutes);

@@ -1,41 +1,45 @@
 <%- include('../partials/header') %>
 
 <section class="hero">
-  <h1>Chào mừng đến với Mini CMS</h1>
-  <p>Hệ thống quản lý nội dung đơn giản cho doanh nghiệp nhỏ</p>
+  <h1><%= t.home.welcome %></h1>
+  <p><%= t.home.description %></p>
 </section>
 
 <section class="section">
-  <h2>Bài viết mới nhất</h2>
+  <h2><%= t.home.latest_posts %></h2>
   <% if (posts && posts.length > 0) { %>
     <div class="post-grid">
       <% posts.forEach(post => { %>
+        <%
+          const displayTitle = (lang === 'en' && post.title_en) ? post.title_en : post.title;
+          const displayExcerpt = (lang === 'en' && post.excerpt_en) ? post.excerpt_en : post.excerpt;
+        %>
         <article class="post-card">
           <% if (post.thumbnail) { %>
-            <img src="<%= post.thumbnail %>" alt="<%= post.title %>" class="post-thumbnail">
+            <img src="<%= post.thumbnail %>" alt="<%= displayTitle %>" class="post-thumbnail">
           <% } else { %>
             <div class="post-thumbnail-placeholder"></div>
           <% } %>
           <div class="post-card-content">
-            <h3><a href="/posts/<%= post.slug %>"><%= post.title %></a></h3>
-            <% if (post.excerpt) { %>
-              <p><%= post.excerpt.substring(0, 150) %><%= post.excerpt.length > 150 ? '...' : '' %></p>
+            <h3><a href="/posts/<%= post.slug %>"><%= displayTitle %></a></h3>
+            <% if (displayExcerpt) { %>
+              <p><%= displayExcerpt.substring(0, 150) %><%= displayExcerpt.length > 150 ? '...' : '' %></p>
             <% } %>
-            <small><%= new Date(post.created_at).toLocaleDateString('vi-VN') %></small>
+            <small><%= new Date(post.created_at).toLocaleDateString(lang === 'en' ? 'en-US' : 'vi-VN') %></small>
           </div>
         </article>
       <% }) %>
     </div>
     <p class="text-center mt-2">
-      <a href="/posts" class="btn">Xem tất cả bài viết →</a>
+      <a href="/posts" class="btn"><%= t.home.view_all_posts %></a>
     </p>
   <% } else { %>
-    <p class="empty-state">Chưa có bài viết nào.</p>
+    <p class="empty-state"><%= t.posts.empty %></p>
   <% } %>
 </section>
 
 <section class="section">
-  <h2>Tài liệu mới nhất</h2>
+  <h2><%= t.home.latest_documents %></h2>
   <% if (documents && documents.length > 0) { %>
     <ul class="document-list">
       <% documents.forEach(doc => { %>
@@ -47,15 +51,15 @@
               <p><%= doc.description %></p>
             <% } %>
           </div>
-          <a href="/documents/<%= doc.id %>/download" class="btn btn-small">Tải xuống</a>
+          <a href="/documents/<%= doc.id %>/download" class="btn btn-small"><%= t.documents.download %></a>
         </li>
       <% }) %>
     </ul>
     <p class="text-center mt-2">
-      <a href="/documents" class="btn">Xem tất cả tài liệu →</a>
+      <a href="/documents" class="btn"><%= t.home.view_all_documents %></a>
     </p>
   <% } else { %>
-    <p class="empty-state">Chưa có tài liệu nào.</p>
+    <p class="empty-state"><%= t.documents.empty %></p>
   <% } %>
 </section>
 

@@ -2,7 +2,7 @@
   </main>
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; <%= new Date().getFullYear() %> Mini CMS. Simple CMS for small business.</p>
+      <p>&copy; <%= new Date().getFullYear() %> Mini CMS. <%= typeof t !== 'undefined' ? t.footer.copyright : 'Simple CMS for small business.' %></p>
     </div>
   </footer>
   <script src="/js/main.js"></script>

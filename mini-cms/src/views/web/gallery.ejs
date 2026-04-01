@@ -1,8 +1,8 @@
 <%- include('../partials/header') %>
 
 <section class="gallery-hero">
-  <h1>THƯ VIỆN HÌNH ẢNH</h1>
-  <p>Khám phá những khoảnh khắc đáng nhớ của chúng tôi</p>
+  <h1><%= t.gallery.title %></h1>
+  <p><%= t.gallery.description %></p>
 </section>
 
 <% if (images && images.length > 0) { %>
@@ -22,12 +22,12 @@
   </div>
   
   <p class="text-center mt-2">
-    <a href="/" class="btn">← Về trang chủ</a>
+    <a href="/" class="btn"><%= t.common.back_home %></a>
   </p>
 <% } else { %>
   <div class="empty-state">
-    <p>Chưa có hình ảnh nào trong thư viện.</p>
-    <a href="/" class="btn">← Về trang chủ</a>
+    <p><%= t.gallery.empty %></p>
+    <a href="/" class="btn"><%= t.common.back_home %></a>
   </div>
 <% } %>
 

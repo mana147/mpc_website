@@ -50,10 +50,22 @@ function initDatabase() {
       content TEXT,
       thumbnail TEXT,
       status TEXT DEFAULT 'draft',
+      title_en TEXT,
+      excerpt_en TEXT,
+      content_en TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
+
+  // Thêm cột tiếng Anh nếu chưa có (cho database cũ)
+  try {
+    db.exec(`ALTER TABLE posts ADD COLUMN title_en TEXT`);
+    db.exec(`ALTER TABLE posts ADD COLUMN excerpt_en TEXT`);
+    db.exec(`ALTER TABLE posts ADD COLUMN content_en TEXT`);
+  } catch (e) {
+    // Cột đã tồn tại, bỏ qua
+  }
 
   // Tạo bảng documents
   db.exec(`
