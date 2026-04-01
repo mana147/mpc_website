@@ -7,24 +7,9 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="admin-page">
+  <% const activePage = 'dashboard'; %>
   <div class="admin-layout">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
-      <div class="sidebar-header">
-        <a href="/admin" class="sidebar-logo">Mini CMS</a>
-      </div>
-      <nav class="sidebar-nav">
-        <a href="/admin" class="nav-item">📊 Dashboard</a>
-        <a href="/admin/posts" class="nav-item">📝 Bài viết</a>
-        <a href="/admin/documents" class="nav-item">📄 Tài liệu</a>
-        <a href="/admin/gallery" class="nav-item">🖼️ Thư viện ảnh</a>
-        <hr>
-        <a href="/" class="nav-item" target="_blank">🌐 Xem website</a>
-        <form action="/admin/logout" method="POST" style="margin: 0;">
-          <button type="submit" class="nav-item nav-logout">🚪 Đăng xuất</button>
-        </form>
-      </nav>
-    </aside>
+    <%- include('../partials/admin-sidebar', { activePage }) %>
 
     <!-- Main content -->
     <main class="admin-main">
