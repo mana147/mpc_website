@@ -12,6 +12,7 @@
     "posts": "Bài viết",
     "gallery": "Thư viện ảnh",
     "documents": "Tài liệu",
+    "contact": "Liên hệ",
     "language": "Ngôn ngữ"
   },
   
@@ -57,7 +58,24 @@
     "not_found_desc": "Không tìm thấy trang bạn yêu cầu.",
     "system_error": "Lỗi hệ thống"
   },
-  
+
+  "contact": {
+    "title": "THÔNG TIN CỦA QUÝ KHÁCH",
+    "subtitle": "Hãy để lại thông tin, chúng tôi sẽ liên hệ sớm nhất",
+    "full_name": "Họ & Tên",
+    "full_name_placeholder": "Nhập họ và tên của bạn",
+    "email": "Địa chỉ email",
+    "email_placeholder": "Nhập địa chỉ email",
+    "subject": "Tiêu đề",
+    "subject_placeholder": "Nhập tiêu đề",
+    "phone": "Số điện thoại",
+    "phone_placeholder": "Nhập số điện thoại",
+    "message": "Nội dung gửi",
+    "message_placeholder": "Nhập nội dung bạn muốn gửi...",
+    "submit": "Gửi liên hệ",
+    "success_message": "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể."
+  },
+
   "footer": {
     "copyright": "Hệ thống quản lý nội dung đơn giản cho doanh nghiệp."
   },

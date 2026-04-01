@@ -9,6 +9,7 @@ const router = express.Router();
 const PostController = require('../controllers/postController');
 const DocumentController = require('../controllers/documentController');
 const GalleryController = require('../controllers/galleryController');
+const ContactController = require('../controllers/contactController');
 const PostModel = require('../models/postModel');
 const DocumentModel = require('../models/documentModel');
 
@@ -34,5 +35,9 @@ router.get('/documents/:id/download', DocumentController.download);
 
 // Thư viện ảnh
 router.get('/gallery', GalleryController.index);
+
+// Liên hệ
+router.get('/contact', ContactController.index);
+router.post('/contact', ContactController.submit);
 
 module.exports = router;

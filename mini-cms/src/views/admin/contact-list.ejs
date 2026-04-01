@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <% const activePage = 'contacts'; %>
+  <div class="admin-layout">
+    <%- include('../partials/admin-sidebar', { activePage }) %>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <% if (contacts && contacts.length > 0) { %>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Tiêu đề</th>
+                <th>Trạng thái</th>
+                <th>Ngày gửi</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% contacts.forEach(contact => { %>
+                <tr class="<%= contact.is_read ? '' : 'unread-row' %>">
+                  <td><%= contact.id %></td>
+                  <td>
+                    <strong><%= contact.full_name %></strong>
+                    <% if (!contact.is_read) { %>
+                      <span class="badge badge-new">Mới</span>
+                    <% } %>
+                  </td>
+                  <td><%= contact.email %></td>
+                  <td><%= contact.subject.substring(0, 40) %><%= contact.subject.length > 40 ? '...' : '' %></td>
+                  <td>
+                    <% if (contact.is_read) { %>
+                      <span class="badge badge-read">Đã đọc</span>
+                    <% } else { %>
+                      <span class="badge badge-unread">Chưa đọc</span>
+                    <% } %>
+                  </td>
+                  <td><%= new Date(contact.created_at).toLocaleDateString('vi-VN') %></td>
+                  <td class="actions">
+                    <a href="/admin/contacts/<%= contact.id %>" class="btn btn-small">Xem</a>
+                    <form action="/admin/contacts/<%= contact.id %>/delete" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc muốn xóa liên hệ này?');">
+                      <button type="submit" class="btn btn-small btn-danger">Xóa</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <div class="empty-state">
+            <p>Chưa có liên hệ nào.</p>
+          </div>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

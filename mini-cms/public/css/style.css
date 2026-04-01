@@ -1087,3 +1087,258 @@ img {
 .admin-gallery-delete .btn {
   width: 100%;
 }
+
+/* ============================================
+   CONTACT PAGE - PUBLIC
+   ============================================ */
+.contact-hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  margin: -40px -20px 40px -20px;
+}
+
+.contact-hero h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.contact-hero p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.contact-container {
+  max-width: 700px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+}
+
+.contact-form {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form .form-group.full-width {
+  width: 100%;
+}
+
+.contact-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fff;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.contact-form input.input-error,
+.contact-form textarea.input-error {
+  border-color: #dc3545;
+}
+
+.contact-form .error-text {
+  display: block;
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form .form-actions {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.contact-form .btn-submit {
+  background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
+  color: #fff;
+  padding: 14px 50px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contact-form .btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(241, 39, 17, 0.3);
+}
+
+/* ============================================
+   CONTACT ADMIN STYLES
+   ============================================ */
+.unread-row {
+  background: #fff9e6 !important;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-new {
+  background: #dc3545;
+  color: #fff;
+  margin-left: 8px;
+}
+
+.badge-read {
+  background: #28a745;
+  color: #fff;
+}
+
+.badge-unread {
+  background: #ffc107;
+  color: #333;
+}
+
+/* Contact Detail Card */
+.contact-detail-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.contact-detail-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  padding: 25px 30px;
+}
+
+.contact-detail-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+}
+
+.contact-date {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.contact-detail-info {
+  padding: 25px 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  width: 130px;
+  color: #666;
+  font-weight: 500;
+}
+
+.info-value {
+  flex: 1;
+  color: #333;
+}
+
+.info-value a {
+  color: #0066cc;
+}
+
+.contact-detail-message {
+  padding: 25px 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.contact-detail-message h3 {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.message-content {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  line-height: 1.7;
+  color: #333;
+}
+
+.contact-detail-actions {
+  padding: 20px 30px;
+  display: flex;
+  gap: 12px;
+}
+
+/* Responsive Contact */
+@media (max-width: 768px) {
+  .contact-hero {
+    padding: 40px 20px;
+  }
+  
+  .contact-hero h1 {
+    font-size: 1.6rem;
+  }
+  
+  .contact-form {
+    padding: 25px 20px;
+  }
+  
+  .contact-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .contact-detail-actions {
+    flex-direction: column;
+  }
+  
+  .contact-detail-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <% const activePage = 'contacts'; %>
+  <div class="admin-layout">
+    <%- include('../partials/admin-sidebar', { activePage }) %>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <a href="/admin/contacts" class="btn">← Quay lại</a>
+      </header>
+
+      <div class="admin-content">
+        <div class="contact-detail-card">
+          <div class="contact-detail-header">
+            <h2><%= contact.subject %></h2>
+            <span class="contact-date">
+              Gửi lúc: <%= new Date(contact.created_at).toLocaleString('vi-VN') %>
+            </span>
+          </div>
+
+          <div class="contact-detail-info">
+            <div class="info-row">
+              <span class="info-label">Họ tên:</span>
+              <span class="info-value"><%= contact.full_name %></span>
+            </div>
+            
+            <div class="info-row">
+              <span class="info-label">Email:</span>
+              <span class="info-value">
+                <a href="mailto:<%= contact.email %>"><%= contact.email %></a>
+              </span>
+            </div>
+            
+            <% if (contact.phone) { %>
+            <div class="info-row">
+              <span class="info-label">Số điện thoại:</span>
+              <span class="info-value">
+                <a href="tel:<%= contact.phone %>"><%= contact.phone %></a>
+              </span>
+            </div>
+            <% } %>
+          </div>
+
+          <div class="contact-detail-message">
+            <h3>Nội dung:</h3>
+            <div class="message-content">
+              <%- contact.message.replace(/\n/g, '<br>') %>
+            </div>
+          </div>
+
+          <div class="contact-detail-actions">
+            <a href="mailto:<%= contact.email %>?subject=Re: <%= contact.subject %>" class="btn btn-primary">
+              📧 Phản hồi qua Email
+            </a>
+            <form action="/admin/contacts/<%= contact.id %>/delete" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc muốn xóa liên hệ này?');">
+              <button type="submit" class="btn btn-danger">🗑️ Xóa liên hệ</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

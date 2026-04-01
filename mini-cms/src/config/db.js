@@ -90,6 +90,20 @@ function initDatabase() {
     )
   `);
 
+  // Tạo bảng contacts
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS contacts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      full_name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      phone TEXT,
+      message TEXT NOT NULL,
+      is_read INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
   // Tạo admin mặc định nếu chưa có
   const adminExists = db.prepare('SELECT id FROM users WHERE username = ?').get('admin');
   

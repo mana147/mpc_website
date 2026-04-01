@@ -16,6 +16,7 @@
         <a href="/posts"><%= typeof t !== 'undefined' ? t.nav.posts : 'Bài viết' %></a>
         <a href="/gallery"><%= typeof t !== 'undefined' ? t.nav.gallery : 'Thư viện ảnh' %></a>
         <a href="/documents"><%= typeof t !== 'undefined' ? t.nav.documents : 'Tài liệu' %></a>
+        <a href="/contact"><%= typeof t !== 'undefined' ? t.nav.contact : 'Liên hệ' %></a>
         <span class="lang-switcher">
           <a href="/lang/vi" class="<%= (typeof lang !== 'undefined' && lang === 'vi') ? 'active' : '' %>">🇻🇳 VI</a>
           <a href="/lang/en" class="<%= (typeof lang !== 'undefined' && lang === 'en') ? 'active' : '' %>">🇺🇸 EN</a>

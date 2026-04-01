@@ -12,6 +12,7 @@
     "posts": "Posts",
     "gallery": "Gallery",
     "documents": "Documents",
+    "contact": "Contact",
     "language": "Language"
   },
   
@@ -57,7 +58,24 @@
     "not_found_desc": "The page you requested could not be found.",
     "system_error": "System Error"
   },
-  
+
+  "contact": {
+    "title": "CUSTOMER INFORMATION",
+    "subtitle": "Leave your information, we will contact you soon",
+    "full_name": "Full Name",
+    "full_name_placeholder": "Enter your full name",
+    "email": "Email Address",
+    "email_placeholder": "Enter your email address",
+    "subject": "Subject",
+    "subject_placeholder": "Enter subject",
+    "phone": "Phone Number",
+    "phone_placeholder": "Enter your phone number",
+    "message": "Message",
+    "message_placeholder": "Enter your message...",
+    "submit": "Send Message",
+    "success_message": "Thank you for contacting us! We will respond as soon as possible."
+  },
+
   "footer": {
     "copyright": "Simple CMS for small business."
   },
