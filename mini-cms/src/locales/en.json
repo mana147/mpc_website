@@ -139,6 +139,26 @@
     "gallery_accepted": "Accepted: JPG, JPEG, PNG, WEBP. Max 5MB/image. Max 20 images.",
     "image_list": "Image list",
     "total_images": "Total",
-    "images": "images"
+    "images": "images",
+    
+    "menu_management": "Menu Management",
+    "create_menu": "Create new menu",
+    "edit_menu": "Edit menu",
+    "menu_name_vi": "Menu name (Vietnamese)",
+    "menu_name_en": "Menu name (English)",
+    "menu_slug": "Slug",
+    "menu_type": "Menu type",
+    "menu_type_system": "System menu",
+    "menu_type_single_post": "Single post",
+    "menu_type_custom": "Custom",
+    "menu_linked_post": "Linked post",
+    "menu_select_post": "Select post",
+    "menu_sort_order": "Sort order",
+    "menu_visible": "Visible",
+    "menu_hidden": "Hidden",
+    "menu_show": "Show",
+    "menu_hide": "Hide",
+    "menu_system_warning": "System menus cannot be deleted or have their type/slug changed.",
+    "menu_no_content": "This page has no content yet."
   }
 }

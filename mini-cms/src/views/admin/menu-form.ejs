@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .posts-checkbox-list {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+    .posts-checkbox-list label {
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      margin-bottom: 5px;
+      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .posts-checkbox-list label:hover {
+      background: #e9f5ff;
+    }
+    .posts-checkbox-list input[type="checkbox"] {
+      margin-right: 10px;
+      width: 18px;
+      height: 18px;
+    }
+    .posts-checkbox-list .post-status {
+      margin-left: auto;
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .posts-checkbox-list .status-published {
+      background: #d4edda;
+      color: #155724;
+    }
+    .posts-checkbox-list .status-draft {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .selected-count {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body class="admin-page">
+  <% const activePage = 'menus'; %>
+  <div class="admin-layout">
+    <%- include('../partials/admin-sidebar', { activePage }) %>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <a href="/admin/menus" class="btn">← Quay lại</a>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <form action="/admin/menus<%= menu && menu.id ? '/' + menu.id + '/edit' : '/create' %>" method="POST" class="admin-form">
+          
+          <!-- Tên menu tiếng Việt -->
+          <div class="form-group">
+            <label for="name_vi">Tên menu (Tiếng Việt) *</label>
+            <input 
+              type="text" 
+              id="name_vi" 
+              name="name_vi" 
+              value="<%= menu ? menu.name_vi : '' %>"
+              placeholder="Ví dụ: Giới thiệu công ty"
+              required
+              class="<%= errors.name_vi ? 'input-error' : '' %>"
+            >
+            <% if (errors.name_vi) { %>
+              <span class="error-text"><%= errors.name_vi %></span>
+            <% } %>
+          </div>
+
+          <!-- Tên menu tiếng Anh -->
+          <div class="form-group">
+            <label for="name_en">Tên menu (English)</label>
+            <input 
+              type="text" 
+              id="name_en" 
+              name="name_en" 
+              value="<%= menu ? menu.name_en : '' %>"
+              placeholder="Example: About Us"
+            >
+          </div>
+
+          <!-- Loại menu -->
+          <div class="form-group">
+            <label for="type">Loại menu</label>
+            <% if (menu && menu.type === 'system') { %>
+              <input type="text" value="System (Hệ thống)" disabled>
+              <input type="hidden" name="type" value="system">
+              <small class="form-hint">Menu hệ thống không thể thay đổi loại</small>
+            <% } else { %>
+              <select id="type" name="type" onchange="toggleMenuTypeFields()">
+                <option value="custom" <%= (!menu || menu.type === 'custom') ? 'selected' : '' %>>Custom (Tùy chỉnh)</option>
+                <option value="single_post" <%= (menu && menu.type === 'single_post') ? 'selected' : '' %>>Single Post (Gán 1 bài viết)</option>
+                <option value="post_list" <%= (menu && menu.type === 'post_list') ? 'selected' : '' %>>Post List (Dropdown nhiều bài viết)</option>
+              </select>
+              <small class="form-hint">
+                <strong>Custom:</strong> Menu với link tùy chỉnh | 
+                <strong>Single Post:</strong> Gán 1 bài viết | 
+                <strong>Post List:</strong> Dropdown chứa nhiều bài viết
+              </small>
+            <% } %>
+          </div>
+
+          <!-- Slug -->
+          <div class="form-group">
+            <label for="slug">Slug (Đường dẫn)</label>
+            <% if (menu && menu.type === 'system') { %>
+              <input type="text" value="<%= menu.slug %>" disabled>
+              <input type="hidden" name="slug" value="<%= menu.slug %>">
+              <small class="form-hint">Không thể thay đổi slug của menu hệ thống</small>
+            <% } else { %>
+              <input 
+                type="text" 
+                id="slug" 
+                name="slug" 
+                value="<%= menu ? menu.slug : '' %>"
+                placeholder="Ví dụ: /menu/gioi-thieu hoặc để trống để tự sinh"
+                class="<%= errors.slug ? 'input-error' : '' %>"
+              >
+              <small class="form-hint">Để trống sẽ tự động sinh từ tên menu. Với Post List, slug không dùng để điều hướng.</small>
+              <% if (errors.slug) { %>
+                <span class="error-text"><%= errors.slug %></span>
+              <% } %>
+            <% } %>
+          </div>
+
+          <!-- Bài viết gán (cho single_post) -->
+          <div class="form-group" id="single-post-group" style="<%= (!menu || menu.type !== 'single_post') ? 'display: none;' : '' %>">
+            <label for="linked_post_id">Chọn bài viết để gán *</label>
+            <select id="linked_post_id" name="linked_post_id" class="<%= errors.linked_post_id ? 'input-error' : '' %>">
+              <option value="">-- Chọn bài viết --</option>
+              <% posts.forEach(post => { %>
+                <option value="<%= post.id %>" <%= (menu && menu.linked_post_id == post.id) ? 'selected' : '' %>>
+                  <%= post.title %> (<%= post.status === 'published' ? 'Đã xuất bản' : 'Nháp' %>)
+                </option>
+              <% }) %>
+            </select>
+            <% if (errors.linked_post_id) { %>
+              <span class="error-text"><%= errors.linked_post_id %></span>
+            <% } %>
+            <small class="form-hint">Khi người dùng click menu, sẽ hiển thị bài viết này</small>
+          </div>
+
+          <!-- Danh sách bài viết (cho post_list) -->
+          <div class="form-group" id="post-list-group" style="<%= (!menu || menu.type !== 'post_list') ? 'display: none;' : '' %>">
+            <label>Chọn bài viết cho dropdown *</label>
+            <div class="posts-checkbox-list">
+              <% posts.forEach(post => { %>
+                <label>
+                  <input 
+                    type="checkbox" 
+                    name="post_ids" 
+                    value="<%= post.id %>"
+                    <%= (selectedPostIds && selectedPostIds.includes(post.id)) ? 'checked' : '' %>
+                    onchange="updateSelectedCount()"
+                  >
+                  <span><%= post.title %></span>
+                  <span class="post-status <%= post.status === 'published' ? 'status-published' : 'status-draft' %>">
+                    <%= post.status === 'published' ? 'Đã xuất bản' : 'Nháp' %>
+                  </span>
+                </label>
+              <% }) %>
+            </div>
+            <% if (errors.post_ids) { %>
+              <span class="error-text"><%= errors.post_ids %></span>
+            <% } %>
+            <div class="selected-count">
+              Đã chọn: <span id="selected-count"><%= selectedPostIds ? selectedPostIds.length : 0 %></span> bài viết
+            </div>
+            <small class="form-hint">Các bài viết được chọn sẽ hiển thị trong dropdown khi hover menu. Chỉ bài viết đã xuất bản mới hiển thị ngoài public.</small>
+          </div>
+
+          <!-- Thứ tự hiển thị -->
+          <div class="form-group">
+            <label for="sort_order">Thứ tự hiển thị</label>
+            <input 
+              type="number" 
+              id="sort_order" 
+              name="sort_order" 
+              value="<%= menu ? menu.sort_order : '' %>"
+              placeholder="Để trống sẽ tự động thêm cuối"
+              min="0"
+            >
+            <small class="form-hint">Số nhỏ hơn sẽ hiển thị trước</small>
+          </div>
+
+          <!-- Hiển thị -->
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input 
+                type="checkbox" 
+                name="is_visible" 
+                value="1"
+                <%= (!menu || menu.is_visible) ? 'checked' : '' %>
+              >
+              Hiển thị menu trên website
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <%= menu ? 'Cập nhật menu' : 'Tạo menu' %>
+            </button>
+            <a href="/admin/menus" class="btn">Hủy</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function toggleMenuTypeFields() {
+      const type = document.getElementById('type').value;
+      const singlePostGroup = document.getElementById('single-post-group');
+      const postListGroup = document.getElementById('post-list-group');
+      
+      // Ẩn tất cả
+      singlePostGroup.style.display = 'none';
+      postListGroup.style.display = 'none';
+      
+      // Hiện theo type
+      if (type === 'single_post') {
+        singlePostGroup.style.display = 'block';
+      } else if (type === 'post_list') {
+        postListGroup.style.display = 'block';
+      }
+    }
+
+    function updateSelectedCount() {
+      const checkboxes = document.querySelectorAll('input[name="post_ids"]:checked');
+      document.getElementById('selected-count').textContent = checkboxes.length;
+    }
+
+    // Init on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      updateSelectedCount();
+    });
+  </script>
+</body>
+</html>

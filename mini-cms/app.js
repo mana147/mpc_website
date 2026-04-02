@@ -19,6 +19,7 @@ const languageRoutes = require('./src/routes/language');
 
 // Import middleware
 const { languageMiddleware } = require('./src/middlewares/languageMiddleware');
+const { loadMenus } = require('./src/middlewares/menuMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -62,6 +63,9 @@ app.use((req, res, next) => {
 
 // Language middleware - phải đặt sau session
 app.use(languageMiddleware);
+
+// Menu middleware - load visible menus cho public pages
+app.use(loadMenus);
 
 // ============================================
 // ROUTES

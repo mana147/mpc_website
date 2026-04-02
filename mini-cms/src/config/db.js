@@ -104,6 +104,37 @@ function initDatabase() {
     )
   `);
 
+  // Tạo bảng menus
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS menus (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name_vi TEXT NOT NULL,
+      name_en TEXT,
+      slug TEXT NOT NULL,
+      type TEXT DEFAULT 'system',
+      linked_post_id INTEGER,
+      is_visible INTEGER DEFAULT 1,
+      sort_order INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (linked_post_id) REFERENCES posts(id) ON DELETE SET NULL
+    )
+  `);
+
+  // Tạo bảng menu_posts (quan hệ nhiều-nhiều giữa menu và posts)
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS menu_posts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      menu_id INTEGER NOT NULL,
+      post_id INTEGER NOT NULL,
+      sort_order INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (menu_id) REFERENCES menus(id) ON DELETE CASCADE,
+      FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+      UNIQUE(menu_id, post_id)
+    )
+  `);
+
   // Tạo admin mặc định nếu chưa có
   const adminExists = db.prepare('SELECT id FROM users WHERE username = ?').get('admin');
   
@@ -119,6 +150,28 @@ function initDatabase() {
     );
     
     console.log(`✅ Đã tạo tài khoản admin: ${username} / ${password}`);
+  }
+
+  // Seed menu mặc định nếu bảng menus trống
+  const menuCount = db.prepare('SELECT COUNT(*) as count FROM menus').get();
+  if (menuCount.count === 0) {
+    const defaultMenus = [
+      { name_vi: 'Trang chủ', name_en: 'Home', slug: '/', type: 'system', sort_order: 1 },
+      { name_vi: 'Bài viết', name_en: 'Posts', slug: '/posts', type: 'system', sort_order: 2 },
+      { name_vi: 'Thư viện ảnh', name_en: 'Gallery', slug: '/gallery', type: 'system', sort_order: 3 },
+      { name_vi: 'Tài liệu', name_en: 'Documents', slug: '/documents', type: 'system', sort_order: 4 },
+      { name_vi: 'Liên hệ', name_en: 'Contact', slug: '/contact', type: 'system', sort_order: 5 }
+    ];
+
+    const insertMenu = db.prepare(`
+      INSERT INTO menus (name_vi, name_en, slug, type, is_visible, sort_order)
+      VALUES (?, ?, ?, ?, 1, ?)
+    `);
+
+    for (const menu of defaultMenus) {
+      insertMenu.run(menu.name_vi, menu.name_en, menu.slug, menu.type, menu.sort_order);
+    }
+    console.log('✅ Đã tạo 5 menu mặc định');
   }
 
   console.log('✅ Database đã sẵn sàng!');

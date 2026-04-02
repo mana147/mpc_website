@@ -10,6 +10,7 @@ const PostController = require('../controllers/postController');
 const DocumentController = require('../controllers/documentController');
 const GalleryController = require('../controllers/galleryController');
 const ContactController = require('../controllers/contactController');
+const MenuController = require('../controllers/menuController');
 const PostModel = require('../models/postModel');
 const DocumentModel = require('../models/documentModel');
 
@@ -39,5 +40,8 @@ router.get('/gallery', GalleryController.index);
 // Liên hệ
 router.get('/contact', ContactController.index);
 router.post('/contact', ContactController.submit);
+
+// Menu page (single_post hoặc custom)
+router.get('/menu/:slug', MenuController.showMenuPage);
 
 module.exports = router;

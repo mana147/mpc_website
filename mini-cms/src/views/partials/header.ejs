@@ -9,19 +9,74 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="container">
+    <div class="header-container">
       <a href="/" class="logo">Mini CMS</a>
-      <nav class="main-nav">
-        <a href="/"><%= typeof t !== 'undefined' ? t.nav.home : 'Trang chủ' %></a>
-        <a href="/posts"><%= typeof t !== 'undefined' ? t.nav.posts : 'Bài viết' %></a>
-        <a href="/gallery"><%= typeof t !== 'undefined' ? t.nav.gallery : 'Thư viện ảnh' %></a>
-        <a href="/documents"><%= typeof t !== 'undefined' ? t.nav.documents : 'Tài liệu' %></a>
-        <a href="/contact"><%= typeof t !== 'undefined' ? t.nav.contact : 'Liên hệ' %></a>
-        <span class="lang-switcher">
+      
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-menu">
+          <% if (typeof visibleMenus !== 'undefined' && visibleMenus.length > 0) { %>
+            <% visibleMenus.forEach(menu => { %>
+              <%
+                // Xác định tên menu theo ngôn ngữ
+                const menuName = (typeof lang !== 'undefined' && lang === 'en' && menu.name_en) 
+                  ? menu.name_en 
+                  : menu.name_vi;
+                // Xác định URL
+                const menuUrl = menu.url || menu.slug;
+                // Kiểm tra có children không (cho post_list type)
+                const hasChildren = menu.type === 'post_list' && menu.children && menu.children.length > 0;
+              %>
+              <% if (hasChildren) { %>
+                <!-- Menu có dropdown -->
+                <li class="nav-item has-dropdown">
+                  <a href="javascript:void(0)" class="nav-link">
+                    <%= menuName %>
+                    <span class="dropdown-arrow">▼</span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <% menu.children.forEach(child => { %>
+                      <%
+                        // Tên bài viết theo ngôn ngữ
+                        const childTitle = (typeof lang !== 'undefined' && lang === 'en' && child.title_en) 
+                          ? child.title_en 
+                          : child.title;
+                      %>
+                      <li>
+                        <a href="/posts/<%= child.slug %>" class="dropdown-item">
+                          <span class="dropdown-icon">›</span>
+                          <%= childTitle %>
+                        </a>
+                      </li>
+                    <% }) %>
+                  </ul>
+                </li>
+              <% } else { %>
+                <!-- Menu bình thường -->
+                <li class="nav-item">
+                  <a href="<%= menuUrl %>" class="nav-link"><%= menuName %></a>
+                </li>
+              <% } %>
+            <% }) %>
+          <% } else { %>
+            <!-- Fallback nếu chưa có menu từ DB -->
+            <li class="nav-item"><a href="/" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.home : 'Trang chủ' %></a></li>
+            <li class="nav-item"><a href="/posts" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.posts : 'Bài viết' %></a></li>
+            <li class="nav-item"><a href="/gallery" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.gallery : 'Thư viện ảnh' %></a></li>
+            <li class="nav-item"><a href="/documents" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.documents : 'Tài liệu' %></a></li>
+            <li class="nav-item"><a href="/contact" class="nav-link"><%= typeof t !== 'undefined' ? t.nav.contact : 'Liên hệ' %></a></li>
+          <% } %>
+        </ul>
+        
+        <div class="lang-switcher">
           <a href="/lang/vi" class="<%= (typeof lang !== 'undefined' && lang === 'vi') ? 'active' : '' %>">🇻🇳 VI</a>
           <a href="/lang/en" class="<%= (typeof lang !== 'undefined' && lang === 'en') ? 'active' : '' %>">🇺🇸 EN</a>
-        </span>
+        </div>
       </nav>
+      
+      <!-- Mobile menu toggle -->
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+        <span class="hamburger-icon"></span>
+      </button>
     </div>
   </header>
   <main class="main-content">

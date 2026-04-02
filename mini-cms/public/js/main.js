@@ -47,4 +47,47 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // Mobile dropdown toggle - Updated for new structure
+  const dropdownItems = document.querySelectorAll('.nav-item.has-dropdown');
+  dropdownItems.forEach(function(item) {
+    const link = item.querySelector('.nav-link');
+    if (link) {
+      link.addEventListener('click', function(e) {
+        // Chỉ toggle trên mobile
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          // Đóng các dropdown khác
+          dropdownItems.forEach(function(other) {
+            if (other !== item) {
+              other.classList.remove('mobile-open');
+            }
+          });
+          item.classList.toggle('mobile-open');
+        }
+      });
+    }
+  });
+});
+
+/**
+ * Toggle mobile menu
+ */
+function toggleMobileMenu() {
+  const nav = document.querySelector('.main-nav');
+  if (nav) {
+    nav.classList.toggle('mobile-open');
+  }
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('.main-nav');
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  
+  if (nav && nav.classList.contains('mobile-open')) {
+    if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+      nav.classList.remove('mobile-open');
+    }
+  }
 });

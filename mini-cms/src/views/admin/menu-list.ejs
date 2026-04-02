@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <% const activePage = 'menus'; %>
+  <div class="admin-layout">
+    <%- include('../partials/admin-sidebar', { activePage }) %>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <a href="/admin/menus/create" class="btn btn-primary">+ Tạo menu mới</a>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <% if (menus && menus.length > 0) { %>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">Thứ tự</th>
+                <th>Tên (VI)</th>
+                <th>Tên (EN)</th>
+                <th>Slug</th>
+                <th>Loại</th>
+                <th>Bài viết gán</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="menu-list">
+              <% menus.forEach(menu => { %>
+                <tr data-id="<%= menu.id %>">
+                  <td class="sort-handle" style="cursor: move; text-align: center;">
+                    <span class="drag-icon">☰</span>
+                    <span class="sort-order"><%= menu.sort_order %></span>
+                  </td>
+                  <td>
+                    <strong><%= menu.name_vi %></strong>
+                    <% if (menu.type === 'system') { %>
+                      <span class="badge badge-system">Hệ thống</span>
+                    <% } %>
+                  </td>
+                  <td><%= menu.name_en || '-' %></td>
+                  <td><code><%= menu.slug %></code></td>
+                  <td>
+                    <% if (menu.type === 'system') { %>
+                      <span class="badge badge-info">System</span>
+                    <% } else if (menu.type === 'single_post') { %>
+                      <span class="badge badge-warning">Bài viết</span>
+                    <% } else if (menu.type === 'post_list') { %>
+                      <span class="badge badge-success">Dropdown</span>
+                    <% } else { %>
+                      <span class="badge">Custom</span>
+                    <% } %>
+                  </td>
+                  <td>
+                    <% if (menu.type === 'post_list' && menu.children_count > 0) { %>
+                      <small><strong><%= menu.children_count %></strong> bài viết</small>
+                    <% } else if (menu.linked_post_title) { %>
+                      <small><%= menu.linked_post_title.substring(0, 30) %><%= menu.linked_post_title.length > 30 ? '...' : '' %></small>
+                    <% } else { %>
+                      -
+                    <% } %>
+                  </td>
+                  <td>
+                    <% if (menu.is_visible) { %>
+                      <span class="badge badge-read">Hiển thị</span>
+                    <% } else { %>
+                      <span class="badge badge-unread">Ẩn</span>
+                    <% } %>
+                  </td>
+                  <td class="actions">
+                    <a href="/admin/menus/<%= menu.id %>/edit" class="btn btn-small">Sửa</a>
+                    
+                    <form action="/admin/menus/<%= menu.id %>/toggle-visibility" method="POST" style="display: inline;">
+                      <button type="submit" class="btn btn-small <%= menu.is_visible ? 'btn-warning' : 'btn-success' %>">
+                        <%= menu.is_visible ? 'Ẩn' : 'Hiện' %>
+                      </button>
+                    </form>
+                    
+                    <% if (menu.type !== 'system') { %>
+                      <form action="/admin/menus/<%= menu.id %>/delete" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc muốn xóa menu này?');">
+                        <button type="submit" class="btn btn-small btn-danger">Xóa</button>
+                      </form>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          
+          <div class="menu-help" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            <h4 style="margin-bottom: 10px;">Hướng dẫn:</h4>
+            <ul style="margin-left: 20px; color: #666;">
+              <li><strong>System:</strong> Menu hệ thống, không thể xóa nhưng có thể ẩn/hiện</li>
+              <li><strong>Bài viết:</strong> Menu gắn với 1 bài viết cụ thể, khi click sẽ hiển thị bài viết đó</li>
+              <li><strong>Dropdown:</strong> Menu chứa nhiều bài viết, hover sẽ hiện dropdown danh sách bài viết con</li>
+              <li><strong>Custom:</strong> Menu tùy chỉnh với đường dẫn tự do</li>
+            </ul>
+          </div>
+        <% } else { %>
+          <div class="empty-state">
+            <p>Chưa có menu nào.</p>
+            <a href="/admin/menus/create" class="btn btn-primary">+ Tạo menu đầu tiên</a>
+          </div>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+
+<%
+  // Chọn nội dung theo ngôn ngữ
+  let displayTitle, displayExcerpt, displayContent;
+  
+  if (post) {
+    displayTitle = (lang === 'en' && post.title_en) ? post.title_en : post.title;
+    displayExcerpt = (lang === 'en' && post.excerpt_en) ? post.excerpt_en : post.excerpt;
+    displayContent = (lang === 'en' && post.content_en) ? post.content_en : post.content;
+  } else {
+    displayTitle = (lang === 'en' && menu.name_en) ? menu.name_en : menu.name_vi;
+  }
+  
+  const dateLocale = lang === 'en' ? 'en-US' : 'vi-VN';
+%>
+
+<% if (post) { %>
+  <!-- Render bài viết đã gán -->
+  <article class="post-detail menu-page">
+    <header class="post-header">
+      <h1><%= displayTitle %></h1>
+      <% if (post.created_at) { %>
+        <p class="post-meta">
+          <%= t.posts.published_on %> <%= new Date(post.created_at).toLocaleDateString(dateLocale) %>
+        </p>
+      <% } %>
+    </header>
+
+    <% if (post.thumbnail) { %>
+      <img src="<%= post.thumbnail %>" alt="<%= displayTitle %>" class="post-featured-image">
+    <% } %>
+
+    <% if (displayExcerpt) { %>
+      <p class="post-excerpt"><%= displayExcerpt %></p>
+    <% } %>
+
+    <div class="post-content">
+      <%- displayContent ? displayContent.replace(/\n/g, '<br>') : '' %>
+    </div>
+  </article>
+<% } else { %>
+  <!-- Menu không có bài viết gán -->
+  <div class="menu-page-empty">
+    <h1><%= displayTitle %></h1>
+    <p class="empty-state"><%= lang === 'en' ? 'Content is being updated...' : 'Nội dung đang được cập nhật...' %></p>
+    <a href="/" class="btn"><%= t.common.back_home %></a>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>

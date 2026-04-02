@@ -139,6 +139,26 @@
     "gallery_accepted": "Chỉ chấp nhận: JPG, JPEG, PNG, WEBP. Tối đa 5MB/ảnh. Tối đa 20 ảnh/lần.",
     "image_list": "Danh sách ảnh",
     "total_images": "Tổng",
-    "images": "ảnh"
+    "images": "ảnh",
+    
+    "menu_management": "Quản lý Menu",
+    "create_menu": "Tạo menu mới",
+    "edit_menu": "Sửa menu",
+    "menu_name_vi": "Tên menu (Tiếng Việt)",
+    "menu_name_en": "Tên menu (English)",
+    "menu_slug": "Đường dẫn (Slug)",
+    "menu_type": "Loại menu",
+    "menu_type_system": "Menu hệ thống",
+    "menu_type_single_post": "Liên kết bài viết",
+    "menu_type_custom": "Tùy chỉnh",
+    "menu_linked_post": "Bài viết liên kết",
+    "menu_select_post": "Chọn bài viết",
+    "menu_sort_order": "Thứ tự sắp xếp",
+    "menu_visible": "Hiển thị",
+    "menu_hidden": "Ẩn",
+    "menu_show": "Hiện",
+    "menu_hide": "Ẩn",
+    "menu_system_warning": "Menu hệ thống không thể xóa hoặc thay đổi loại/slug.",
+    "menu_no_content": "Trang này chưa có nội dung."
   }
 }

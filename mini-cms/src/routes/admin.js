@@ -15,6 +15,7 @@ const PostController = require('../controllers/postController');
 const DocumentController = require('../controllers/documentController');
 const GalleryController = require('../controllers/galleryController');
 const ContactController = require('../controllers/contactController');
+const MenuController = require('../controllers/menuController');
 
 // ============================================
 // AUTH ROUTES (không cần đăng nhập)
@@ -54,5 +55,15 @@ router.post('/gallery/:id/delete', GalleryController.destroy);
 router.get('/contacts', ContactController.adminIndex);
 router.get('/contacts/:id', ContactController.adminShow);
 router.post('/contacts/:id/delete', ContactController.destroy);
+
+// Menus
+router.get('/menus', MenuController.adminIndex);
+router.get('/menus/create', MenuController.create);
+router.post('/menus/create', MenuController.store);
+router.get('/menus/:id/edit', MenuController.edit);
+router.post('/menus/:id/edit', MenuController.update);
+router.post('/menus/:id/delete', MenuController.destroy);
+router.post('/menus/:id/toggle-visibility', MenuController.toggleVisibility);
+router.post('/menus/reorder', MenuController.reorder);
 
 module.exports = router;
