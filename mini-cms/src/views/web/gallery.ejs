@@ -3,27 +3,41 @@
 <section class="gallery-hero">
   <h1><%= t.gallery.title %></h1>
   <p><%= t.gallery.description %></p>
+  <% if (images && images.length > 0) { %>
+  <div class="gallery-stats">
+    <div class="gallery-stat">
+      <span class="gallery-stat-number"><%= images.length %></span>
+      <span class="gallery-stat-label">Hình ảnh</span>
+    </div>
+  </div>
+  <% } %>
 </section>
 
 <% if (images && images.length > 0) { %>
   <div class="gallery-masonry">
     <% images.forEach((image, index) => { %>
-      <div class="gallery-item" onclick="openLightbox('<%= image.filepath %>', '<%= image.alt_text || image.filename %>')">
+      <div class="gallery-item" data-index="<%= index %>" onclick="openLightbox(<%= index %>)">
         <img 
           src="<%= image.filepath %>" 
           alt="<%= image.alt_text || image.filename %>"
           loading="lazy"
         >
         <div class="gallery-overlay">
-          <span class="gallery-zoom-icon">🔍</span>
+          <span class="gallery-zoom-icon"></span>
+          <span class="gallery-caption"><%= image.alt_text || image.filename %></span>
         </div>
       </div>
     <% }) %>
   </div>
   
-  <p class="text-center mt-2">
-    <a href="/" class="btn"><%= t.common.back_home %></a>
-  </p>
+  <div class="gallery-footer">
+    <a href="/" class="btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      <%= t.common.back_home %>
+    </a>
+  </div>
 <% } else { %>
   <div class="empty-state">
     <p><%= t.gallery.empty %></p>
@@ -32,23 +46,38 @@
 <% } %>
 
 <!-- Lightbox Modal -->
-<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+<div id="lightbox" class="lightbox" onclick="handleLightboxClick(event)">
   <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <span class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</span>
   <img id="lightbox-img" src="" alt="">
+  <span class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</span>
   <p id="lightbox-caption"></p>
 </div>
 
 <script>
-function openLightbox(src, alt) {
+const galleryImages = [
+  <% images.forEach((image, index) => { %>
+    {
+      src: '<%= image.filepath %>',
+      alt: '<%= (image.alt_text || image.filename).replace(/'/g, "\\'") %>'
+    }<%= index < images.length - 1 ? ',' : '' %>
+  <% }) %>
+];
+
+let currentIndex = 0;
+
+function openLightbox(index) {
+  currentIndex = index;
   const lightbox = document.getElementById('lightbox');
   const img = document.getElementById('lightbox-img');
   const caption = document.getElementById('lightbox-caption');
   
-  img.src = src;
-  img.alt = alt;
-  caption.textContent = alt;
+  img.src = galleryImages[index].src;
+  img.alt = galleryImages[index].alt;
+  caption.textContent = galleryImages[index].alt;
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
+  updateNavigation();
 }
 
 function closeLightbox() {
@@ -57,9 +86,60 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
-// Close on Escape key
+function navigateLightbox(direction) {
+  event.stopPropagation();
+  currentIndex += direction;
+  
+  if (currentIndex < 0) currentIndex = galleryImages.length - 1;
+  if (currentIndex >= galleryImages.length) currentIndex = 0;
+  
+  const img = document.getElementById('lightbox-img');
+  const caption = document.getElementById('lightbox-caption');
+  
+  // Fade animation
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.95)';
+  
+  setTimeout(() => {
+    img.src = galleryImages[currentIndex].src;
+    img.alt = galleryImages[currentIndex].alt;
+    caption.textContent = galleryImages[currentIndex].alt;
+    img.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  }, 150);
+  
+  updateNavigation();
+}
+
+function updateNavigation() {
+  const prevBtn = document.querySelector('.lightbox-prev');
+  const nextBtn = document.querySelector('.lightbox-next');
+  
+  // Show/hide if needed (or always show for looping)
+  prevBtn.style.display = galleryImages.length > 1 ? 'flex' : 'none';
+  nextBtn.style.display = galleryImages.length > 1 ? 'flex' : 'none';
+}
+
+function handleLightboxClick(event) {
+  if (event.target.id === 'lightbox') {
+    closeLightbox();
+  }
+}
+
+// Keyboard navigation
 document.addEventListener('keydown', (e) => {
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox.classList.contains('active')) return;
+  
   if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navigateLightbox(-1);
+  if (e.key === 'ArrowRight') navigateLightbox(1);
+});
+
+// Add smooth img transition
+document.addEventListener('DOMContentLoaded', () => {
+  const lightboxImg = document.getElementById('lightbox-img');
+  lightboxImg.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
 });
 </script>
 
