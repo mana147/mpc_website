@@ -1,18 +1,24 @@
+/**
+ * Sidebar Component Styles
+ * Imports shared foundation from variables.css
+ */
+@import url('../css/variables.css');
+
 .sidebar-menu {
-    background: white;
+    background: var(--color-bg-primary);
     padding: 0;
     border-radius: 0;
-    width: 100%;
+    width: var(--sidebar-width-mobile);
     position: sticky;
     top: 0;
     align-self: flex-start;
 }
 
 .sidebar-menu-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333333;
-    padding: 30px 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    padding: var(--spacing-xl) 0;
     margin: 0;
     
     text-transform: uppercase;
@@ -74,4 +80,117 @@
 
 .sidebar-menu-list li:hover::before {
     background-color: #e74c3c;
+}
+
+/* ========================================
+   RESPONSIVE STYLES
+======================================== */
+
+/* Tablet (960px and below) */
+@media (max-width: 959px) {
+    .sidebar-menu {
+        position: relative;
+        top: auto;
+        margin-bottom: 30px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .sidebar-menu-title {
+        font-size: 18px;
+        padding: 20px 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #f9f9f9;
+        border-bottom: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .sidebar-menu-title::after {
+        content: '▼';
+        font-size: 12px;
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar-menu.collapsed .sidebar-menu-title::after {
+        transform: rotate(-90deg);
+    }
+    
+    .sidebar-menu-list {
+        display: block;
+        max-height: 500px;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+    
+    .sidebar-menu.collapsed .sidebar-menu-list {
+        max-height: 0;
+    }
+    
+    .sidebar-menu-list li a {
+        padding: 16px 25px;
+        font-size: 15px;
+    }
+    
+    .sidebar-menu-list li::before {
+        height: 26px;
+    }
+}
+
+/* Mobile (640px and below) */
+@media (max-width: 639px) {
+    .sidebar-menu {
+        margin-bottom: 20px;
+        border-radius: 6px;
+    }
+    
+    .sidebar-menu-title {
+        font-size: 16px;
+        padding: 15px 14px;
+        letter-spacing: 1px;
+    }
+    
+    .sidebar-menu-list li a {
+        padding: 14px 20px;
+        font-size: 14px;
+        /* Touch-friendly tap area */
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .sidebar-menu-list li::before {
+        height: 22px;
+        width: 2px;
+    }
+    
+    /* Auto-collapsed on mobile */
+    .sidebar-menu:not(.expanded) .sidebar-menu-list {
+        max-height: 0;
+    }
+    
+    .sidebar-menu:not(.expanded) .sidebar-menu-title::after {
+        transform: rotate(-90deg);
+    }
+    
+    .sidebar-menu.expanded .sidebar-menu-list {
+        max-height: 500px;
+    }
+}
+
+/* Small Mobile (480px and below) */
+@media (max-width: 479px) {
+    .sidebar-menu-title {
+        font-size: 14px;
+        padding: 12px 0;
+    }
+    
+    .sidebar-menu-list li a {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
 }

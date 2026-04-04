@@ -1,6 +1,12 @@
+/**
+ * Footer Component Styles
+ * Imports shared foundation from variables.css
+ */
+@import url('../css/variables.css');
+
 .mpc-footer {
-    background: #2c3e7d;
-    color: white;
+    background: var(--color-bg-dark);
+    color: var(--color-white);
     margin-top: 0;
 }
 
@@ -9,12 +15,12 @@
 }
 
 .footer-container {
-    max-width: 1400px;
+    max-width: var(--container-xxl);
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 0 var(--container-padding-lg);
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 40px;
+    gap: var(--grid-gap-xl);
 }
 
 .footer-column {

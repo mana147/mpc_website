@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
+/**
+ * Chi tiết Tuyển dụng (Job Detail) Page Styles
+ * Imports shared foundation from variables.css and common.css
+ */
+@import url('../../css/variables.css');
+@import url('../../css/common.css');
 
 /* custom css for recruitment detail */
 /* Custom Header for detail page (no hero banner) */

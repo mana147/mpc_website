@@ -1,3 +1,10 @@
+/**
+ * Trang chủ (Homepage) Page Styles
+ * Imports shared foundation from variables.css and common.css
+ */
+@import url('../../css/variables.css');
+@import url('../../css/common.css');
+
 html,
 body {
     overflow-x: hidden;
@@ -60,10 +67,10 @@ body {
 }
 
 .about-title {
-    font-size: 36px;
+    font-size: clamp(24px, 4vw, 36px);
     font-weight: bold;
     color: #333333;
-    line-height: 44px;
+    line-height: 1.2;
     text-transform: uppercase;
     letter-spacing: 0%;
     padding-top: 20px;
@@ -112,10 +119,10 @@ body {
 } */
 
 .section-title h2 {
-    font-size: 36px;
+    font-size: clamp(24px, 4vw, 36px);
     font-weight: bold;
     color: #333;
-    line-height: 44px;
+    line-height: 1.2;
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 0%;

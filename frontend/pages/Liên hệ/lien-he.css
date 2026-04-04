@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
-
-/* ====== Base Settings ====== */
-body {
-    font-family: 'Barlow', sans-serif;
-    background-color: #fff;
-}
+/**
+ * Liên hệ (Contact) Page Styles
+ * Imports shared foundation from variables.css and common.css
+ */
+@import url('../../css/variables.css');
+@import url('../../css/common.css');
 
 /* Banner Section (Shared with other pages or can be overridden here) */
 .page-banner {
@@ -112,5 +111,77 @@ body {
 
     .contact-info-list {
         max-width: 100% !important;
+    }
+}
+
+/* Tablet (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .page-banner {
+        height: 300px;
+    }
+    
+    .btn-send {
+        width: 140px;
+        padding: 10px 24px;
+    }
+}
+
+/* Mobile (640px - 767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+    .page-banner {
+        height: 250px;
+    }
+    
+    .section-title {
+        font-size: 22px !important;
+        margin-bottom: 24px !important;
+    }
+    
+    .contact-form .custom-input {
+        font-size: 14px;
+        padding-bottom: 12px;
+    }
+    
+    .btn-send {
+        width: 130px;
+        height: 42px;
+        font-size: 14px;
+    }
+}
+
+/* Small Mobile (0 - 639px) */
+@media (max-width: 639px) {
+    .page-banner {
+        height: 200px;
+    }
+    
+    .section-title {
+        font-size: clamp(18px, 5vw, 24px) !important;
+        margin-bottom: 20px !important;
+        line-height: 1.3;
+    }
+    
+    .contact-form .custom-input {
+        font-size: 14px;
+        padding-bottom: 10px;
+    }
+    
+    .form-group-textarea .custom-input {
+        min-height: 40px;
+    }
+    
+    .btn-send {
+        width: 100%;
+        height: 45px;
+        font-size: 15px;
+        justify-content: center;
+    }
+    
+    .contact-info-item {
+        font-size: 14px;
+    }
+    
+    .map-container iframe {
+        min-height: 250px;
     }
 }

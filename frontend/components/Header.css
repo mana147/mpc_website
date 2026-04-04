@@ -1,3 +1,9 @@
+/**
+ * Header Component Styles
+ * Imports shared foundation from variables.css
+ */
+@import url('../css/variables.css');
+
 .mpc-header {
     background: transparent;
     border-bottom: none;
@@ -6,7 +12,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: var(--z-header);
 }
 
 .mpc-header::after {

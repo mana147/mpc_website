@@ -1,3 +1,10 @@
+/**
+ * About MIPEC Page Styles
+ * Imports shared foundation from variables.css and common.css
+ */
+@import url('../../css/variables.css');
+@import url('../../css/common.css');
+
 /* Hero Section */
 .hero-section {
     position: relative;
@@ -44,8 +51,8 @@
 
 /* Title */
 .hero-title {
-    font-size: 60px;
-    line-height: 60px;
+    font-size: clamp(28px, 6vw, 60px);
+    line-height: 1.1;
     letter-spacing: 0.05em;
     /* 5% */
     text-transform: uppercase;
