@@ -1,5 +1,37 @@
 # Mini CMS - AI Coding Instructions
 
+## ⚠️ Database Operations (CRITICAL!)
+
+**Before ANY database operation, AI MUST ask for user confirmation and describe clearly:**
+
+1. **CREATE** (new table, new column, insert data):
+   - Describe exactly what will be created
+   - Show the SQL schema or data to be inserted
+   - Wait for user approval before executing
+
+2. **UPDATE** (modify schema, update data):
+   - Describe what will be changed
+   - Show before/after comparison
+   - Wait for user approval before executing
+
+3. **DELETE** (drop table, remove column, delete data):
+   - Clearly warn about data loss
+   - List what will be deleted
+   - Wait for user approval before executing
+
+**Example prompt to user:**
+```
+🗄️ DATABASE CHANGE REQUEST:
+- Action: CREATE TABLE `categories`
+- Columns: id, name, slug, description, created_at
+- Impact: New table will be added to database
+- Files affected: src/config/db.js
+
+Proceed with this change? (yes/no)
+```
+
+---
+
 ## Architecture Overview
 
 This is a Node.js/Express CMS with server-rendered EJS templates and SQLite database. The codebase follows a classic MVC pattern within `mini-cms/`:
@@ -85,3 +117,15 @@ const slug = makeUniqueSlug(slugify(title), (s) => PostModel.slugExists(s));
 - `mini-cms/app.js` - Entry point, middleware setup, flash message handling
 - `mini-cms/src/config/db.js` - Database init, schema definitions, default admin creation
 - `mini-cms/src/routes/admin.js` - All admin routes with auth middleware
+
+## After Major Changes (IMPORTANT!)
+
+When you complete any of the following tasks, **UPDATE `.github/SKILL_MAP.md`** accordingly:
+
+1. **New feature added** → Update "Feature → File Mapping" section
+2. **New database table** → Update "Database Schema" section  
+3. **New model/controller** → Update "Folder Structure" and "AI Agent Skills" sections
+4. **New route** → Update the corresponding feature's route list
+5. **New middleware** → Update "Folder Structure" section
+
+This ensures the SKILL_MAP stays in sync with the codebase for future AI sessions.
