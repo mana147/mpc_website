@@ -183,14 +183,6 @@ const MenuModel = {
   getNextSortOrder() {
     const result = db.prepare('SELECT MAX(sort_order) as maxOrder FROM menus').get();
     return (result.maxOrder || 0) + 1;
-  },
-
-  /**
-   * Kiểm tra xem có phải menu hệ thống không
-   */
-  isSystemMenu(id) {
-    const menu = this.findById(id);
-    return menu && menu.type === 'system';
   }
 };
 

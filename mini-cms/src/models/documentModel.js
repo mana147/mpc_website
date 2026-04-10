@@ -53,18 +53,6 @@ const DocumentModel = {
   },
 
   /**
-   * Cập nhật tài liệu
-   */
-  update(id, data) {
-    const stmt = db.prepare(`
-      UPDATE documents 
-      SET title = ?, description = ?
-      WHERE id = ?
-    `);
-    return stmt.run(data.title, data.description || '', id);
-  },
-
-  /**
    * Xóa tài liệu
    */
   delete(id) {
