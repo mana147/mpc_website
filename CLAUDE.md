@@ -7,7 +7,7 @@ Detailed reference (optional deep-dive): `.github/SKILL_MAP.md`. After any struc
 ## Repository Layout
 
 - **`mini-cms/`** — Node.js/Express CMS with EJS server-rendered views and SQLite. Main application.
-- **`view-html/`** — Static HTML/CSS/JS prototypes (e.g. `view-html/trang_chu/landing.html`) used as design references. No build step.
+- **`view-html/`** — Static HTML/CSS/JS prototypes (e.g. `view-html/trang_chu/landing.html`) used as design references for MPC Port website. No build step. Uses Bootstrap 5, Font Awesome, Barlow Condensed font, red/orange/navy color scheme.
 
 ## Commands
 
@@ -19,6 +19,10 @@ npm start          # Production start
 ```
 
 No test suite, no linter, no build step. Default admin: `admin` / `admin123` at `/admin/login`.
+
+### Dependencies
+
+`express`, `ejs`, `better-sqlite3`, `express-session`, `multer`, `bcrypt`, `dotenv`. Dev: `nodemon`.
 
 ---
 
@@ -34,58 +38,66 @@ app.js → middleware chain → routes/ → controllers/ → models/ → config/
 
 ### Middleware Order (load-bearing — do NOT reorder)
 
-`urlencoded → static → session → flash-clear → languageMiddleware → menuMiddleware → routes`
+`urlencoded → json → static → session → flash-clear → languageMiddleware → menuMiddleware → routes`
 
-### Route Mounting Order
+### Route Mounting Order (as in app.js)
 
 `/lang/*` → `/*` (public web) → `/admin/*` (protected by `requireAuth`) → `/auth/*`
 
 ### Folder Structure
 
 ```
-mini-cms/src/
-├── config/db.js              # DB init & schema (CREATE TABLE IF NOT EXISTS)
-├── controllers/              # Request handlers (public + admin* in same file)
-│   ├── adminController.js    # Dashboard
-│   ├── authController.js     # Login/logout
-│   ├── contactController.js  # Contact CRUD
-│   ├── documentController.js # Document CRUD
-│   ├── galleryController.js  # Gallery CRUD
-│   ├── menuController.js     # Menu CRUD + public page
-│   └── postController.js     # Post CRUD
-├── middlewares/
-│   ├── authMiddleware.js     # requireAuth, redirectIfAuth
-│   ├── languageMiddleware.js # i18n (lang, t, __)
-│   ├── menuMiddleware.js     # loadMenus → res.locals.visibleMenus
-│   └── uploadMiddleware.js   # Multer (uploadImage, uploadGallery, uploadPdf)
-├── models/                   # DB operations (SYNC — no async/await!)
-│   ├── contactModel.js       # contacts table
-│   ├── documentModel.js      # documents table
-│   ├── galleryModel.js       # gallery_images table
-│   ├── menuModel.js          # menus table
-│   ├── menuPostModel.js      # menu_posts junction table
-│   ├── postModel.js          # posts table
-│   └── userModel.js          # users table + auth
-├── routes/
-│   ├── admin.js              # Protected admin routes
-│   ├── auth.js               # Auth routes
-│   ├── language.js           # /lang/:lang switch
-│   └── web.js                # Public routes
-├── locales/
-│   ├── vi.json               # Vietnamese translations
-│   └── en.json               # English translations
-├── utils/slugify.js          # Vietnamese-aware slug generator
-└── views/
-    ├── admin/                # Admin panel views
-    ├── web/                  # Public views
-    └── partials/             # header.ejs, footer.ejs
+mini-cms/
+├── app.js                        # Entry point, middleware chain, route mounting, error handlers
+├── database/cms.sqlite           # SQLite database file (auto-created)
+├── public/
+│   ├── css/style.css             # Single CSS file for ALL public + admin pages (~1955 lines)
+│   ├── css/pages/                # Empty — reserved for page-specific CSS
+│   ├── js/main.js                # Auto-hide alerts, confirm delete, thumbnail preview, mobile menu
+│   └── uploads/                  # Runtime uploads (images/, pdfs/)
+└── src/
+    ├── config/db.js              # DB init & schema (CREATE TABLE IF NOT EXISTS), seed data
+    ├── controllers/              # Request handlers (public + admin* in same file)
+    │   ├── adminController.js    # Dashboard (stats: posts, documents)
+    │   ├── authController.js     # Login/logout (bcrypt)
+    │   ├── contactController.js  # Contact form + admin CRUD
+    │   ├── documentController.js # Document upload/download + admin (no edit)
+    │   ├── galleryController.js  # Gallery view + admin upload/delete (no edit)
+    │   ├── menuController.js     # Menu CRUD + visibility toggle + reorder + public page
+    │   └── postController.js     # Post full CRUD (bilingual)
+    ├── middlewares/
+    │   ├── authMiddleware.js     # requireAuth, redirectIfAuth
+    │   ├── languageMiddleware.js # i18n (lang, t, __)
+    │   ├── menuMiddleware.js     # loadMenus → res.locals.visibleMenus
+    │   └── uploadMiddleware.js   # Multer (uploadImage, uploadGallery, uploadPdf)
+    ├── models/                   # DB operations (SYNC — no async/await!)
+    │   ├── contactModel.js       # contacts table (has countUnread — not yet wired to dashboard)
+    │   ├── documentModel.js      # documents table (read-only after create, no update)
+    │   ├── galleryModel.js       # gallery_images table (no update/edit for alt_text)
+    │   ├── menuModel.js          # menus table
+    │   ├── menuPostModel.js      # menu_posts junction (3 methods: getPostIdsByMenuId, assignPostsToMenu, removeAllPostsFromMenu)
+    │   ├── postModel.js          # posts table
+    │   └── userModel.js          # users table + auth (has changePassword — not yet wired to admin)
+    ├── routes/
+    │   ├── admin.js              # Protected admin routes (login/logout before requireAuth, rest after)
+    │   ├── auth.js               # Simple redirects: /auth/login → /admin/login
+    │   ├── language.js           # GET /lang/:lang — switch language via session
+    │   └── web.js                # Public routes (home has inline handler, not in controller)
+    ├── locales/
+    │   ├── vi.json               # Vietnamese translations (~40 admin keys defined but UNUSED in views)
+    │   └── en.json               # English translations (~40 admin keys defined but UNUSED in views)
+    ├── utils/slugify.js          # Vietnamese-aware slug generator
+    └── views/
+        ├── admin/                # 12 EJS templates (all hardcoded Vietnamese, no i18n)
+        ├── web/                  # 9 EJS templates (i18n enabled, except 404.ejs and error.ejs)
+        └── partials/             # header.ejs (dynamic menu + lang switcher), footer.ejs, admin-sidebar.ejs
 ```
 
 ---
 
 ## Database Schema
 
-All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE IF NOT EXISTS`. No migrations.
+All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE IF NOT EXISTS`. No migrations. `journal_mode = WAL` is set.
 
 | Table | Key Columns | Purpose |
 |-------|-------------|---------|
@@ -95,16 +107,21 @@ All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE I
 | `gallery_images` | id, filename, filepath, alt_text | Image gallery |
 | `contacts` | id, full_name, email, subject, phone, message, is_read | Contact submissions |
 | `menus` | id, name_vi, name_en, slug, type, linked_post_id, is_visible, sort_order | Navigation items |
-| `menu_posts` | id, menu_id, post_id, sort_order | Junction for post_list menus |
+| `menu_posts` | id, menu_id, post_id, sort_order | Junction for post_list menus (UNIQUE menu_id+post_id) |
 
 ### Menu Types
 
 | Type | Behavior | URL |
 |------|----------|-----|
-| `system` | Fixed pages | Uses slug directly |
+| `system` | Fixed pages (cannot delete/change type/slug) | Uses slug directly |
 | `single_post` | Links to one post | `/posts/:slug` |
 | `post_list` | Dropdown menu | `#` (hover for children via `menu_posts`) |
 | `custom` | External link | Custom URL |
+
+### Seed Data (auto-created on first run)
+
+- Default admin: `admin` / `admin123` (or from env `ADMIN_USERNAME`/`ADMIN_PASSWORD`)
+- 5 system menus: Home (`/`), Posts (`/posts`), Gallery (`/gallery`), Documents (`/documents`), Contact (`/contact`)
 
 ---
 
@@ -112,13 +129,14 @@ All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE I
 
 | Feature | Model | Controller | Public Routes | Admin Routes |
 |---------|-------|------------|---------------|--------------|
-| Posts | postModel | postController | `GET /posts`, `GET /posts/:slug` | `/admin/posts/*` |
-| Gallery | galleryModel | galleryController | `GET /gallery` | `/admin/gallery/*` |
-| Documents | documentModel | documentController | `GET /documents`, `GET /documents/:id/download` | `/admin/documents/*` |
-| Contact | contactModel | contactController | `GET /contact`, `POST /contact` | `/admin/contacts/*` |
-| Menus | menuModel, menuPostModel | menuController | `GET /menu/:slug` | `/admin/menus/*` |
+| Posts | postModel | postController | `GET /posts`, `GET /posts/:slug` | Full CRUD `/admin/posts/*` |
+| Gallery | galleryModel | galleryController | `GET /gallery` | Upload + delete only `/admin/gallery/*` |
+| Documents | documentModel | documentController | `GET /documents`, `GET /documents/:id/download` | Create + delete only `/admin/documents/*` |
+| Contact | contactModel | contactController | `GET /contact`, `POST /contact` | View + delete `/admin/contacts/*` |
+| Menus | menuModel, menuPostModel | menuController | `GET /menu/:slug` | Full CRUD + reorder + toggle `/admin/menus/*` |
 | Auth | userModel | authController | — | `GET/POST /admin/login`, `POST /admin/logout` |
 | i18n | — | — | `GET /lang/:lang` | — |
+| Home | (inline in web.js) | — | `GET /` (latest 6 posts + 5 docs) | — |
 
 ---
 
@@ -151,8 +169,9 @@ module.exports = Model;
 
 ### Auth
 
-- **Session-based** (`express-session`). Do NOT change to JWT.
+- **Session-based** (`express-session`, 24h expiry). Do NOT change to JWT.
 - Protected by `requireAuth` middleware in `src/routes/admin.js`.
+- Password hashing: `bcrypt` with salt rounds 10, `compareSync` for verification.
 
 ### Flash Messages
 
@@ -164,10 +183,11 @@ return res.redirect('/path');
 
 ### File Uploads (Multer)
 
-- `uploadImage` — single, 5MB, jpg/png/webp → `public/uploads/images/`
-- `uploadGallery` — multiple, 5MB each → `public/uploads/images/`
-- `uploadPdf` — single, 20MB → `public/uploads/pdfs/`
+- `uploadImage` — single, field `thumbnail`, 5MB, jpg/png/webp → `public/uploads/images/`
+- `uploadGallery` — multiple, field `images`, max 20 files, 5MB each → `public/uploads/images/`
+- `uploadPdf` — single, field `file`, 20MB → `public/uploads/pdfs/`
 - On update/delete: **remove old file from disk**.
+- Errors are caught by `handleUploadError` wrapper → sets `req.uploadError` for controllers.
 
 ### Slugs
 
@@ -188,6 +208,53 @@ const slug = makeUniqueSlug(slugify(title), (s) => Model.slugExists(s, excludeId
 ```
 user, success, error, lang, t, __(), visibleMenus
 ```
+
+---
+
+## Known Issues & TODOs
+
+### CRITICAL
+
+| # | Issue | Detail | File |
+|---|-------|--------|------|
+| 1 | **`PRAGMA foreign_keys = ON` is never set** | All `ON DELETE CASCADE` and `ON DELETE SET NULL` constraints are **not enforced**. Deleting a post leaves orphaned `menu_posts` rows and stale `menus.linked_post_id`. | `src/config/db.js` |
+
+### MODERATE
+
+| # | Issue | Detail | File |
+|---|-------|--------|------|
+| 2 | **Orphaned files on DB error** | If model `.create()`/`.update()` throws after file upload, the file is not cleaned up. In `postController.update`, old file is deleted before DB write — DB failure leaves broken reference. | `postController.js`, `documentController.js`, `galleryController.js` |
+| 3 | **No edit for Documents** | Can only create + delete. No edit route, controller, or view. | `documentController.js`, `admin.js` |
+| 4 | **No edit for Gallery** | Cannot update `alt_text` after upload. No update model method, route, or view. | `galleryController.js`, `galleryModel.js` |
+| 5 | **Dashboard missing metrics** | No stats for gallery images or contacts. `ContactModel.countUnread()` exists but unused. | `adminController.js` |
+
+### MINOR
+
+| # | Issue | Detail | File |
+|---|-------|--------|------|
+| 6 | **`showMenuPage` ignores i18n for title** | Always uses `menu.name_vi` regardless of language. | `menuController.js` |
+| 7 | **`slugExists` inconsistent return** | PostModel returns row object; MenuModel returns boolean. Both work but inconsistent. | `postModel.js`, `menuModel.js` |
+| 8 | **Menu `reorder` lacks input validation** | Only checks `Array.isArray(orders)`, not integer types. | `menuController.js` |
+| 9 | **Gallery upload always sets empty `alt_text`** | No form field for alt text during upload. | `galleryController.js` |
+| 10 | **404.ejs, error.ejs hardcode Vietnamese** | Locale keys exist (`t.common.not_found` etc.) but not used. | `views/web/404.ejs`, `views/web/error.ejs` |
+| 11 | **All admin views hardcode Vietnamese** | ~40 admin locale keys defined in both JSON files but completely unused. | All `views/admin/*.ejs` |
+| 12 | **`gallery.ejs` hardcodes "Hinh anh"** | Should use locale key. | `views/web/gallery.ejs` |
+| 13 | **`UserModel.changePassword` not wired** | Method exists but no route/view to change admin password. | `userModel.js` |
+| 14 | **`ContactModel.countUnread` not wired** | Method exists but not shown on dashboard or nav. | `contactModel.js` |
+
+### Prototype vs CMS Gap
+
+The `view-html/` prototype represents the target MPC Port website design. Current CMS has **not yet adopted** the prototype design:
+
+| Aspect | Prototype | CMS Current |
+|--------|-----------|-------------|
+| Branding | MPC Port logo, Barlow Condensed, red/orange/navy (`#DF1F28`, `#FCB248`, `#2c3e7d`) | Generic "Mini CMS", system fonts, purple/blue gradient |
+| Header | Transparent overlay on banner, centered nav, language pill | White sticky bar, left logo + right nav |
+| Footer | 4-column grid (about + menus + contact), navy, social icons | Single-line dark footer with copyright |
+| CSS framework | Bootstrap 5 + Font Awesome + Bootstrap Icons | No framework, custom CSS only |
+| Missing pages | About, Infrastructure, Services (6 sub-items), Recruitment | Not implemented |
+| Missing sections | Hero banner, quick nav (EPort/Ship Schedule/Container/Invoice), Vietnam map with port specs, facility tabs, services carousel, image library slider | Not implemented |
+| Assets | Logo, custom fonts, 18 icons, 20+ images | No branded assets in `public/` |
 
 ---
 
@@ -226,6 +293,7 @@ This applies to schema edits in `db.js` and destructive data operations. Do NOT 
 | New `res.locals` variable exposed globally | Available in Views section |
 | New locale keys pattern or i18n behavior change | i18n section |
 | New util file | Folder Structure |
+| Bug fix or feature completion from Known Issues | Known Issues & TODOs section |
 
 ### How to update
 
