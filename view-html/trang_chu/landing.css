@@ -96,21 +96,20 @@ body {
 .about-label {
     font-size: 20px;
     color: #828282;
-    /* font-weight: 500; */
-    font-style: medium;
     line-height: 24px;
-    letter-spacing: 0%;
     height: 24px;
     padding-top: 12px;
 }
 
-.about-title {
+.about-title,
+.title2 {
     font-size: 36px;
-    /* font-weight: bold; */
-    /* color: #333333; */
     line-height: 44px;
+    color: #333333;
+}
+
+.about-title {
     text-transform: uppercase;
-    letter-spacing: 0%;
     padding-top: 20px;
 }
 
@@ -118,25 +117,26 @@ body {
     padding-top: 10px;
 }
 
-.about-text {
+.about-text,
+.description {
     font-size: 20px;
     font-weight: 400;
     line-height: 26px;
-    letter-spacing: 0%;
     color: #333333;
-    text-align: justify;
-    /* margin-top: 0; */
-    /* margin-bottom: 30px; */
 }
 
-.read-more-btn {
+.about-text {
+    text-align: justify;
+}
+
+/* Shared outline button */
+.btn-outline {
     background: transparent;
     border: 2px solid #e74c3c;
     color: #e74c3c;
     padding: 10px 25px;
     font-size: 16px;
     font-weight: 500;
-    /* border-radius: 20px; */
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
@@ -145,15 +145,22 @@ body {
     text-decoration: none;
 }
 
-.read-more-btn img {
+.btn-outline img {
     width: 41px;
     height: 41px;
 }
 
-.read-more-btn:hover {
-    /* background: #e74c3c; */
-    /* color: white;/ */
+.btn-outline:hover {
     text-decoration: underline;
+}
+
+.btn-outline--white {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.btn-outline--mt {
+    margin-top: 50px;
 }
 
 /* Port Image Section */
@@ -217,14 +224,6 @@ body {
 }
 
 
-.title2 {
-    /* font-weight: 700; */
-    font-size: 36px;
-    line-height: 44px;
-    letter-spacing: 0%;
-    color: #333333;
-}
-
 .map-wrapper {
     padding-left: 0;
     margin-left: calc(-50vw + 50% - 15px);
@@ -274,40 +273,11 @@ body {
 }
 
 .description {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 26px;
-    letter-spacing: 0%;
-    color: #333333;
     padding-top: 50px;
     width: 557px;
     height: 139px;
 }
 
-.btn-map {
-    background: transparent;
-    border: 2px solid #e74c3c;
-    color: #e74c3c;
-    padding: 10px 25px;
-    font-size: 16px;
-    margin-top: 50px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-}
-
-.btn-map img {
-    width: 41px;
-    height: 41px;
-}
-
-.btn-map:hover {
-    text-decoration: underline;
-}
 
 /* FACILITY */
 
@@ -329,30 +299,6 @@ body {
     padding-right: 15px;
 }
 
-.read-more-btn-facility {
-    background: transparent;
-    border: 2px solid #ffffff;
-    color: hsl(0, 0%, 100%);
-    padding: 10px 25px;
-    font-size: 16px;
-    font-weight: 500;
-    /* border-radius: 20px; */
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-}
-
-.read-more-btn-facility img {
-    width: 41px;
-    height: 41px;
-}
-
-.read-more-btn-facility:hover {
-    text-decoration: underline;
-}
 
 /* Tab item */
 .tab-item {
@@ -362,7 +308,6 @@ body {
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
-    letter-spacing: 0%;
     color: #FFFFFF;
     width: 160px;
 }
@@ -496,6 +441,7 @@ body {
 
 .slider {
     overflow: visible;
+    position: relative;
 }
 
 .slides {
@@ -553,29 +499,25 @@ body {
 }
 
 .service-title {
-    font-family: 'Barlow Condensed', sans-serif;
     font-weight: 500;
     font-size: 20px;
     line-height: 28px;
-    letter-spacing: 0%;
     color: #333333;
     margin-bottom: 12px;
 }
 
 .service-text {
-    font-family: 'Barlow Condensed', sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: 0%;
     color: #828282;
     margin-bottom: 25px;
 }
 
 .read-more {
     font-size: 14px;
-    color: #4f4f4f;
-    text-decoration: underline;
+    color:#e74c3c;
+    text-decoration: none;
     font-weight: 600;
     transition: .3s;
 }
@@ -705,11 +647,6 @@ body {
     height: 242px;
 }
 
-/* Slider */
-.slider {
-    position: relative;
-}
-
 .next-btn {
     position: absolute;
     top: 50%;
@@ -727,12 +664,10 @@ body {
 
 /* News and Event */
 .news-title {
-    /* font-weight: 700; */
     margin-bottom: 5px;
 }
 
 .more-link {
-    /* font-size: 13px; */
     color: red;
     text-decoration: none;
 }
@@ -855,12 +790,13 @@ body {
         line-height: 64px;
     }
 
-    .about-text {
+    .about-text,
+    .description {
         font-size: 22px;
         line-height: 34px;
     }
 
-    .read-more-btn {
+    .btn-outline {
         font-size: 18px;
     }
 
@@ -890,8 +826,6 @@ body {
 
     .description {
         width: 760px;
-        font-size: 22px;
-        line-height: 34px;
     }
 
     .facility-left {
@@ -919,7 +853,7 @@ body {
         margin-bottom: 4px;
     }
 
-    .read-more-btn-facility {
+    .btn-outline--white {
         font-size: 18px;
     }
 
@@ -1073,7 +1007,7 @@ body {
         margin-bottom: 3px;
     }
 
-    .read-more-btn-facility {
+    .btn-outline--white {
         font-size: 16px;
     }
 
@@ -1168,7 +1102,7 @@ body {
         margin-bottom: 3px;
     }
 
-    .read-more-btn-facility {
+    .btn-outline--white {
         font-size: 15px;
     }
 
@@ -1202,10 +1136,6 @@ body {
         height: 70px;
     }
 
-    .nav-option {
-        /* font-size: 13px; */
-    }
-
     .nav-bar img {
         width: 46px;
         height: 46px;
@@ -1226,12 +1156,14 @@ body {
         font-size: 15px;
     }
 
-    .about-title {
+    .about-title,
+    .title2 {
         font-size: 30px;
         line-height: 40px;
     }
 
-    .about-text {
+    .about-text,
+    .description {
         font-size: 16px;
         line-height: 25px;
     }
@@ -1251,11 +1183,6 @@ body {
 
     .geo-section {
         padding: 50px 0;
-    }
-
-    .title2 {
-        font-size: 30px;
-        line-height: 40px;
     }
 
     /* ===== FIXED: GEO-SECTION MAP & CONTENT ===== */
@@ -1305,13 +1232,11 @@ body {
     .description {
         width: 100%;
         max-width: 100%;
-        font-size: 16px;
-        line-height: 25px;
         padding-top: 64px;
         height: auto;
     }
 
-    .btn-map {
+    .btn-outline--mt {
         margin-top: 30px;
     }
 
@@ -1360,7 +1285,7 @@ body {
         margin-top: 16px !important;
     }
 
-    .read-more-btn-facility {
+    .btn-outline--white {
         padding: 8px 60px 8px 0;
         font-size: 14px;
     }
@@ -1455,6 +1380,73 @@ body {
     }
 }
 
+/* Shared: Tablet + Mobile (<=958px) */
+@media (max-width: 958px) {
+    .facility-tabs {
+        flex-direction: row !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 0;
+        padding-right: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        justify-content: flex-start;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .facility-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-item {
+        width: auto;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    .tab-item.active::before {
+        width: 0;
+        display: none;
+    }
+
+    .tab-item.active {
+        font-weight: 700;
+    }
+
+    .thumbs {
+        padding-left: 0 !important;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .btn-outline--white {
+        padding: 8px 0;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .facility-left {
+        min-height: auto;
+    }
+
+    .image-wrapper > img {
+        width: 100%;
+        height: auto;
+        left: 0;
+        max-width: none;
+    }
+
+    .news-left,
+    .news-right {
+        width: 100%;
+        height: auto;
+    }
+}
+
 /* 640-958px - Tablet */
 @media (min-width: 640px) and (max-width: 958px) {
     .hero-section {
@@ -1499,13 +1491,18 @@ body {
         font-size: 14px;
     }
 
-    .about-title {
+    .about-title,
+    .title2 {
         font-size: 26px;
         line-height: 34px;
+    }
+
+    .about-title {
         padding-top: 12px;
     }
 
-    .about-text {
+    .about-text,
+    .description {
         font-size: 15px;
         line-height: 24px;
     }
@@ -1525,11 +1522,6 @@ body {
 
     .geo-section {
         padding: 38px 0;
-    }
-
-    .title2 {
-        font-size: 26px;
-        line-height: 34px;
     }
 
     .map-wrapper {
@@ -1557,13 +1549,11 @@ body {
 
     .description {
         width: 100%;
-        font-size: 15px;
-        line-height: 24px;
         padding-top: 22px;
         height: auto;
     }
 
-    .btn-map {
+    .btn-outline--mt {
         margin-top: 28px;
         font-size: 15px;
     }
@@ -1579,7 +1569,6 @@ body {
 
     .facility-left {
         padding: 30px 24px;
-        min-height: auto;
     }
 
     /* Force inner columns to stack on tablet */
@@ -1590,44 +1579,18 @@ body {
         max-width: 100% !important;
     }
 
-    /* Tabs: horizontal scrollable */
+    /* Tabs: tablet-specific sizes */
     .facility-tabs {
-        flex-direction: row !important;
-        align-items: center !important;
-        text-align: center !important;
-        gap: 0;
-        padding-right: 0;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-        padding-bottom: 10px;
-        justify-content: flex-start;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         margin-bottom: 14px;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-
-    .facility-tabs::-webkit-scrollbar {
-        display: none;
     }
 
     .tab-item {
         font-size: 13px;
-        width: auto;
         padding: 6px 14px;
-        flex-shrink: 0;
-        white-space: nowrap;
     }
 
     .tab-item.active {
         font-size: 14px;
-        font-weight: 700;
-    }
-
-    .tab-item.active::before {
-        width: 0;
-        display: none;
     }
 
     /* Tab content */
@@ -1646,19 +1609,13 @@ body {
         margin-top: 18px !important;
     }
 
-    .read-more-btn-facility {
-        padding: 8px 0;
+    .btn-outline--white {
         font-size: 14px;
-        justify-content: center;
-        width: 100%;
     }
 
-    /* Thumbs: override inline padding-left */
+    /* Thumbs: tablet sizes */
     .thumbs {
-        padding-left: 0 !important;
         gap: 8px;
-        flex-wrap: wrap;
-        justify-content: center;
         margin-top: 12px !important;
     }
 
@@ -1676,13 +1633,6 @@ body {
         padding-top: 20px;
     }
 
-    .image-wrapper>img {
-        width: 100%;
-        height: auto;
-        left: 0;
-        max-width: none;
-    }
-
     .next-btn-service {
         right: 15px;
     }
@@ -1697,17 +1647,14 @@ body {
         width: 50%;
     }
 
-    .service-card {
+    .service-card,
+    .service-content {
         max-width: 100%;
     }
 
     .service-card img {
         width: 100%;
         height: 340px;
-    }
-
-    .service-content {
-        max-width: 100%;
     }
 
     .service-title {
@@ -1803,9 +1750,13 @@ body {
         line-height: 20px;
     }
 
-    .about-title {
+    .about-title,
+    .title2 {
         font-size: 21px;
         line-height: 29px;
+    }
+
+    .about-title {
         padding-top: 10px;
     }
 
@@ -1814,7 +1765,7 @@ body {
         line-height: 22px;
     }
 
-    .read-more-btn {
+    .btn-outline {
         font-size: 13px;
         padding: 8px 14px;
     }
@@ -1838,11 +1789,6 @@ body {
 
     .title1 {
         font-size: 12px;
-    }
-
-    .title2 {
-        font-size: 21px;
-        line-height: 29px;
     }
 
     .map-wrapper {
@@ -1886,7 +1832,7 @@ body {
         height: auto;
     }
 
-    .btn-map {
+    .btn-outline--mt {
         font-size: 13px;
         margin-top: 18px;
     }
@@ -1902,51 +1848,21 @@ body {
 
     .facility-left {
         padding: 24px 16px;
-        min-height: auto;
     }
 
-    /* Tabs: horizontal scrollable on mobile */
+    /* Tabs: mobile-specific sizes */
     .facility-tabs {
-        flex-direction: row !important;
-        align-items: center !important;
-        text-align: center !important;
-        gap: 0;
-        padding-right: 0;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-        padding-bottom: 10px;
-        justify-content: flex-start;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         margin-bottom: 12px;
-        scrollbar-width: none;
-        /* Firefox */
-        -ms-overflow-style: none;
-        /* IE */
-    }
-
-    .facility-tabs::-webkit-scrollbar {
-        display: none;
-        /* Chrome, Safari */
     }
 
     .tab-item {
         font-size: 12px;
         line-height: 19px;
-        width: auto;
         padding: 6px 12px;
-        flex-shrink: 0;
-        white-space: nowrap;
     }
 
     .tab-item.active {
         font-size: 13px;
-        font-weight: 700;
-    }
-
-    .tab-item.active::before {
-        width: 0;
-        display: none;
     }
 
     /* Tab content styling */
@@ -1970,19 +1886,13 @@ body {
         margin-top: 16px !important;
     }
 
-    .read-more-btn-facility {
-        padding: 8px 0;
+    .btn-outline--white {
         font-size: 13px;
-        justify-content: center;
-        width: 100%;
     }
 
-    /* Thumbs: override inline padding-left and center */
+    /* Thumbs: mobile sizes */
     .thumbs {
-        padding-left: 0 !important;
         gap: 6px;
-        flex-wrap: wrap;
-        justify-content: center;
         margin-top: 12px !important;
     }
 
@@ -1998,13 +1908,6 @@ body {
 
     .image-wrapper {
         padding-top: 12px;
-    }
-
-    .image-wrapper>img {
-        width: 100%;
-        height: auto;
-        left: 0;
-        max-width: none;
     }
 
     .next-btn-service {
@@ -2042,8 +1945,12 @@ body {
         width: 100%;
     }
 
-    .service-card {
+    .service-card,
+    .service-content {
         max-width: 100%;
+    }
+
+    .service-card {
         margin: 0 auto;
     }
 
@@ -2053,7 +1960,6 @@ body {
     }
 
     .service-content {
-        max-width: 100%;
         padding: 12px 0;
     }
 
