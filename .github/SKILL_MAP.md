@@ -1,7 +1,7 @@
 # 🗺️ MINI CMS PROJECT SKILL MAP
 
 > **Purpose**: This document provides a comprehensive understanding of the Mini CMS codebase for AI agents and developers.
-> **Auto-generated**: April 2, 2026
+> **Last updated**: April 11, 2026
 > **Related**: See also [copilot-instructions.md](./copilot-instructions.md) for coding guidelines.
 
 ---
@@ -99,32 +99,63 @@ Controller Method
 mini-cms/
 ├── app.js                          # Entry point
 ├── package.json                    # Dependencies
-├── .env / .env.example             # Environment config
 ├── database/
-│   └── cms.sqlite                  # SQLite database file
-├── public/                         # Static assets
-│   ├── css/style.css               # Main stylesheet
-│   ├── js/main.js                  # Client-side JS
-│   └── uploads/
-│       ├── images/                 # Uploaded images
-│       └── pdfs/                   # Uploaded PDFs
+│   └── cms.sqlite                  # SQLite database file (WAL mode)
+├── public/
+│   ├── css/
+│   │   ├── style.css               # Admin panel styles (~1955 lines)
+│   │   ├── mpc-base.css            # MPC shared: fonts, variables, buttons, forms
+│   │   ├── mpc-header.css          # MPC header (transparent overlay, responsive)
+│   │   ├── mpc-footer.css          # MPC footer (4-column, navy background)
+│   │   └── pages/
+│   │       └── landing.css         # Landing page CSS (~2000 lines, 5 breakpoints)
+│   ├── fonts/
+│   │   └── barlow-condensed/       # Barlow Condensed TTF (6 weights)
+│   ├── images/
+│   │   ├── icons/                  # 18 SVG icons (geo-*, eport, container, etc.)
+│   │   ├── logo.png                # MPC Port logo
+│   │   └── map-vietnam.svg         # Vietnam map for geo section
+│   ├── js/
+│   │   ├── main.js                 # Admin: alerts, confirm delete, thumbnail preview
+│   │   └── landing.js              # Landing: mobile menu, sliders, carousels
+│   ├── uploads/
+│   │   ├── images/                 # Uploaded images (flat, multer saves here)
+│   │   │   ├── about/              # Pre-created static asset subfolders
+│   │   │   ├── Dịch vụ/
+│   │   │   ├── Hạ tầng/
+│   │   │   ├── Liên hệ/
+│   │   │   ├── Thư viện/
+│   │   │   ├── Tin tức/
+│   │   │   ├── Trang chủ/
+│   │   │   └── Tuyển dụng/
+│   │   └── pdfs/                   # Uploaded PDF files
+│   └── vendor/                     # Offline vendor libs (no CDN required)
+│       ├── bootstrap/
+│       │   ├── css/bootstrap.min.css
+│       │   └── js/bootstrap.bundle.min.js
+│       ├── bootstrap-icons/
+│       │   ├── bootstrap-icons.css
+│       │   └── fonts/
+│       └── font-awesome/
+│           ├── css/all.min.css
+│           └── webfonts/
 └── src/
     ├── config/
-    │   └── db.js                   # Database init & schema
-    ├── controllers/                # Request handlers
-    │   ├── adminController.js      # Dashboard
-    │   ├── authController.js       # Login/logout
-    │   ├── contactController.js    # Contact CRUD
-    │   ├── documentController.js   # Document CRUD
-    │   ├── galleryController.js    # Gallery CRUD
-    │   ├── menuController.js       # Menu CRUD + public page
-    │   └── postController.js       # Post CRUD
+    │   └── db.js                   # Database init & schema (CREATE TABLE IF NOT EXISTS)
+    ├── controllers/                # Request handlers (public + admin* prefix)
+    │   ├── adminController.js      # Dashboard stats
+    │   ├── authController.js       # Login/logout (bcrypt)
+    │   ├── contactController.js    # Contact form + admin CRUD
+    │   ├── documentController.js   # Document upload/download + admin
+    │   ├── galleryController.js    # Gallery view + admin upload/delete
+    │   ├── menuController.js       # Menu CRUD + visibility toggle + reorder + public page
+    │   └── postController.js       # Post full CRUD (bilingual)
     ├── middlewares/
     │   ├── authMiddleware.js       # requireAuth, redirectIfAuth
     │   ├── languageMiddleware.js   # i18n (lang, t, __)
-    │   ├── menuMiddleware.js       # loadMenus → visibleMenus
-    │   └── uploadMiddleware.js     # Multer config (image, pdf, gallery)
-    ├── models/                     # Database operations (SYNC!)
+    │   ├── menuMiddleware.js       # loadMenus → res.locals.visibleMenus
+    │   └── uploadMiddleware.js     # Multer (uploadImage, uploadGallery, uploadPdf)
+    ├── models/                     # Database operations (SYNC — no async/await!)
     │   ├── contactModel.js         # contacts table
     │   ├── documentModel.js        # documents table
     │   ├── galleryModel.js         # gallery_images table
@@ -133,19 +164,37 @@ mini-cms/
     │   ├── postModel.js            # posts table
     │   └── userModel.js            # users table + auth
     ├── routes/
-    │   ├── admin.js                # Protected admin routes
-    │   ├── auth.js                 # Auth redirects
-    │   ├── language.js             # /lang/:lang switch
-    │   └── web.js                  # Public routes
+    │   ├── admin.js                # Protected admin routes (requireAuth)
+    │   ├── auth.js                 # Simple redirects: /auth/login → /admin/login
+    │   ├── language.js             # GET /lang/:lang — switch language via session
+    │   └── web.js                  # Public routes (home inline handler)
     ├── locales/
     │   ├── vi.json                 # Vietnamese translations
     │   └── en.json                 # English translations
     ├── utils/
     │   └── slugify.js              # Vietnamese-aware slug generator
     └── views/
-        ├── admin/                  # Admin panel views
-        ├── web/                    # Public views
-        └── partials/               # Shared partials
+        ├── admin/                  # 12 EJS templates (hardcoded Vietnamese, no i18n)
+        │   ├── contact-detail.ejs, contact-list.ejs
+        │   ├── dashboard.ejs
+        │   ├── document-create.ejs, document-list.ejs
+        │   ├── gallery.ejs, login.ejs
+        │   ├── menu-form.ejs, menu-list.ejs
+        │   └── post-create.ejs, post-edit.ejs, post-list.ejs
+        ├── partials/
+        │   ├── mpc-header.ejs      # MPC public header (transparent overlay, dynamic menus)
+        │   ├── mpc-footer.ejs      # MPC public footer (4-column, navy, social icons)
+        │   ├── admin-sidebar.ejs   # Admin sidebar navigation
+        │   ├── header.ejs          # Legacy admin header
+        │   └── footer.ejs          # Legacy admin footer
+        └── web/                    # 9 EJS templates (i18n enabled, mpc-header/mpc-footer)
+            ├── home.ejs            # Landing page (all 11 sections ported from prototype)
+            ├── posts.ejs, post-detail.ejs
+            ├── gallery.ejs
+            ├── documents.ejs
+            ├── contact.ejs
+            ├── menu-page.ejs
+            ├── 404.ejs, error.ejs
 ```
 
 ---
@@ -359,11 +408,11 @@ features:
 ```yaml
 middleware: src/middlewares/uploadMiddleware.js
 exports:
-  - uploadImage (single, 5MB, jpg/png/webp)
-  - uploadGallery (multiple, 5MB each)
-  - uploadPdf (single, 20MB)
+  - uploadImage (single, field: thumbnail, 5MB, jpg/png/webp) → public/uploads/images/
+  - uploadGallery (array, field: images, max 20 files, 5MB each) → public/uploads/images/
+  - uploadPdf (single, field: file, 20MB, PDF only) → public/uploads/pdfs/
 storage:
-  - public/uploads/images/
+  - public/uploads/images/ (flat — multer saves all uploads here regardless of subfolder)
   - public/uploads/pdfs/
 patterns:
   - req.file / req.files
@@ -683,6 +732,75 @@ success       // Flash success message
 error         // Flash error message
 lang          // Current language ('vi' or 'en')
 t             // Full translation object
-__()          // Translation helper function
-visibleMenus  // Dynamic menus with children
+__()          // Translation helper function (dot-path key resolver)
+visibleMenus  // Dynamic menus with children (from menuMiddleware)
 ```
+
+---
+
+## 9. MPC Public Design System
+
+### 9.1 Design Stack
+
+| Element | Value |
+|---------|-------|
+| Font | Barlow Condensed (local TTF, 6 weights), served from `public/fonts/barlow-condensed/` |
+| Primary colors | Red `#DF1F28`, Orange `#FCB248`, Navy `#2c3e7d` |
+| Text colors | Dark `#333333`, Gray `#828282`, Light gray `#BDBDBD` |
+| CSS framework | Bootstrap 5 (vendored) + Bootstrap Icons (vendored) + Font Awesome 6 (vendored) |
+| Vendor location | `public/vendor/` — fully offline, no CDN |
+
+### 9.2 CSS Architecture
+
+| File | Used by | Purpose |
+|------|---------|--------|
+| `public/css/style.css` | Admin pages only | Admin panel styles (~1955 lines) |
+| `public/css/mpc-base.css` | All public pages | Fonts, CSS variables, buttons, forms, page components |
+| `public/css/mpc-header.css` | All public pages | Transparent overlay header, responsive nav, language pill |
+| `public/css/mpc-footer.css` | All public pages | 4-column navy footer |
+| `public/css/pages/landing.css` | `home.ejs` only | Landing page specific (~2000 lines, 5 breakpoints) |
+
+### 9.3 Partials Structure
+
+| Partial | Used by | Includes |
+|---------|---------|----------|
+| `partials/mpc-header.ejs` | All public web pages | Bootstrap 5, Bootstrap Icons, FA, mpc-base.css, mpc-header.css, vendor CSS |
+| `partials/mpc-footer.ejs` | All public web pages | 4-column footer, social icons, contact info, mpc-footer.css |
+| `partials/header.ejs` | Admin pages | Legacy admin header |
+| `partials/footer.ejs` | Admin pages | Legacy admin footer |
+| `partials/admin-sidebar.ejs` | All admin pages | Sidebar nav links |
+
+### 9.4 Landing Page Sections (home.ejs)
+
+All 11 sections ported from `view-html/trang_chu/landing.html` with full i18n:
+
+| # | Section | Key Classes |
+|---|---------|-------------|
+| 1 | Header | via `mpc-header.ejs` |
+| 2 | Hero Banner | `.hero-section`, `.hero-overlay` |
+| 3 | Quick Nav | `.nav-bar`, `.nav-option` (4 icon buttons) |
+| 4 | About | `.about-section` (2-col, company intro) |
+| 5 | Port Image | `.port-image-section` (panorama, offset) |
+| 6 | Geo Location | `.geo-section`, Vietnam SVG map + 6 specs |
+| 7 | Facility | `.facility`, tabbed panel + image slider |
+| 8 | Services | `.wrapper`, service carousel (4×4 cards) |
+| 9 | Image Library | `.gallery-section`, 3-col auto-slide |
+| 10 | News & Events | `.news-section`, 2-col news list |
+| 11 | Footer | via `mpc-footer.ejs` |
+
+### 9.5 Prototype vs CMS Status
+
+| Aspect | Status | Notes |
+|--------|--------|-------|
+| Branding | **DONE** | MPC Port logo, Barlow Condensed, red/orange/navy on all public pages |
+| Header | **DONE** | `mpc-header.ejs` — transparent overlay, dynamic menus, language pill |
+| Footer | **DONE** | `mpc-footer.ejs` — 4-column grid, navy, social icons, contact info |
+| CSS framework | **DONE** | Bootstrap 5 + Bootstrap Icons + Font Awesome vendored in `public/vendor/` |
+| Landing page | **DONE** | All 11 sections in `home.ejs` with i18n |
+| Assets | **DONE** | Fonts, icons, logo, map-vietnam.svg in `public/` |
+| All public pages | **DONE** | Posts, Gallery, Documents, Contact, Menu-page, 404, Error use mpc-header/mpc-footer |
+| Admin pages | **Unchanged** | Still use `header.ejs`/`footer.ejs` + `style.css` |
+| About page | **Pending** | No dedicated route/view yet |
+| Infrastructure page | **Pending** | No dedicated route/view yet |
+| Services page | **Pending** | No dedicated route/view yet |
+| Recruitment page | **Pending** | No dedicated route/view yet |

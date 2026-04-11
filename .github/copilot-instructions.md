@@ -88,8 +88,9 @@ router.get('/posts', PostController.adminIndex);
 ### File Uploads
 Multer middleware in `mini-cms/src/middlewares/uploadMiddleware.js`:
 - Images: `uploadImage` → `public/uploads/images/` (5MB max, jpg/png/webp)
-- PDFs: `uploadPdf` → `public/uploads/pdfs/` (10MB max)
-- Access via `req.file`, errors via `req.uploadError`
+- Gallery: `uploadGallery` → `public/uploads/images/` (multiple, max 20 files, 5MB each)
+- PDFs: `uploadPdf` → `public/uploads/pdfs/` (20MB max, PDF only)
+- Access via `req.file` / `req.files`, errors via `req.uploadError`
 
 ### Slug Generation
 Use `mini-cms/src/utils/slugify.js` for URL-friendly slugs with Vietnamese support:
@@ -100,10 +101,19 @@ const slug = makeUniqueSlug(slugify(title), (s) => PostModel.slugExists(s));
 
 ## Views & Templates
 
-- Admin templates: `src/views/admin/` - include sidebar navigation
-- Public templates: `src/views/web/`
-- Partials: `src/views/partials/header.ejs`, `footer.ejs`
-- All views receive `user`, `success`, `error` via `res.locals` middleware
+- Admin templates: `src/views/admin/` — use `partials/header.ejs`, `partials/footer.ejs`, `partials/admin-sidebar.ejs` + `public/css/style.css`
+- Public templates: `src/views/web/` — use `partials/mpc-header.ejs`, `partials/mpc-footer.ejs` (MPC branding, Bootstrap 5)
+- All views receive `user`, `success`, `error`, `lang`, `t`, `__()`, `visibleMenus` via `res.locals` middleware
+
+## MPC Public Design System
+
+All public pages (`src/views/web/`) use the MPC Port design:
+- **CSS**: `mpc-base.css` (fonts, variables, buttons), `mpc-header.css`, `mpc-footer.css`, `css/pages/landing.css` (home page only)
+- **Vendor**: Bootstrap 5, Bootstrap Icons, Font Awesome vendored in `public/vendor/` (offline, no CDN)
+- **Fonts**: Barlow Condensed TTF (6 weights) in `public/fonts/barlow-condensed/`
+- **Icons**: 18 SVG icons in `public/images/icons/`
+- **Colors**: Red `#DF1F28`, Orange `#FCB248`, Navy `#2c3e7d`
+- **Home page** (`src/views/web/home.ejs`): All 11 landing sections ported from `view-html/trang_chu/landing.html` with i18n
 
 ## Adding New Features
 
