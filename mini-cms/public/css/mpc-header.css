@@ -1,6 +1,7 @@
 /* MPC Header Styles */
 .mpc-header {
     background: transparent;
+    background-color: #0000005c;
     border-bottom: none;
     padding: 0;
     position: absolute;
@@ -145,7 +146,7 @@
 }
 
 .header-nav .menu-item>a::after {
-    content: " \u25BC";
+    content: " \25BC";
     font-size: 0.8em;
     margin-left: 4px;
     opacity: 0.7;
