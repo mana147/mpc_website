@@ -13,16 +13,22 @@ const ContactController = require('../controllers/contactController');
 const MenuController = require('../controllers/menuController');
 const PostModel = require('../models/postModel');
 const DocumentModel = require('../models/documentModel');
+const GalleryModel = require('../models/galleryModel');
 
 // Trang chủ
 router.get('/', (req, res) => {
-  const latestPosts = PostModel.getLatest(6);
+  const latestPosts = PostModel.getLatest(9);
   const latestDocuments = DocumentModel.getLatest(5);
-  
+  const galleryImages = GalleryModel.getAll().slice(0, 6);
+
   res.render('web/home', {
     title: 'Trang chủ',
     posts: latestPosts,
-    documents: latestDocuments
+    documents: latestDocuments,
+    galleryImages: galleryImages,
+    currentPath: '/',
+    pageCss: '/css/pages/landing.css',
+    pageJs: '/js/landing.js'
   });
 });
 

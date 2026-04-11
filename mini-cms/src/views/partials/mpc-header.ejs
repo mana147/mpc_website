@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="<%= typeof lang !== 'undefined' ? lang : 'vi' %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'MPC Port' %> | MPC Port</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/mpc-base.css">
+  <link rel="stylesheet" href="/css/mpc-header.css">
+  <link rel="stylesheet" href="/css/mpc-footer.css">
+  <% if (typeof pageCss !== 'undefined' && pageCss) { %>
+    <link rel="stylesheet" href="<%= pageCss %>">
+  <% } %>
+</head>
+<body class="mpc-page">
+  <!-- MPC Header -->
+  <header class="mpc-header">
+    <div class="header-container">
+      <div class="header-logo">
+        <a href="/"><img src="/images/logo.png" alt="MPC Logo" class="logo-image"></a>
+      </div>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="header-nav">
+        <ul class="nav-menu">
+          <% if (typeof visibleMenus !== 'undefined' && visibleMenus.length > 0) { %>
+            <% visibleMenus.forEach(menu => { %>
+              <%
+                const menuName = (typeof lang !== 'undefined' && lang === 'en' && menu.name_en)
+                  ? menu.name_en
+                  : menu.name_vi;
+                const menuUrl = menu.url || menu.slug;
+                const hasChildren = menu.type === 'post_list' && menu.children && menu.children.length > 0;
+                const isActive = (typeof currentPath !== 'undefined') && currentPath === menuUrl;
+              %>
+              <% if (hasChildren) { %>
+                <li class="menu-item">
+                  <a href="javascript:void(0)" style="color: #ffffff;"<%= isActive ? ' class="active"' : '' %>><%= menuName.toUpperCase() %></a>
+                  <ul class="sub-menu">
+                    <% menu.children.forEach(child => { %>
+                      <%
+                        const childTitle = (typeof lang !== 'undefined' && lang === 'en' && child.title_en)
+                          ? child.title_en
+                          : child.title;
+                      %>
+                      <li><a href="/posts/<%= child.slug %>"><%= childTitle %></a></li>
+                    <% }) %>
+                  </ul>
+                </li>
+              <% } else { %>
+                <li><a href="<%= menuUrl %>"<%= isActive ? ' class="active"' : '' %>><%= menuName.toUpperCase() %></a></li>
+              <% } %>
+            <% }) %>
+          <% } else { %>
+            <li><a href="/" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/') ? 'active' : '' %>">TRANG CHỦ</a></li>
+            <li><a href="/posts">BÀI VIẾT</a></li>
+            <li><a href="/gallery">THƯ VIỆN ẢNH</a></li>
+            <li><a href="/documents">TÀI LIỆU</a></li>
+            <li><a href="/contact">LIÊN HỆ</a></li>
+          <% } %>
+        </ul>
+      </nav>
+
+      <% if (typeof lang !== 'undefined' && lang === 'en') { %>
+        <a href="/lang/vi" class="header-language">
+          <img src="/images/icons/vn.png" alt="VN" class="flag-icon">
+          <span>VIE</span>
+          <span class="dropdown-icon">▼</span>
+        </a>
+      <% } else { %>
+        <a href="/lang/en" class="header-language">
+          <img src="/images/icons/vn.png" alt="VN" class="flag-icon">
+          <span>VIE</span>
+          <span class="dropdown-icon">▼</span>
+        </a>
+      <% } %>
+    </div>
+  </header>
+
+  <main>

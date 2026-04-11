@@ -1,5 +1,6 @@
-<%- include('../partials/header') %>
+<%- include('../partials/mpc-header') %>
 
+<div class="page-container">
 <h1><%= t.documents.title %></h1>
 
 <% if (documents && documents.length > 0) { %>
@@ -22,4 +23,6 @@
   <p class="empty-state"><%= t.documents.empty %></p>
 <% } %>
 
-<%- include('../partials/footer') %>
+</div>
+
+<%- include('../partials/mpc-footer') %>

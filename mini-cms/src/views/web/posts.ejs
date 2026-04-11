@@ -1,5 +1,6 @@
-<%- include('../partials/header') %>
+<%- include('../partials/mpc-header') %>
 
+<div class="page-container">
 <h1><%= t.posts.title %></h1>
 
 <% if (posts && posts.length > 0) { %>
@@ -30,4 +31,6 @@
   <p class="empty-state"><%= t.posts.empty %></p>
 <% } %>
 
-<%- include('../partials/footer') %>
+</div>
+
+<%- include('../partials/mpc-footer') %>

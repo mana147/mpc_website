@@ -76,8 +76,34 @@
     "success_message": "Thank you for contacting us! We will respond as soon as possible."
   },
 
+  "landing": {
+    "ship_schedule": "SHIP SCHEDULE",
+    "container_tracking": "CONTAINER TRACKING",
+    "invoice_lookup": "INVOICE LOOKUP",
+    "about_label": "ABOUT US",
+    "about_title": "MIPEC PORT JOINT STOCK COMPANY",
+    "about_text": "MIPEC Port Joint Stock Company (trading name MPC) operates MPC Port terminal at Dinh Vu - Cat Hai Economic Zone, Hai Phong. With a total area of 22.3 ha and designed capacity of 500,000 TEU/year, MPC Port provides modern port services to meet international cargo transportation needs.",
+    "geo_title": "GEOGRAPHIC LOCATION",
+    "geo_description": "MPC Port terminal is located at a strategic position on Dinh Vu Peninsula, Dinh Vu - Cat Hai Economic Zone, Hai Phong. With deep shipping channels and connected transportation systems, MPC Port serves as a key gateway for import-export cargo in Northern Vietnam.",
+    "view_map": "View map",
+    "facility_title": "INFRASTRUCTURE",
+    "tab_infrastructure": "Infrastructure",
+    "tab_it": "IT",
+    "tab_capacity": "Reception Capacity",
+    "tab_equipment": "Handling Equipment",
+    "tab_warehouse": "Warehouse",
+    "tab_structure": "Structure",
+    "services_title": "OUR SERVICES",
+    "gallery_title": "IMAGE GALLERY",
+    "news_title": "NEWS & EVENTS"
+  },
+
   "footer": {
-    "copyright": "Simple CMS for small business."
+    "copyright": "Simple CMS for small business.",
+    "description": "MPEC Port Joint Stock Company (trading name MPC) operates MPC Port terminal.",
+    "connect": "Connect with us",
+    "category": "Category",
+    "contact_title": "Contact"
   },
   
   "admin": {

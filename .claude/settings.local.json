@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la public/css/mpc-base.css public/css/mpc-header.css public/css/mpc-footer.css public/css/pages/landing.css public/js/landing.js)",
+      "Bash(ls public/fonts/barlow-condensed/)",
+      "Bash(ls public/images/icons/)",
+      "Bash(ls public/images/logo.png public/images/map-vietnam.svg)",
+      "Bash(ls src/views/partials/mpc-header.ejs src/views/partials/mpc-footer.ejs)",
+      "Bash(timeout 8 node app.js)",
+      "Bash(node -e ':*)"
+    ]
+  }
+}

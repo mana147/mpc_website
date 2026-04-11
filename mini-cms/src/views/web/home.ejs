@@ -1,66 +1,499 @@
-<%- include('../partials/header') %>
+<%- include('../partials/mpc-header') %>
 
-<section class="hero">
-  <h1><%= t.home.welcome %></h1>
-  <p><%= t.home.description %></p>
-</section>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-overlay"></div>
+      <img src="/uploads/images/Trang%20ch%E1%BB%A7/home-banner.png" alt="Port Hero">
+    </section>
 
-<section class="section">
-  <h2><%= t.home.latest_posts %></h2>
-  <% if (posts && posts.length > 0) { %>
-    <div class="post-grid">
-      <% posts.forEach(post => { %>
-        <%
-          const displayTitle = (lang === 'en' && post.title_en) ? post.title_en : post.title;
-          const displayExcerpt = (lang === 'en' && post.excerpt_en) ? post.excerpt_en : post.excerpt;
-        %>
-        <article class="post-card">
-          <% if (post.thumbnail) { %>
-            <img src="<%= post.thumbnail %>" alt="<%= displayTitle %>" class="post-thumbnail">
-          <% } else { %>
-            <div class="post-thumbnail-placeholder"></div>
-          <% } %>
-          <div class="post-card-content">
-            <h3><a href="/posts/<%= post.slug %>"><%= displayTitle %></a></h3>
-            <% if (displayExcerpt) { %>
-              <p><%= displayExcerpt.substring(0, 150) %><%= displayExcerpt.length > 150 ? '...' : '' %></p>
-            <% } %>
-            <small><%= new Date(post.created_at).toLocaleDateString(lang === 'en' ? 'en-US' : 'vi-VN') %></small>
-          </div>
-        </article>
-      <% }) %>
+    <!-- Quick Nav -->
+    <div class="nav-bar">
+      <a href="#" class="nav-option">
+        <img src="/images/icons/icon-eport.svg" alt="E-Port">
+        EPORT
+      </a>
+      <a href="#" class="nav-option">
+        <img src="/images/icons/icon-lich-tau.svg" alt="<%= t.landing.ship_schedule %>">
+        <%= t.landing.ship_schedule %>
+      </a>
+      <a href="#" class="nav-option">
+        <img src="/images/icons/icon-container.svg" alt="<%= t.landing.container_tracking %>">
+        <%= t.landing.container_tracking %>
+      </a>
+      <a href="#" class="nav-option">
+        <img src="/images/icons/icon-hddt.svg" alt="<%= t.landing.invoice_lookup %>">
+        <%= t.landing.invoice_lookup %>
+      </a>
     </div>
-    <p class="text-center mt-2">
-      <a href="/posts" class="btn"><%= t.home.view_all_posts %></a>
-    </p>
-  <% } else { %>
-    <p class="empty-state"><%= t.posts.empty %></p>
-  <% } %>
-</section>
 
-<section class="section">
-  <h2><%= t.home.latest_documents %></h2>
-  <% if (documents && documents.length > 0) { %>
-    <ul class="document-list">
-      <% documents.forEach(doc => { %>
-        <li class="document-item">
-          <span class="doc-icon">📄</span>
-          <div class="doc-info">
-            <strong><%= doc.title %></strong>
-            <% if (doc.description) { %>
-              <p><%= doc.description %></p>
+    <!-- About Section -->
+    <section class="about-section">
+      <div class="about-container">
+        <div class="about-left">
+          <img src="/images/icons/icon-redline.svg" alt="">
+          <div class="about-label"><%= t.landing.about_label %></div>
+          <h2 class="about-title"><%= t.landing.about_title %></h2>
+        </div>
+        <div class="about-right">
+          <div class="about-text">
+            <p><%= t.landing.about_text %></p>
+          </div>
+          <a class="btn-outline" href="#"><%= t.common.learn_more %>
+            <span class="read-more-icon"><img src="/images/icons/icon-arrow-right-red.svg" alt="Arrow"></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Port Image Section -->
+    <section class="port-image-section">
+      <img src="/uploads/images/Trang%20ch%E1%BB%A7/home-gioi-thieu.png" alt="Port Introduction" class="img-gioi-thieu">
+    </section>
+
+    <!-- GEO SECTION -->
+    <section class="geo-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-12 text-center mb-4">
+            <h3 class="title1">
+              <img src="/images/icons/icon-redline.svg" alt="">
+            </h3>
+            <h2 class="title2"><%= t.landing.geo_title %></h2>
+          </div>
+          <!-- MAP -->
+          <div class="col-lg-6 map-wrapper">
+            <img src="/images/map-vietnam.svg" alt="<%= t.landing.view_map %>" class="map-svg">
+          </div>
+          <!-- CONTENT -->
+          <div class="col-lg-6 content-wrapper">
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="icon"><img src="/images/icons/icon-geo-coordinates.svg" alt="Coordinates"></div>
+                <div>20&deg; 49' 30" N<br>106&deg; 48' 18" E</div>
+              </div>
+              <div class="info-item">
+                <div class="icon"><img src="/images/icons/icon-geo-area.svg" alt="Area"></div>
+                <div>Area:<br>22.3ha</div>
+              </div>
+              <div class="info-item">
+                <div class="icon"><img src="/images/icons/icon-geo-storage.svg" alt="Storage"></div>
+                <div>Full Storage Capacity:<br>~13,000 Teus</div>
+              </div>
+              <div class="info-item">
+                <div class="icon"><img src="/images/icons/icon-geo-depth.svg" alt="Depth"></div>
+                <div>Depth alongside:<br> -9.7m to -11m</div>
+              </div>
+              <div class="info-item">
+                <div class="icon"><img src="/images/icons/icon-geo-turning.svg" alt="Turning Basin"></div>
+                <div>Turning Basin:<br>360m</div>
+              </div>
+              <div class="info-item">
+                <div class="icon"><img src="/images/icons/icon-geo-berth.svg" alt="Berth"></div>
+                <div>Berth:<br>02 Unit 380m<br>Length</div>
+              </div>
+            </div>
+
+            <p class="description"><%= t.landing.geo_description %></p>
+
+            <a class="btn-outline btn-outline--mt" href="#"><%= t.landing.view_map %>
+              <span class="map-more-icon"><img src="/images/icons/icon-arrow-right-red.svg" alt="Arrow"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FACILITY SECTION -->
+    <section class="facility py-5">
+      <div class="container-fluid">
+        <div class="text-center mb-5">
+          <h3 class="title1"><img src="/images/icons/icon-redline.svg" alt=""></h3>
+          <h2 class="title2"><%= t.landing.facility_title %></h2>
+        </div>
+
+        <div class="row align-items-center">
+          <!-- LEFT PANEL -->
+          <div class="col-lg-6 facility-left text-white">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="facility-tabs flex-column align-items-end text-end">
+                  <span class="tab-item active" data-tab="tab1"><%= t.landing.tab_infrastructure %></span>
+                  <span class="tab-item" data-tab="tab5"><%= t.landing.tab_it %></span>
+                  <span class="tab-item" data-tab="tab2"><%= t.landing.tab_capacity %></span>
+                  <span class="tab-item" data-tab="tab4"><%= t.landing.tab_equipment %></span>
+                  <span class="tab-item" data-tab="tab6"><%= t.landing.tab_warehouse %></span>
+                  <span class="tab-item" data-tab="tab3"><%= t.landing.tab_structure %></span>
+                </div>
+              </div>
+              <div class="col-md-8 facility-col-left">
+                <div id="tab-content">
+                  <div class="tab-pane active" id="tab1">
+                    <ul>
+                      <li>Tổng diện tích toàn cảng: 22.3 ha.</li>
+                      <li>Khu vực xếp container: 13,200 teus.</li>
+                      <li>Khu vực xếp hàng OOG, DG.</li>
+                      <li>Khu vực container lạnh: 432 ổ cắm.</li>
+                      <li>Kho CFS: 10,000 m2.</li>
+                      <li>Khu vực sửa chữa container: 1,200 m2.</li>
+                      <li>Khu vực soi chiếu container.</li>
+                      <li>Cổng: 10 làn.</li>
+                      <li>Cân điện tử 120 tấn: 02.</li>
+                    </ul>
+                  </div>
+                  <div class="tab-pane" id="tab5">
+                    <ul>
+                      <li>Hệ thống quản lý cảng TOS.</li>
+                      <li>Cổng tự động nhận dạng container.</li>
+                      <li>Hệ thống camera giám sát 24/7.</li>
+                    </ul>
+                  </div>
+                  <div class="tab-pane" id="tab2">
+                    <ul>
+                      <li>Tàu container đến 50,000 DWT.</li>
+                      <li>Công suất thiết kế: 500,000 TEU/năm.</li>
+                    </ul>
+                  </div>
+                  <div class="tab-pane" id="tab4">
+                    <ul>
+                      <li>Cẩu bờ STS: 02 chiếc.</li>
+                      <li>Cẩu bãi RTG: 06 chiếc.</li>
+                      <li>Xe nâng Reach Stacker: 04 chiếc.</li>
+                      <li>Đầu kéo: 12 chiếc.</li>
+                    </ul>
+                  </div>
+                  <div class="tab-pane" id="tab6">
+                    <ul>
+                      <li>Bãi container: 13,200 TEU.</li>
+                      <li>Kho CFS: 10,000 m2.</li>
+                    </ul>
+                  </div>
+                  <div class="tab-pane" id="tab3">
+                    <ul>
+                      <li>Chiều dài cầu cảng: 380m.</li>
+                      <li>Độ sâu trước bến: -9.7m đến -11m.</li>
+                      <li>Vũng quay trở tàu: 360m.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="facility-bottom-content text-center mt-5">
+              <a class="btn-outline btn-outline--white" href="#">
+                <%= t.common.learn_more %>
+                <span class="read-more-icon"><img src="/images/icons/icon-arrow-right-white.svg" width="41" height="41" alt="Arrow"></span>
+              </a>
+              <div class="thumbs mt-4">
+                <img src="/uploads/images/Trang%20ch%E1%BB%A7/facility-img1.png" class="thumb active" data-index="0">
+                <img src="/uploads/images/Trang%20ch%E1%BB%A7/facility-img2.png" class="thumb" data-index="1">
+                <img src="/uploads/images/Trang%20ch%E1%BB%A7/facility-img3.png" class="thumb" data-index="2">
+                <img src="/uploads/images/Trang%20ch%E1%BB%A7/facility-img4.png" class="thumb" data-index="3">
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT IMAGE -->
+          <div class="col-lg-6 facility-image">
+            <div class="image-wrapper">
+              <img id="mainImage" src="/uploads/images/Trang%20ch%E1%BB%A7/facility-img5.png" class="img-fluid" />
+              <button class="next-btn-service"><img src="/images/icons/icon-arrow-right-dark.svg" width="41" height="41" alt="Next"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICE -->
+    <div class="wrapper">
+      <div class="section-title">
+        <h3 class="title1"><img src="/images/icons/icon-redline.svg" alt=""></h3>
+        <h2 class="title2"><%= t.landing.services_title %></h2>
+        <a href="#" class="more-link"><%= t.common.learn_more %></a>
+      </div>
+
+      <div class="arrow left"><img src="/images/icons/icon-slider-arrow-left.svg" alt="Previous"></div>
+      <div class="arrow right"><img src="/images/icons/icon-slider-arrow-right.svg" alt="Next"></div>
+
+      <div class="slider-viewport">
+        <div class="slider">
+          <div class="slides" id="slides">
+            <!-- PAGE 1 -->
+            <div class="page">
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img1.png" alt="Dịch vụ hàng hải">
+                  <div class="service-content">
+                    <div class="service-title">Dịch vụ hàng hải</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img2.png" alt="Dịch vụ khai thác cảng">
+                  <div class="service-content">
+                    <div class="service-title">Dịch vụ khai thác cảng</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img3.png" alt="Dịch vụ vận tải Container">
+                  <div class="service-content">
+                    <div class="service-title">Dịch vụ vận tải Container</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img4.png" alt="Dịch vụ khai thác cảng">
+                  <div class="service-content">
+                    <div class="service-title">Dịch vụ khai thác cảng</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PAGE 2 -->
+            <div class="page">
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img1.png" alt="Logistics">
+                  <div class="service-content">
+                    <div class="service-title">Logistics</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img2.png" alt="Kho bãi">
+                  <div class="service-content">
+                    <div class="service-title">Kho bãi</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img3.png" alt="Thuê ngoài">
+                  <div class="service-content">
+                    <div class="service-title">Thuê ngoài</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img4.png" alt="Phân phối">
+                  <div class="service-content">
+                    <div class="service-title">Phân phối</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PAGE 3 -->
+            <div class="page">
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img1.png" alt="Dịch vụ hàng hải">
+                  <div class="service-content">
+                    <div class="service-title">Dịch vụ hàng hải</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img2.png" alt="Dịch vụ khai thác cảng">
+                  <div class="service-content">
+                    <div class="service-title">Dịch vụ khai thác cảng</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img3.png" alt="Dịch vụ vận tải Container">
+                  <div class="service-content">
+                    <div class="service-title">Dịch vụ vận tải Container</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img4.png" alt="Dịch vụ nội địa">
+                  <div class="service-content">
+                    <div class="service-title">Dịch vụ nội địa</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PAGE 4 -->
+            <div class="page">
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img1.png" alt="Logistics">
+                  <div class="service-content">
+                    <div class="service-title">Logistics</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img2.png" alt="Kho bãi">
+                  <div class="service-content">
+                    <div class="service-title">Kho bãi</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img3.png" alt="Thuê ngoài">
+                  <div class="service-content">
+                    <div class="service-title">Thuê ngoài</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-item">
+                <div class="service-card">
+                  <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img4.png" alt="Phân phối">
+                  <div class="service-content">
+                    <div class="service-title">Phân phối</div>
+                    <div class="service-text">Cảng Mipec là cảng tổng hợp cung cấp dịch vụ cảng tốt nhất hiện ...</div>
+                    <a href="#" class="read-more">Xem thêm</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dots" id="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- IMAGES LIBRARY -->
+    <section class="gallery-section">
+      <div class="container-fluid">
+        <div class="text-center gallery-title">
+          <h3 class="title1"><img src="/images/icons/icon-redline.svg" alt=""></h3>
+          <h2 class="title2"><%= t.landing.gallery_title %></h2>
+          <a href="/gallery" class="more-link"><%= t.common.learn_more %></a>
+        </div>
+
+        <div class="row g-3 mt-4">
+          <!-- Part 1 -->
+          <div class="col-lg-4">
+            <div class="img-box big">
+              <% if (galleryImages && galleryImages.length > 0) { %>
+                <img src="<%= galleryImages[0].filepath %>" class="img-fluid" alt="<%= galleryImages[0].alt_text || '' %>">
+              <% } else { %>
+                <img src="/uploads/images/Trang%20ch%E1%BB%A7/library-img1.png" class="img-fluid" alt="">
+              <% } %>
+            </div>
+          </div>
+
+          <!-- Part 2 -->
+          <div class="col-lg-4">
+            <div class="row g-3">
+              <% for (let i = 1; i <= 4; i++) { %>
+                <div class="col-6">
+                  <div class="img-box small">
+                    <% if (galleryImages && galleryImages.length > i) { %>
+                      <img src="<%= galleryImages[i].filepath %>" class="img-fluid" alt="<%= galleryImages[i].alt_text || '' %>">
+                    <% } else { %>
+                      <img src="/uploads/images/Trang%20ch%E1%BB%A7/service-img<%= i %>.png" class="img-fluid" alt="">
+                    <% } %>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+
+          <!-- Part 3 -->
+          <div class="col-lg-4">
+            <div class="img-box big slider">
+              <% if (galleryImages && galleryImages.length > 5) { %>
+                <img id="sliderImage" src="<%= galleryImages[5].filepath %>" class="img-fluid" alt="">
+              <% } else { %>
+                <img id="sliderImage" src="/uploads/images/Trang%20ch%E1%BB%A7/ha-tang.png" class="img-fluid" alt="">
+              <% } %>
+              <button class="next-btn" onclick="nextSlide()"><img src="/images/icons/icon-gallery-play.svg" alt="Play"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS AND EVENT -->
+    <section class="news-section py-5">
+      <div class="container text-center">
+        <h3 class="title1"><img src="/images/icons/icon-redline.svg" alt=""></h3>
+        <h2 class="news-title"><%= t.landing.news_title %></h2>
+        <a href="/posts" class="more-link"><%= t.common.learn_more %></a>
+
+        <div class="news-wrapper mt-4">
+          <!-- LEFT -->
+          <div class="news-left">
+            <ul class="news-list text-start">
+              <% if (posts && posts.length > 0) { %>
+                <% posts.forEach(post => { %>
+                  <%
+                    const displayTitle = (lang === 'en' && post.title_en) ? post.title_en : post.title;
+                  %>
+                  <li>
+                    <a href="/posts/<%= post.slug %>"><%= displayTitle.length > 60 ? displayTitle.substring(0, 60) + '...' : displayTitle %></a>
+                    <span class="date"><%= new Date(post.created_at).toLocaleDateString('vi-VN') %></span>
+                  </li>
+                <% }) %>
+              <% } else { %>
+                <li><%= t.posts.empty %></li>
+              <% } %>
+            </ul>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="news-right">
+            <% if (posts && posts.length > 0 && posts[0].thumbnail) { %>
+              <img src="<%= posts[0].thumbnail %>" alt="<%= posts[0].title %>">
+            <% } else { %>
+              <img src="/uploads/images/Trang%20ch%E1%BB%A7/event-img1.png" alt="Event">
             <% } %>
           </div>
-          <a href="/documents/<%= doc.id %>/download" class="btn btn-small"><%= t.documents.download %></a>
-        </li>
-      <% }) %>
-    </ul>
-    <p class="text-center mt-2">
-      <a href="/documents" class="btn"><%= t.home.view_all_documents %></a>
-    </p>
-  <% } else { %>
-    <p class="empty-state"><%= t.documents.empty %></p>
-  <% } %>
-</section>
+        </div>
+      </div>
+    </section>
 
-<%- include('../partials/footer') %>
+<%- include('../partials/mpc-footer') %>

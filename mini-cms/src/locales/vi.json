@@ -76,8 +76,34 @@
     "success_message": "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể."
   },
 
+  "landing": {
+    "ship_schedule": "XEM LỊCH TÀU",
+    "container_tracking": "TRA CỨU VỊ TRÍ CONTAINER",
+    "invoice_lookup": "TRA CỨU HĐĐT",
+    "about_label": "VỀ CHÚNG TÔI",
+    "about_title": "CÔNG TY CỔ PHẦN CẢNG MIPEC",
+    "about_text": "Công ty cổ phần cảng MIPEC (tên giao dịch MPC) là nhà khai thác Bến cảng MPC Port tại Khu Kinh tế Đình Vũ - Cát Hải, Hải Phòng. Với tổng diện tích 22.3 ha và công suất thiết kế 500,000 TEU/năm, MPC Port cung cấp các dịch vụ cảng biển hiện đại, đáp ứng nhu cầu vận chuyển hàng hóa quốc tế.",
+    "geo_title": "VỊ TRÍ ĐỊA LÝ",
+    "geo_description": "Bến cảng MPC Port nằm ở vị trí thuận lợi tại Bán đảo Đình Vũ, Khu Kinh tế Đình Vũ - Cát Hải, Hải Phòng. Với luồng tàu sâu và hệ thống giao thông kết nối, MPC Port là cửa ngõ quan trọng cho hàng hóa xuất nhập khẩu khu vực phía Bắc.",
+    "view_map": "Xem bản đồ",
+    "facility_title": "CƠ SỞ HẠ TẦNG",
+    "tab_infrastructure": "Hạ tầng",
+    "tab_it": "CNTT",
+    "tab_capacity": "Năng lực tiếp nhận",
+    "tab_equipment": "Thiết bị xếp dỡ",
+    "tab_warehouse": "Kho bãi",
+    "tab_structure": "Cấu tạo",
+    "services_title": "DỊCH VỤ CỦA CHÚNG TÔI",
+    "gallery_title": "THƯ VIỆN HÌNH ẢNH",
+    "news_title": "TIN TỨC & SỰ KIỆN"
+  },
+
   "footer": {
-    "copyright": "Hệ thống quản lý nội dung đơn giản cho doanh nghiệp."
+    "copyright": "Hệ thống quản lý nội dung đơn giản cho doanh nghiệp.",
+    "description": "Công ty cổ phần cảng MPEC (tên giao dịch MPC) là nhà khai thác Bến cảng MPC Port.",
+    "connect": "Kết nối với chúng tôi",
+    "category": "Danh mục",
+    "contact_title": "Liên hệ"
   },
   
   "admin": {
