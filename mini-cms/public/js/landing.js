@@ -170,3 +170,41 @@ function nextSlide() {
 
 // Expose nextSlide globally for onclick
 window.nextSlide = nextSlide;
+
+/* ---------- BRAND PARTNER CAROUSEL ---------- */
+(function () {
+    const track = document.getElementById('brandTrack');
+    if (!track) return;
+
+    const items = track.querySelectorAll('.brand-item');
+    const total = items.length;
+    let offset = 0;
+
+    function getVisible() {
+        if (window.innerWidth <= 639) return 2;
+        if (window.innerWidth <= 958) return 3;
+        if (window.innerWidth <= 1367) return 4;
+        return 5;
+    }
+
+    function getMaxOffset() {
+        return Math.max(0, total - getVisible());
+    }
+
+    function updateTrack() {
+        const itemWidthPct = 100 / getVisible();
+        track.style.setProperty('--brand-item-width', itemWidthPct + '%');
+        offset = Math.min(offset, getMaxOffset());
+        track.style.transform = 'translateX(-' + (offset * itemWidthPct) + '%)';
+    }
+
+    function goNext() {
+        offset = offset >= getMaxOffset() ? 0 : offset + 1;
+        updateTrack();
+    }
+
+    window.addEventListener('resize', updateTrack);
+
+    updateTrack();
+    setInterval(goNext, 3000);
+})();

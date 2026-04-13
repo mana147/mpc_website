@@ -72,17 +72,104 @@
     text-align: justify;
 }
 
-/* Port Image Section */
-.port-image-section {
-    padding: 0;
-    margin-top: -100px;
+/* ========================
+   BRAND PARTNER CAROUSEL
+   ======================== */
+.brand-carousel-section {
+    background: #ffffff;
+    padding: 36px 0;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
 }
 
-.img-gioi-thieu {
-    width: 1537px;
-    height: 243px;
-    display: block;
-    margin-left: 383px;
+.brand-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.brand-track-outer {
+    overflow: hidden;
+    flex: 1;
+}
+
+.brand-track {
+    display: flex;
+    transition: transform 0.4s ease;
+    --brand-item-width: 20%;
+}
+
+.brand-item {
+    flex: 0 0 var(--brand-item-width);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #eeeeee;
+    min-height: 72px;
+}
+
+.brand-item:last-child {
+    border-right: none;
+}
+
+.brand-item img {
+    max-height: 80px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.55;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.brand-item img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.brand-logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: #aaaaaa;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.brand-item:hover .brand-logo-text {
+    color: #DF1F28;
+}
+
+.brand-arrow {
+    background: transparent;
+    border: 2px solid #DF1F28;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    transition: background 0.25s ease;
+}
+
+.brand-arrow:hover {
+    background: #DF1F28;
+}
+
+.brand-arrow img {
+    width: 16px;
+    height: 16px;
+    transition: filter 0.25s ease;
+}
+
+.brand-arrow:hover img {
+    filter: invert(1) brightness(5);
 }
 
 /* Quick Nav */
@@ -698,12 +785,6 @@
         font-size: 18px;
     }
 
-    .img-gioi-thieu {
-        width: 1537px;
-        height: 310px;
-        margin-left: 560px;
-    }
-
     .geo-section {
         padding: 80px 0;
     }
@@ -854,12 +935,6 @@
         line-height: 30px;
     }
 
-    .img-gioi-thieu {
-        width: 1537px;
-        height: 268px;
-        margin-left: 490px;
-    }
-
     .title2 {
         font-size: 40px;
         line-height: 50px;
@@ -956,12 +1031,6 @@
         grid-template-columns: 400px 1fr;
         gap: 80px;
         padding: 0 40px;
-    }
-
-    .img-gioi-thieu {
-        width: 1537px;
-        height: 243px;
-        margin-left: 383px;
     }
 
     .wrapper {
@@ -1062,17 +1131,8 @@
         line-height: 25px;
     }
 
-    .img-gioi-thieu {
-        width: 100%;
-        height: auto;
-        margin-left: 0;
-        display: block;
-    }
-
-    .port-image-section {
-        margin-top: -80px;
-        padding: 0;
-        overflow: hidden;
+    .brand-carousel-section {
+        padding: 28px 0;
     }
 
     .geo-section {
@@ -1394,17 +1454,12 @@
         line-height: 24px;
     }
 
-    .img-gioi-thieu {
-        width: 100%;
-        height: auto;
-        margin-left: 0;
-        display: block;
+    .brand-carousel-section {
+        padding: 24px 0;
     }
 
-    .port-image-section {
-        margin-top: -50px;
-        padding: 0;
-        overflow: hidden;
+    .brand-item {
+        padding: 0 16px;
     }
 
     .geo-section {
@@ -1650,18 +1705,29 @@
         padding: 8px 14px;
     }
 
-    .img-gioi-thieu {
-        width: 100%;
-        height: auto;
-        margin-left: 0;
-        display: block;
+    .brand-carousel-section {
+        padding: 20px 0;
     }
 
-    .port-image-section {
-        margin-top: -28px;
-        padding: 0;
-        overflow: hidden;
+    .brand-item {
+        padding: 0 10px;
+        min-height: 56px;
     }
+
+    .brand-arrow {
+        width: 36px;
+        height: 36px;
+    }
+
+    .brand-arrow img {
+        width: 13px;
+        height: 13px;
+    }
+
+    .brand-logo-text {
+        font-size: 13px;
+    }
+
 
     .geo-section {
         padding: 22px 0;
