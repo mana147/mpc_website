@@ -26,7 +26,7 @@
 
 /* About Section */
 .about-section {
-    padding: 100px 0 239px 0;
+    padding: 100px 0 100px 0;
     background: white;
 }
 
@@ -756,7 +756,7 @@
     }
 
     .about-section {
-        padding: 140px 0 300px 0;
+        padding: 100px 0 100px 0;
     }
 
     .about-container {
@@ -915,7 +915,7 @@
     }
 
     .about-section {
-        padding: 115px 0 270px 0;
+        padding: 100px 0 100px 0;
     }
 
     .about-container {
@@ -1105,7 +1105,7 @@
     }
 
     .about-section {
-        padding: 80px 0 170px 0;
+        padding: 80px 0 100px 0;
     }
 
     .about-container {
@@ -1132,7 +1132,7 @@
     }
 
     .brand-carousel-section {
-        padding: 28px 0;
+        padding: 10px 0 20px 0;
     }
 
     .geo-section {
@@ -1380,7 +1380,7 @@
         min-height: auto;
     }
 
-    .image-wrapper > img {
+    .image-wrapper>img {
         width: 100%;
         height: auto;
         left: 0;
@@ -1455,7 +1455,7 @@
     }
 
     .brand-carousel-section {
-        padding: 24px 0;
+        padding: 10px 0 20px 0;
     }
 
     .brand-item {
@@ -1706,7 +1706,7 @@
     }
 
     .brand-carousel-section {
-        padding: 20px 0;
+        padding: 10px 0 30px 0;
     }
 
     .brand-item {
