@@ -1371,6 +1371,8 @@
     }
 
     .btn-outline--white {
+        display: flex;
+        max-width: 100%;
         padding: 8px 0;
         justify-content: center;
         width: 100%;
