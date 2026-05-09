@@ -24,6 +24,7 @@
         <% } %>
 
         <form action="/admin/posts/<%= post.id %>/edit" method="POST" enctype="multipart/form-data" class="admin-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <!-- Vietnamese Content -->
           <fieldset class="lang-fieldset">
             <legend>🇻🇳 Nội dung Tiếng Việt</legend>

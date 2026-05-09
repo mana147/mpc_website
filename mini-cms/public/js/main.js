@@ -38,7 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
           if (!preview) {
             preview = document.createElement('div');
             preview.className = 'upload-preview';
-            preview.innerHTML = '<img style="max-width:200px;margin-top:10px;border-radius:5px;">';
+            const img = document.createElement('img');
+            img.style.cssText = 'max-width:200px;margin-top:10px;border-radius:5px;';
+            preview.appendChild(img);
             thumbnailInput.parentNode.appendChild(preview);
           }
           preview.querySelector('img').src = e.target.result;

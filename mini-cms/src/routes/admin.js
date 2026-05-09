@@ -17,11 +17,24 @@ const GalleryController = require('../controllers/galleryController');
 const ContactController = require('../controllers/contactController');
 const MenuController = require('../controllers/menuController');
 
+// Rate limiting cho login — chặn brute force
+const rateLimit = require('express-rate-limit');
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 phút
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    req.session.error = 'Quá nhiều lần thử đăng nhập. Vui lòng thử lại sau 15 phút.';
+    res.redirect('/admin/login');
+  }
+});
+
 // ============================================
 // AUTH ROUTES (không cần đăng nhập)
 // ============================================
 router.get('/login', redirectIfAuth, AuthController.showLogin);
-router.post('/login', AuthController.login);
+router.post('/login', loginLimiter, AuthController.login);
 router.post('/logout', AuthController.logout);
 
 // ============================================

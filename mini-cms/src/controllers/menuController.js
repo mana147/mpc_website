@@ -297,14 +297,27 @@ const MenuController = {
    * POST /admin/menus/reorder - Sắp xếp lại thứ tự
    */
   reorder(req, res) {
-    const { orders } = req.body; // [{id: 1, sort_order: 1}, ...]
+    const { orders } = req.body;
+
+    if (!Array.isArray(orders)) {
+      return res.json({ success: false, message: 'Dữ liệu không hợp lệ' });
+    }
+
+    // Validate từng phần tử: id và sort_order phải là số nguyên dương hợp lệ
+    const isValid = orders.every(o => {
+      const id        = Number(o.id);
+      const sortOrder = Number(o.sort_order);
+      return Number.isInteger(id) && id > 0 &&
+             Number.isInteger(sortOrder) && sortOrder >= 0;
+    });
+
+    if (!isValid) {
+      return res.json({ success: false, message: 'Dữ liệu không hợp lệ' });
+    }
 
     try {
-      if (Array.isArray(orders)) {
-        MenuModel.reorder(orders);
-        return res.json({ success: true });
-      }
-      return res.json({ success: false, message: 'Dữ liệu không hợp lệ' });
+      MenuModel.reorder(orders);
+      return res.json({ success: true });
     } catch (error) {
       console.error('Reorder menu error:', error);
       return res.json({ success: false, message: 'Có lỗi xảy ra' });

@@ -52,8 +52,8 @@
 
           <div class="contact-detail-message">
             <h3>Nội dung:</h3>
-            <div class="message-content">
-              <%- contact.message.replace(/\n/g, '<br>') %>
+            <div class="message-content" style="white-space: pre-wrap">
+              <%= contact.message %>
             </div>
           </div>
 
@@ -62,6 +62,7 @@
               📧 Phản hồi qua Email
             </a>
             <form action="/admin/contacts/<%= contact.id %>/delete" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc muốn xóa liên hệ này?');">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <button type="submit" class="btn btn-danger">🗑️ Xóa liên hệ</button>
             </form>
           </div>

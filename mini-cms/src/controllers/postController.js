@@ -5,8 +5,7 @@
 
 const PostModel = require('../models/postModel');
 const { slugify, makeUniqueSlug } = require('../utils/slugify');
-const fs = require('fs');
-const path = require('path');
+const { safeUnlink } = require('../utils/safeFilePath');
 
 const PostController = {
   // ============================================
@@ -170,13 +169,7 @@ const PostController = {
     // Xử lý thumbnail
     let thumbnail = post.thumbnail;
     if (req.file) {
-      // Xóa ảnh cũ nếu có
-      if (post.thumbnail) {
-        const oldPath = path.join(__dirname, '../../public', post.thumbnail);
-        if (fs.existsSync(oldPath)) {
-          fs.unlinkSync(oldPath);
-        }
-      }
+      safeUnlink(post.thumbnail);
       thumbnail = '/uploads/images/' + req.file.filename;
     }
 
@@ -216,14 +209,7 @@ const PostController = {
     }
 
     try {
-      // Xóa thumbnail nếu có
-      if (post.thumbnail) {
-        const imagePath = path.join(__dirname, '../../public', post.thumbnail);
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-        }
-      }
-
+      safeUnlink(post.thumbnail);
       PostModel.delete(id);
       req.session.success = 'Xóa bài viết thành công';
     } catch (error) {

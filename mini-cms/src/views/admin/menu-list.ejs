@@ -87,13 +87,15 @@
                     <a href="/admin/menus/<%= menu.id %>/edit" class="btn btn-small">Sửa</a>
                     
                     <form action="/admin/menus/<%= menu.id %>/toggle-visibility" method="POST" style="display: inline;">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                       <button type="submit" class="btn btn-small <%= menu.is_visible ? 'btn-warning' : 'btn-success' %>">
                         <%= menu.is_visible ? 'Ẩn' : 'Hiện' %>
                       </button>
                     </form>
-                    
+
                     <% if (menu.type !== 'system') { %>
                       <form action="/admin/menus/<%= menu.id %>/delete" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc muốn xóa menu này?');">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit" class="btn btn-small btn-danger">Xóa</button>
                       </form>
                     <% } %>

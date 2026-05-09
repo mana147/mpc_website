@@ -71,7 +71,7 @@
         <% } %>
 
         <form action="/admin/menus<%= menu && menu.id ? '/' + menu.id + '/edit' : '/create' %>" method="POST" class="admin-form">
-          
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <!-- Tên menu tiếng Việt -->
           <div class="form-group">
             <label for="name_vi">Tên menu (Tiếng Việt) *</label>

@@ -18,9 +18,20 @@ router.get('/:lang', (req, res) => {
     req.session.lang = lang;
   }
   
-  // Redirect về trang trước đó hoặc trang chủ
-  const referer = req.get('Referer') || '/';
-  res.redirect(referer);
+  // Redirect về trang trước đó (chỉ same-origin) hoặc trang chủ
+  const referer = req.get('Referer');
+  let redirectTo = '/';
+  if (referer) {
+    try {
+      const refererUrl = new URL(referer);
+      if (refererUrl.host === req.get('Host')) {
+        redirectTo = refererUrl.pathname + refererUrl.search;
+      }
+    } catch (e) {
+      // URL không hợp lệ, redirect về trang chủ
+    }
+  }
+  res.redirect(redirectTo);
 });
 
 module.exports = router;

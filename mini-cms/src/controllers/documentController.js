@@ -4,8 +4,8 @@
  */
 
 const DocumentModel = require('../models/documentModel');
+const { safeUnlink, safeResolve } = require('../utils/safeFilePath');
 const fs = require('fs');
-const path = require('path');
 
 const DocumentController = {
   // ============================================
@@ -34,8 +34,8 @@ const DocumentController = {
       return res.status(404).render('web/404', { title: 'Không tìm thấy tài liệu' });
     }
 
-    const filePath = path.join(__dirname, '../../public', doc.filepath);
-    
+    const filePath = safeResolve(doc.filepath);
+
     if (!fs.existsSync(filePath)) {
       return res.status(404).render('web/404', { title: 'File không tồn tại' });
     }
@@ -123,12 +123,7 @@ const DocumentController = {
     }
 
     try {
-      // Xóa file vật lý
-      const filePath = path.join(__dirname, '../../public', doc.filepath);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-
+      safeUnlink(doc.filepath);
       DocumentModel.delete(id);
       req.session.success = 'Xóa tài liệu thành công';
     } catch (error) {

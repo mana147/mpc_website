@@ -7,7 +7,10 @@
       "Bash(ls public/images/logo.png public/images/map-vietnam.svg)",
       "Bash(ls src/views/partials/mpc-header.ejs src/views/partials/mpc-footer.ejs)",
       "Bash(timeout 8 node app.js)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(grep -E \"env|\\\\.js$|package\")",
+      "Bash(xargs cat)",
+      "Bash(npm install *)"
     ]
   }
 }

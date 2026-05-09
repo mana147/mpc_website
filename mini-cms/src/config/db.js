@@ -149,7 +149,7 @@ function initDatabase() {
       'admin'
     );
     
-    console.log(`✅ Đã tạo tài khoản admin: ${username} / ${password}`);
+    console.log(`✅ Đã tạo tài khoản admin: ${username}`);
   }
 
   // Seed menu mặc định nếu bảng menus trống

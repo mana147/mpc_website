@@ -32,6 +32,7 @@
           <% } %>
 
             <form action="/admin/documents/create" method="POST" enctype="multipart/form-data" class="admin-form">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <div class="form-group">
                 <label for="title">Tiêu đề tài liệu *</label>
                 <input type="text" id="title" name="title" required placeholder="Ví dụ: Báo cáo tài chính Q1 2024">

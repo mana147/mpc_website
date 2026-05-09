@@ -4,8 +4,7 @@
  */
 
 const GalleryModel = require('../models/galleryModel');
-const fs = require('fs');
-const path = require('path');
+const { safeUnlink } = require('../utils/safeFilePath');
 
 const GalleryController = {
   // ============================================
@@ -88,13 +87,7 @@ const GalleryController = {
     }
 
     try {
-      // Xóa file vật lý
-      const filePath = path.join(__dirname, '../../public', image.filepath);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-
-      // Xóa trong database
+      safeUnlink(image.filepath);
       GalleryModel.delete(id);
       req.session.success = 'Đã xóa ảnh thành công';
     } catch (error) {

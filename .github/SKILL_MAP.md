@@ -172,7 +172,8 @@ mini-cms/
     │   ├── vi.json                 # Vietnamese translations
     │   └── en.json                 # English translations
     ├── utils/
-    │   └── slugify.js              # Vietnamese-aware slug generator
+    │   ├── slugify.js              # Vietnamese-aware slug generator
+    │   └── safeFilePath.js         # safeUnlink + safeResolve — path traversal prevention
     └── views/
         ├── admin/                  # 12 EJS templates (hardcoded Vietnamese, no i18n)
         │   ├── contact-detail.ejs, contact-list.ejs
@@ -707,7 +708,10 @@ router.post('/features/create', FeatureController.store);
   "dotenv": "^16.4.5",
   "ejs": "^3.1.9",
   "express": "^4.18.2",
+  "express-rate-limit": "latest",
   "express-session": "^1.18.0",
+  "file-type": "^16.0.0",
+  "helmet": "latest",
   "multer": "^1.4.5-lts.1"
 }
 ```

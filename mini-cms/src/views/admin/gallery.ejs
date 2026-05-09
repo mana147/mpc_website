@@ -30,6 +30,7 @@
         <section class="admin-section">
           <h2>📤 Upload ảnh mới</h2>
           <form action="/admin/gallery/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-group">
               <label for="images">Chọn ảnh (có thể chọn nhiều ảnh)</label>
               <input 
@@ -61,6 +62,7 @@
                   </div>
                   <form action="/admin/gallery/<%= image.id %>/delete" method="POST" class="admin-gallery-delete"
                         onsubmit="return confirm('Bạn có chắc muốn xóa ảnh này?');">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button type="submit" class="btn btn-small btn-danger">Xóa</button>
                   </form>
                 </div>

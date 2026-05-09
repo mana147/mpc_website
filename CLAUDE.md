@@ -22,7 +22,7 @@ No test suite, no linter, no build step. Default admin: `admin` / `admin123` at 
 
 ### Dependencies
 
-`express`, `ejs`, `better-sqlite3`, `express-session`, `multer`, `bcrypt`, `dotenv`. Dev: `nodemon`.
+`express`, `ejs`, `better-sqlite3`, `express-session`, `multer`, `bcrypt`, `dotenv`, `helmet`, `express-rate-limit`, `file-type`. Dev: `nodemon`.
 
 ---
 
@@ -95,6 +95,7 @@ mini-cms/
     │   ├── vi.json               # Vietnamese translations (admin + landing + footer keys)
     │   └── en.json               # English translations (admin + landing + footer keys)
     ├── utils/slugify.js          # Vietnamese-aware slug generator
+    ├── utils/safeFilePath.js     # safeUnlink + safeResolve — chặn path traversal trong file ops
     └── views/
         ├── admin/                # 12 EJS templates (all hardcoded Vietnamese, no i18n)
         ├── web/                  # 9 EJS templates (all use mpc-header/mpc-footer, i18n enabled)

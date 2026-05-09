@@ -15,6 +15,7 @@
   <% } %>
 
   <form action="/contact" method="POST" class="contact-form">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <!-- Họ & Tên - Full width -->
     <div class="form-group full-width">
       <label for="full_name"><%= typeof t !== 'undefined' ? t.contact.full_name : 'Họ & Tên' %> *</label>

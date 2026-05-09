@@ -6,6 +6,10 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { fileTypeFromFile } = require('file-type');
+
+const IMAGE_ALLOWED_MIMES = ['image/jpeg', 'image/png', 'image/webp'];
+const PDF_ALLOWED_MIMES   = ['application/pdf'];
 
 // Đảm bảo thư mục upload tồn tại
 const imageDir = path.join(__dirname, '../../public/uploads/images');
@@ -22,9 +26,9 @@ if (!fs.existsSync(pdfDir)) {
  * Tạo tên file unique
  */
 function generateFilename(originalname) {
-  const ext = path.extname(originalname);
+  const ext    = path.extname(originalname);
   const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 10000);
+  const random = require('crypto').randomBytes(8).toString('hex');
   return `${timestamp}-${random}${ext}`;
 }
 
@@ -90,29 +94,50 @@ const uploadPdf = multer({
 });
 
 // ============================================
-// MIDDLEWARE WRAPPER để xử lý lỗi
+// MIDDLEWARE WRAPPER — xử lý lỗi + validate magic bytes
 // ============================================
-function handleUploadError(uploadMiddleware) {
+function handleUploadError(uploadMiddleware, allowedMimes) {
   return (req, res, next) => {
-    uploadMiddleware(req, res, (err) => {
+    uploadMiddleware(req, res, async (err) => {
       if (err instanceof multer.MulterError) {
-        if (err.code === 'LIMIT_FILE_SIZE') {
-          req.uploadError = 'File quá lớn';
-        } else {
-          req.uploadError = 'Lỗi upload file';
-        }
-      } else if (err) {
-        req.uploadError = err.message;
+        req.uploadError = err.code === 'LIMIT_FILE_SIZE' ? 'File quá lớn' : 'Lỗi upload file';
+        return next();
       }
+      if (err) {
+        req.uploadError = err.message;
+        return next();
+      }
+
+      // Validate nội dung thực tế của file (magic bytes) — không tin MIME từ client
+      const files = req.file ? [req.file] : (req.files || []);
+      for (const file of files) {
+        try {
+          const detected = await fileTypeFromFile(file.path);
+          if (!detected || !allowedMimes.includes(detected.mime)) {
+            fs.unlinkSync(file.path);
+            req.uploadError = 'File không hợp lệ. Nội dung không khớp định dạng được phép.';
+            req.file  = undefined;
+            req.files = undefined;
+            return next();
+          }
+        } catch (e) {
+          if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+          req.uploadError = 'Không thể xác thực file upload.';
+          req.file  = undefined;
+          req.files = undefined;
+          return next();
+        }
+      }
+
       next();
     });
   };
 }
 
 module.exports = {
-  uploadImage: handleUploadError(uploadImage.single('thumbnail')),
-  uploadGallery: handleUploadError(uploadImage.array('images', 20)), // Upload tối đa 20 ảnh
-  uploadPdf: handleUploadError(uploadPdf.single('file')),
+  uploadImage:   handleUploadError(uploadImage.single('thumbnail'),   IMAGE_ALLOWED_MIMES),
+  uploadGallery: handleUploadError(uploadImage.array('images', 20),   IMAGE_ALLOWED_MIMES),
+  uploadPdf:     handleUploadError(uploadPdf.single('file'),          PDF_ALLOWED_MIMES),
   imageDir,
   pdfDir
 };
