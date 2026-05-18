@@ -1,6 +1,20 @@
 // Mobile Menu Toggle
 const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
 const headerNav = document.querySelector('.header-nav');
+const pageHeader = document.querySelector('.mpc-header');
+
+if (pageHeader) {
+    const updateHeaderState = () => {
+        if (window.scrollY > 20) {
+            pageHeader.classList.add('scrolled');
+        } else {
+            pageHeader.classList.remove('scrolled');
+        }
+    };
+
+    updateHeaderState();
+    window.addEventListener('scroll', updateHeaderState);
+}
 
 if (mobileMenuToggle && headerNav) {
     mobileMenuToggle.addEventListener('click', function () {

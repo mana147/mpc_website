@@ -9,6 +9,16 @@
     left: 0;
     right: 0;
     z-index: 1000;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.mpc-header.scrolled {
+    position: fixed;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+}
+
+.mpc-header.scrolled::after {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .mpc-header::after {
