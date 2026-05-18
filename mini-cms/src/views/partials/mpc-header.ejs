@@ -31,7 +31,13 @@
       <nav class="header-nav">
         <ul class="nav-menu">
           <% if (typeof visibleMenus !== 'undefined' && visibleMenus.length > 0) { %>
+            <% const homeMenu = visibleMenus.find(menu => menu.slug === '/'); %>
+            <% if (homeMenu) { %>
+              <li><a href="<%= homeMenu.url || homeMenu.slug %>" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en' && homeMenu.name_en) ? homeMenu.name_en.toUpperCase() : homeMenu.name_vi.toUpperCase() %></a></li>
+            <% } %>
+            <li><a href="/about" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/about') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'ABOUT MPC' : 'VỀ MPC' %></a></li>
             <% visibleMenus.forEach(menu => { %>
+              <% if (menu.slug === '/') return; %>
               <%
                 const menuName = (typeof lang !== 'undefined' && lang === 'en' && menu.name_en)
                   ? menu.name_en
@@ -42,7 +48,7 @@
               %>
               <% if (hasChildren) { %>
                 <li class="menu-item">
-                  <a href="javascript:void(0)" style="color: #ffffff;"<%= isActive ? ' class="active"' : '' %>><%= menuName.toUpperCase() %></a>
+                  <a href="javascript:void(0)" style="color: #ffffff;"<%- isActive ? ' class="active"' : '' %>><%= menuName.toUpperCase() %></a>
                   <ul class="sub-menu">
                     <% menu.children.forEach(child => { %>
                       <%
@@ -55,15 +61,16 @@
                   </ul>
                 </li>
               <% } else { %>
-                <li><a href="<%= menuUrl %>"<%= isActive ? ' class="active"' : '' %>><%= menuName.toUpperCase() %></a></li>
+                <li><a href="<%= menuUrl %>"<%- isActive ? ' class="active"' : '' %>><%= menuName.toUpperCase() %></a></li>
               <% } %>
             <% }) %>
           <% } else { %>
-            <li><a href="/" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/') ? 'active' : '' %>">TRANG CHỦ</a></li>
-            <li><a href="/posts">BÀI VIẾT</a></li>
-            <li><a href="/gallery">THƯ VIỆN ẢNH</a></li>
-            <li><a href="/documents">TÀI LIỆU</a></li>
-            <li><a href="/contact">LIÊN HỆ</a></li>
+            <li><a href="/" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'HOME' : 'TRANG CHỦ' %></a></li>
+            <li><a href="/about" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/about') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'ABOUT MPC' : 'VỀ MPC' %></a></li>
+            <li><a href="/posts"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'POSTS' : 'BÀI VIẾT' %></a></li>
+            <li><a href="/gallery"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'GALLERY' : 'THƯ VIỆN ẢNH' %></a></li>
+            <li><a href="/documents"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'DOCUMENTS' : 'TÀI LIỆU' %></a></li>
+            <li><a href="/contact"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'CONTACT' : 'LIÊN HỆ' %></a></li>
           <% } %>
         </ul>
       </nav>

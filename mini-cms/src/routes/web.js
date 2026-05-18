@@ -47,6 +47,18 @@ router.get('/gallery', GalleryController.index);
 router.get('/contact', ContactController.index);
 router.post('/contact', ContactController.submit);
 
+// About MPC
+router.get('/about', (req, res) => {
+  const pageTitle = res.locals.lang === 'en' ? 'About MPC' : 'Về MPC';
+
+  res.render('web/about', {
+    title: pageTitle,
+    currentPath: '/about',
+    pageCss: '/css/pages/about.css',
+    pageJs: '/js/landing.js'
+  });
+});
+
 // Menu page (single_post hoặc custom)
 router.get('/menu/:slug', MenuController.showMenuPage);
 

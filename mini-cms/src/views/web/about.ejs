@@ -1,0 +1,161 @@
+<%- include('../partials/mpc-header') %>
+
+    <section class="hero-section">
+      <div class="hero-overlay"></div>
+      <img src="/images/about/about-img1.png" alt="Port Hero">
+      <div class="hero-content">
+        <div class="hero-subtitle"><%= t.landing.about_hero_subtitle %></div>
+        <h1 class="hero-title"><%= t.landing.about_hero_title %></h1>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="about-container">
+        <div class="about-title"><%= t.landing.about_label %></div>
+        <div class="about-content"><%- t.landing.about_text %></div>
+      </div>
+    </section>
+
+    <div class="section-wrapper">
+      <div class="custom-row">
+        <div class="col-large content-box">
+          <div class="label">MIPEC PORT</div>
+          <div class="title"><%= t.landing.about_vision_title %></div>
+          <div class="divider"></div>
+          <div class="desc1"><%= t.landing.about_vision_text %></div>
+          <a class="read-more-btn" href="#"><%= t.common.learn_more %>
+            <span class="read-more-icon"><svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="40" height="40" rx="20" stroke="#DF1F28" />
+              <path d="M18.3057 16.1108L22.6948 20.4999L18.3057 24.889" stroke="#DF1F28" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></span>
+          </a>
+        </div>
+
+        <div class="col-small">
+          <img src="/images/about/about-img2.png" class="full-img" alt="About Image 2">
+        </div>
+
+        <div class="col-small content-box">
+          <div class="label">MIPEC PORT</div>
+          <div class="title"><%= t.landing.about_core_values_title %></div>
+          <div class="divider"></div>
+          <div class="desc2"><%= t.landing.about_core_values_text %></div>
+          <a class="read-more-btn" href="#"><%= t.common.learn_more %>
+            <span class="read-more-icon"><svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="40" height="40" rx="20" stroke="#DF1F28" />
+              <path d="M18.3057 16.1108L22.6948 20.4999L18.3057 24.889" stroke="#DF1F28" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="custom-row">
+        <div class="col-large">
+          <img src="/images/about/about-img3.png" class="full-img" alt="About Image 3">
+        </div>
+
+        <div class="col-small content-box">
+          <div class="label">MIPEC PORT</div>
+          <div class="title"><%= t.landing.about_mission_title %></div>
+          <div class="divider"></div>
+          <div class="desc2"><%= t.landing.about_mission_text %></div>
+          <a class="read-more-btn" href="#"><%= t.common.learn_more %>
+            <span class="read-more-icon"><svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="40" height="40" rx="20" stroke="#DF1F28" />
+              <path d="M18.3057 16.1108L22.6948 20.4999L18.3057 24.889" stroke="#DF1F28" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></span>
+          </a>
+        </div>
+
+        <div class="col-small">
+          <img src="/images/about/about-img4.png" class="full-img" alt="About Image 4">
+        </div>
+      </div>
+    </div>
+
+    <section class="history-section">
+      <div class="section-title"><%= t.landing.about_history_title %></div>
+      <div class="title-underline"></div>
+
+      <div class="timeline">
+        <div class="timeline-line"></div>
+        <div class="timeline-points">
+          <div class="timeline-item active" data-index="0">
+            2021
+            <div class="dot"></div>
+          </div>
+          <div class="timeline-item" data-index="1">
+            2020
+            <div class="dot"></div>
+          </div>
+          <div class="timeline-item" data-index="2">
+            2017
+            <div class="dot"></div>
+          </div>
+          <div class="timeline-item" data-index="3">
+            2015
+            <div class="dot"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="history-wrapper">
+        <div class="history-slider" id="slider">
+          <div class="history-slide">
+            <div class="history-col">
+              <div class="year">2021</div>
+              <div class="year-underline"></div>
+              <div class="history-item">
+                <div class="plus">+</div>
+                <div><%= t.landing.about_timeline_2021 %></div>
+              </div>
+            </div>
+            <div class="history-col">
+              <div class="year">2020</div>
+              <div class="year-underline"></div>
+              <div class="history-item">
+                <div class="plus">+</div>
+                <div><%= t.landing.about_timeline_2020_1 %></div>
+              </div>
+              <div class="history-item">
+                <div class="plus">+</div>
+                <div><%= t.landing.about_timeline_2020_2 %></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-slide">
+            <div class="history-col">
+              <div class="year">2017</div>
+              <div class="year-underline"></div>
+              <div class="history-item">
+                <div class="plus">+</div>
+                <div><%= t.landing.about_timeline_2017 %></div>
+              </div>
+            </div>
+            <div class="history-col">
+              <div class="year">2015</div>
+              <div class="year-underline"></div>
+              <div class="history-item">
+                <div class="plus">+</div>
+                <div><%= t.landing.about_timeline_2015 %></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-slide">
+            <div class="history-col">
+              <div class="year">2014</div>
+              <div class="year-underline"></div>
+              <div class="history-item">
+                <div class="plus">+</div>
+                <div><%= t.landing.about_timeline_2014 %></div>
+              </div>
+            </div>
+            <div class="history-col"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<%- include('../partials/mpc-footer') %>
