@@ -4,14 +4,14 @@ node_modules/
 # Environment
 .env
 
-# Database
-database/*.sqlite
+# # Database
+# database/*.sqlite
 
-# Uploads (keep folders but ignore content)
-public/uploads/images/*
-!public/uploads/images/.gitkeep
-public/uploads/pdfs/*
-!public/uploads/pdfs/.gitkeep
+# # Uploads (keep folders but ignore content)
+# public/uploads/images/*
+# !public/uploads/images/.gitkeep
+# public/uploads/pdfs/*
+# !public/uploads/pdfs/.gitkeep
 
 # OS files
 .DS_Store
