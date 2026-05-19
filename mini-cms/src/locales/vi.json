@@ -13,9 +13,27 @@
     "gallery": "Thư viện ảnh",
     "documents": "Tài liệu",
     "contact": "Liên hệ",
+    "recruitment": "Tuyển dụng",
     "language": "Ngôn ngữ"
   },
   
+  "recruitment": {
+    "banner_label": "TUYỂN DỤNG",
+    "banner_title": "Khởi tạo tương lai cùng MPC Port",
+    "banner_subtitle": "Khám phá cơ hội việc làm tại MPC Port và gia nhập đội ngũ của cảng hiện đại sẵn sàng phát triển.",
+    "section_label": "TUYỂN DỤNG",
+    "section_title": "Cơ hội nghề nghiệp",
+    "section_desc": "Tại MPC Port, chúng tôi chào đón cả tân tốt nghiệp và ứng viên kinh nghiệm. Tìm vị trí phù hợp với bạn và ứng tuyển ngay hôm nay.",
+    "salary_label": "Mức lương",
+    "hiring_label": "Số lượng",
+    "deadline_label": "Hạn nộp",
+    "apply_now": "Ứng tuyển ngay",
+    "ready_title": "Sẵn sàng gia nhập đội ngũ?",
+    "ready_text": "Gửi hồ sơ ứng tuyển đến bộ phận tuyển dụng của chúng tôi, chúng tôi sẽ liên hệ bạn với các bước tiếp theo.",
+    "contact_label": "Email liên hệ",
+    "phone_label": "Điện thoại"
+  },
+
   "home": {
     "welcome": "Chào mừng đến với cảng MPC",
     "description": "Hệ thống quản lý nội dung đơn giản cho doanh nghiệp nhỏ",
@@ -211,6 +229,18 @@
     "menu_show": "Hiện",
     "menu_hide": "Ẩn",
     "menu_system_warning": "Menu hệ thống không thể xóa hoặc thay đổi loại/slug.",
-    "menu_no_content": "Trang này chưa có nội dung."
+    "menu_no_content": "Trang này chưa có nội dung.",
+
+    "job_management": "Quản lý Tuyển dụng",
+    "create_job": "Tạo tin tuyển dụng mới",
+    "edit_job": "Sửa tin tuyển dụng",
+    "job_title": "Tiêu đề",
+    "job_title_en": "Tiêu đề (English)",
+    "job_content": "Mô tả công việc",
+    "job_content_en": "Mô tả (English)",
+    "job_salary": "Mức lương",
+    "job_count": "Số lượng tuyển",
+    "job_deadline": "Hạn nộp hồ sơ",
+    "job_status": "Trạng thái"
   }
 }

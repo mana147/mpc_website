@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Admin Mini CMS</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-page">
+  <% const activePage = 'jobs'; %>
+  <div class="admin-layout">
+    <%- include('../partials/admin-sidebar', { activePage }) %>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1><%= title %></h1>
+        <a href="/admin/jobs/create" class="btn btn-primary">+ Tạo tin mới</a>
+      </header>
+
+      <div class="admin-content">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="alert alert-success"><%= success %></div>
+        <% } %>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-error"><%= error %></div>
+        <% } %>
+
+        <% if (jobs && jobs.length > 0) { %>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tiêu đề</th>
+                <th>Mức lương</th>
+                <th>Số lượng</th>
+                <th>Hạn nộp</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% jobs.forEach(job => { %>
+                <tr>
+                  <td><%= job.id %></td>
+                  <td>
+                    <strong><%= job.title %></strong>
+                    <% if (job.title_en) { %>
+                      <br><small style="color:#888"><%= job.title_en %></small>
+                    <% } %>
+                  </td>
+                  <td><%= job.salary || '-' %></td>
+                  <td><%= job.hiring_count %></td>
+                  <td><%= job.deadline || '-' %></td>
+                  <td>
+                    <% if (job.status === 'published') { %>
+                      <span class="badge badge-read">Đã đăng</span>
+                    <% } else { %>
+                      <span class="badge badge-unread">Nháp</span>
+                    <% } %>
+                  </td>
+                  <td><%= new Date(job.created_at).toLocaleDateString('vi-VN') %></td>
+                  <td class="actions">
+                    <% if (job.status === 'published') { %>
+                      <a href="/tuyen-dung/<%= job.slug %>" target="_blank" class="btn btn-small">Xem</a>
+                    <% } %>
+                    <a href="/admin/jobs/<%= job.id %>/edit" class="btn btn-small">Sửa</a>
+                    <form action="/admin/jobs/<%= job.id %>/delete" method="POST" style="display:inline;"
+                          onsubmit="return confirm('Bạn có chắc muốn xóa tin này?');">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                      <button type="submit" class="btn btn-small btn-danger">Xóa</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <div class="empty-state">
+            <p>Chưa có tin tuyển dụng nào.</p>
+            <a href="/admin/jobs/create" class="btn btn-primary">+ Tạo tin đầu tiên</a>
+          </div>
+        <% } %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

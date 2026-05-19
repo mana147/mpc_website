@@ -11,6 +11,7 @@ const DocumentController = require('../controllers/documentController');
 const GalleryController = require('../controllers/galleryController');
 const ContactController = require('../controllers/contactController');
 const MenuController = require('../controllers/menuController');
+const JobController = require('../controllers/jobController');
 const PostModel = require('../models/postModel');
 const DocumentModel = require('../models/documentModel');
 const GalleryModel = require('../models/galleryModel');
@@ -58,6 +59,10 @@ router.get('/about', (req, res) => {
     pageJs: '/js/landing.js'
   });
 });
+
+// Tuyển dụng (load từ DB)
+router.get('/tuyen-dung', JobController.index);
+router.get('/tuyen-dung/:slug', JobController.show);
 
 // Menu page (single_post hoặc custom)
 router.get('/menu/:slug', MenuController.showMenuPage);

@@ -1,0 +1,71 @@
+<%- include('../partials/mpc-header') %>
+
+<section class="page-banner recruitment-banner">
+  <div class="banner-overlay"></div>
+  <img src="/images/about/about-img1.png" alt="Recruitment Banner" class="banner-image">
+  <div class="hero-content">
+    <div class="hero-subtitle"><%= t.recruitment.banner_label %></div>
+    <h1 class="hero-title"><%= t.recruitment.banner_title %></h1>
+    <p class="banner-text"><%= t.recruitment.banner_subtitle %></p>
+  </div>
+</section>
+
+<section class="recruitment-section py-5">
+  <div class="container">
+    <div class="section-intro text-center mb-5">
+      <div class="section-label"><%= t.recruitment.section_label %></div>
+      <h2 class="section-title"><%= t.recruitment.section_title %></h2>
+      <p class="section-desc mx-auto"><%= t.recruitment.section_desc %></p>
+    </div>
+
+    <% if (jobs && jobs.length > 0) { %>
+      <div class="recruitment-grid">
+        <% jobs.forEach(job => { %>
+          <div class="job-card">
+            <div class="job-img-box">
+              <% if (job.thumbnail) { %>
+                <img src="<%= job.thumbnail %>" alt="<%= (lang === 'en' && job.title_en) ? job.title_en : job.title %>"
+                  style="width:100%;height:100%;object-fit:cover;">
+              <% } else { %>
+                <div class="job-img-placeholder"><span><%= lang === 'en' ? 'CAREER' : 'TUYỂN DỤNG' %></span></div>
+              <% } %>
+            </div>
+            <div class="job-content">
+              <span class="job-date"><%= new Date(job.created_at).toLocaleDateString('vi-VN') %></span>
+              <h4 class="job-title">
+                <a href="/tuyen-dung/<%= job.slug %>" style="color:inherit;text-decoration:none;">
+                  <%= (lang === 'en' && job.title_en) ? job.title_en : job.title %>
+                </a>
+              </h4>
+              <ul class="job-details list-unstyled m-0">
+                <li><span class="label"><%= t.recruitment.salary_label %>:</span> <span class="value"><%= job.salary || '-' %></span></li>
+                <li><span class="label"><%= t.recruitment.hiring_label %>:</span> <span class="value"><%= job.hiring_count %></span></li>
+                <li><span class="label"><%= t.recruitment.deadline_label %>:</span> <span class="value"><%= job.deadline || '-' %></span></li>
+              </ul>
+              <a href="/tuyen-dung/<%= job.slug %>" class="btn btn-danger apply-btn mt-4">
+                <%= lang === 'en' ? 'View Detail' : 'Xem chi tiết' %>
+              </a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="text-center py-5">
+        <p style="color:#888;font-size:18px;"><%= lang === 'en' ? 'No open positions at the moment.' : 'Hiện chưa có tin tuyển dụng.' %></p>
+      </div>
+    <% } %>
+
+    <div class="application-panel mt-5" id="application">
+      <div class="application-box">
+        <h3 class="application-title"><%= t.recruitment.ready_title %></h3>
+        <p class="application-text"><%= t.recruitment.ready_text %></p>
+        <div class="application-contact">
+          <p><strong><%= t.recruitment.contact_label %>:</strong> <a href="mailto:career@mpcport.com">career@mpcport.com</a></p>
+          <p><strong><%= t.recruitment.phone_label %>:</strong> 0938 888 777</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/mpc-footer') %>

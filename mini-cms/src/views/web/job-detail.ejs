@@ -1,0 +1,154 @@
+<%- include('../partials/mpc-header') %>
+
+<main class="job-detail-main">
+  <div class="container pb-5">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb justify-content-center pt-4 pb-4" aria-label="breadcrumb">
+      <a href="/"><%= lang === 'en' ? 'Home' : 'Trang chủ' %></a>
+      <span class="separator mx-2">•</span>
+      <a href="/tuyen-dung"><%= lang === 'en' ? 'Careers' : 'Tuyển dụng' %></a>
+      <span class="separator mx-2">•</span>
+      <span><%= (lang === 'en' && job.title_en) ? job.title_en : job.title %></span>
+    </nav>
+
+    <div class="row mt-4">
+      <!-- Left: Job Detail -->
+      <div class="col-lg-8 pr-lg-5">
+        <h1 class="job-detail-title">
+          <%= (lang === 'en' && job.title_en) ? job.title_en : job.title %>
+        </h1>
+
+        <div class="job-meta mb-4">
+          <i class="bi bi-clock"></i>
+          <span><%= new Date(job.created_at).toLocaleDateString('vi-VN') %></span>
+          <% if (job.deadline) { %>
+            &nbsp;|&nbsp;
+            <i class="bi bi-calendar-x"></i>
+            <%= lang === 'en' ? 'Deadline' : 'Hạn nộp' %>: <strong><%= job.deadline %></strong>
+          <% } %>
+          <% if (job.salary) { %>
+            &nbsp;|&nbsp;
+            <i class="bi bi-cash"></i>
+            <%= lang === 'en' ? 'Salary' : 'Lương' %>: <strong><%= job.salary %></strong>
+          <% } %>
+          <% if (job.hiring_count) { %>
+            &nbsp;|&nbsp;
+            <i class="bi bi-people"></i>
+            <%= lang === 'en' ? 'Openings' : 'Số lượng' %>: <strong><%= job.hiring_count %></strong>
+          <% } %>
+        </div>
+
+        <div class="job-description mt-4">
+          <%- (lang === 'en' && job.content_en) ? job.content_en : job.content %>
+        </div>
+
+        <button class="btn apply-btn mt-4" data-bs-toggle="modal" data-bs-target="#applyModal">
+          <%= lang === 'en' ? 'Apply Now' : 'Ứng tuyển ngay' %>
+        </button>
+      </div>
+
+      <!-- Right: Sidebar -->
+      <div class="col-lg-4 mt-5 mt-lg-0 sidebar-column">
+        <button class="btn apply-btn apply-btn-sidebar w-100 mb-5"
+          data-bs-toggle="modal" data-bs-target="#applyModal">
+          <%= lang === 'en' ? 'Apply Now' : 'Ứng tuyển ngay' %>
+        </button>
+
+        <% if (otherJobs && otherJobs.length > 0) { %>
+          <div class="other-jobs-section">
+            <h3 class="other-jobs-title">
+              <%= lang === 'en' ? 'OTHER OPENINGS' : 'TIN TUYỂN DỤNG KHÁC' %>
+            </h3>
+            <ul class="other-jobs-list list-unstyled">
+              <% otherJobs.forEach(other => { %>
+                <li>
+                  <span class="dot">•</span>
+                  <a href="/tuyen-dung/<%= other.slug %>">
+                    <%= (lang === 'en' && other.title_en) ? other.title_en : other.title %>
+                  </a>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Apply Modal -->
+<div class="modal fade" id="applyModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg custom-modal">
+    <div class="modal-content border-0">
+      <button type="button" class="btn-close custom-close-btn" data-bs-dismiss="modal" aria-label="Close">
+        <i class="bi bi-x"></i>
+      </button>
+      <div class="modal-body p-4 p-md-5">
+        <h3 class="modal-title text-center mb-5 form-title" id="applyModalLabel">
+          <%= lang === 'en' ? 'APPLY FOR' : 'ỨNG TUYỂN' %> —
+          <%= (lang === 'en' && job.title_en) ? job.title_en : job.title %>
+        </h3>
+
+        <form>
+          <div class="row g-4 mb-4">
+            <div class="col-md-6">
+              <label class="form-label form-label-custom">
+                <%= lang === 'en' ? 'Full Name' : 'Họ và tên' %> <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control form-control-custom">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label form-label-custom">
+                Email <span class="text-danger">*</span>
+              </label>
+              <input type="email" class="form-control form-control-custom">
+            </div>
+          </div>
+
+          <div class="row g-4 mb-4">
+            <div class="col-md-6">
+              <label class="form-label form-label-custom">
+                <%= lang === 'en' ? 'Phone Number' : 'Số điện thoại' %> <span class="text-danger">*</span>
+              </label>
+              <input type="tel" class="form-control form-control-custom">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label form-label-custom">
+                <%= lang === 'en' ? 'Date of Birth' : 'Ngày, tháng, năm sinh' %> <span class="text-danger">*</span>
+              </label>
+              <input type="text" class="form-control form-control-custom" placeholder="DD/MM/YYYY">
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label form-label-custom">
+              <%= lang === 'en' ? 'Education' : 'Bằng cấp' %> <span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control form-control-custom">
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label form-label-custom">
+              <%= lang === 'en' ? 'Experience' : 'Kinh nghiệm' %> <span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control form-control-custom">
+          </div>
+
+          <div class="mb-5">
+            <div class="upload-area text-center py-3 rounded file-upload-custom">
+              <%= lang === 'en' ? 'Upload your CV' : 'Tải CV của bạn' %>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-danger submit-apply-btn px-5 py-2">
+              <%= lang === 'en' ? 'Submit Application' : 'Nộp hồ sơ ngay' %>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/mpc-footer') %>

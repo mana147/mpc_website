@@ -7,6 +7,7 @@ Detailed reference (optional deep-dive): `.github/SKILL_MAP.md`. After any struc
 ## Repository Layout
 
 - **`mini-cms/`** — Node.js/Express CMS with EJS server-rendered views and SQLite. Main application.
+  - `public/vendor/` — Vendored Bootstrap 5, Bootstrap Icons, Font Awesome 6 (fully offline, no CDN).
 - **`view-html/`** — Static HTML/CSS/JS prototypes (e.g. `view-html/trang_chu/landing.html`) used as design references for MPC Port website. No build step. Uses Bootstrap 5, Font Awesome, Barlow Condensed font, red/orange/navy color scheme.
 
 ## Commands
@@ -51,18 +52,43 @@ mini-cms/
 ├── app.js                        # Entry point, middleware chain, route mounting, error handlers
 ├── database/cms.sqlite           # SQLite database file (auto-created)
 ├── public/
-│   ├── css/style.css             # CSS for admin pages (~1955 lines) — NOT used by public pages
-│   ├── css/mpc-base.css          # MPC shared styles: fonts, variables, buttons, forms, page components
-│   ├── css/mpc-header.css        # MPC header (transparent overlay, responsive nav)
-│   ├── css/mpc-footer.css        # MPC footer (4-column, navy background)
-│   ├── css/pages/landing.css     # Landing page specific CSS (~2000 lines, 5 breakpoints)
+│   ├── css/
+│   │   ├── style.css             # CSS for admin pages (~1955 lines) — NOT used by public pages
+│   │   ├── mpc-base.css          # MPC shared styles: fonts, variables, buttons, forms, page components
+│   │   ├── mpc-header.css        # MPC header (transparent overlay, responsive nav)
+│   │   ├── mpc-footer.css        # MPC footer (4-column, navy background)
+│   │   └── pages/
+│   │       ├── landing.css       # Landing page specific CSS (~2000 lines, 5 breakpoints)
+│   │       └── recruitment.css   # Recruitment page specific CSS
 │   ├── fonts/barlow-condensed/   # Barlow Condensed TTF (6 weights)
-│   ├── images/logo.png           # MPC Port logo
-│   ├── images/map-vietnam.svg    # Vietnam map for geo section
-│   ├── images/icons/             # 18 SVG icons (geo-*, eport, container, hddt, arrows, etc.)
-│   ├── js/main.js                # Admin: auto-hide alerts, confirm delete, thumbnail preview
-│   ├── js/landing.js             # Landing: mobile menu, facility slider, service carousel, gallery
-│   └── uploads/                  # Runtime uploads (images/, pdfs/)
+│   ├── images/
+│   │   ├── logo.png              # MPC Port logo
+│   │   ├── map-vietnam.svg       # Vietnam map for geo section
+│   │   └── icons/                # 18 SVG icons (geo-*, eport, container, hddt, arrows, etc.)
+│   ├── js/
+│   │   ├── main.js               # Admin: auto-hide alerts, confirm delete, thumbnail preview
+│   │   └── landing.js            # Landing: mobile menu, facility slider, service carousel, gallery
+│   ├── uploads/
+│   │   ├── images/               # Uploaded images (flat, multer saves here)
+│   │   │   ├── about/            # Pre-created static asset subfolders
+│   │   │   ├── Dịch vụ/
+│   │   │   ├── Hạ tầng/
+│   │   │   ├── Liên hệ/
+│   │   │   ├── Thư viện/
+│   │   │   ├── Tin tức/
+│   │   │   ├── Trang chủ/
+│   │   │   └── Tuyển dụng/
+│   │   └── pdfs/                 # Uploaded PDF files
+│   └── vendor/                   # Offline vendor libs (no CDN required)
+│       ├── bootstrap/
+│       │   ├── css/bootstrap.min.css
+│       │   └── js/bootstrap.bundle.min.js
+│       ├── bootstrap-icons/
+│       │   ├── bootstrap-icons.css
+│       │   └── fonts/
+│       └── font-awesome/
+│           ├── css/all.min.css
+│           └── webfonts/
 └── src/
     ├── config/db.js              # DB init & schema (CREATE TABLE IF NOT EXISTS), seed data
     ├── controllers/              # Request handlers (public + admin* in same file)
@@ -71,6 +97,7 @@ mini-cms/
     │   ├── contactController.js  # Contact form + admin CRUD
     │   ├── documentController.js # Document upload/download + admin (no edit)
     │   ├── galleryController.js  # Gallery view + admin upload/delete (no edit)
+    │   ├── jobController.js      # Job listings full CRUD + public list/detail (bilingual)
     │   ├── menuController.js     # Menu CRUD + visibility toggle + reorder + public page
     │   └── postController.js     # Post full CRUD (bilingual)
     ├── middlewares/
@@ -84,6 +111,7 @@ mini-cms/
     │   ├── galleryModel.js       # gallery_images table (no update/edit for alt_text)
     │   ├── menuModel.js          # menus table
     │   ├── menuPostModel.js      # menu_posts junction (3 methods: getPostIdsByMenuId, assignPostsToMenu, removeAllPostsFromMenu)
+    │   ├── jobModel.js           # jobs table (full CRUD, getOtherJobs for sidebar)
     │   ├── postModel.js          # posts table
     │   └── userModel.js          # users table + auth (has changePassword — not yet wired to admin)
     ├── routes/
@@ -97,8 +125,19 @@ mini-cms/
     ├── utils/slugify.js          # Vietnamese-aware slug generator
     ├── utils/safeFilePath.js     # safeUnlink + safeResolve — chặn path traversal trong file ops
     └── views/
-        ├── admin/                # 12 EJS templates (all hardcoded Vietnamese, no i18n)
-        ├── web/                  # 9 EJS templates (all use mpc-header/mpc-footer, i18n enabled)
+        ├── admin/                # 15 EJS templates (all hardcoded Vietnamese, no i18n)
+        │   ├── job-list.ejs, job-create.ejs, job-edit.ejs  # Job listings CRUD
+        ├── web/                  # 12 EJS templates (all use mpc-header/mpc-footer, i18n enabled)
+        │   ├── home.ejs          # Landing page (all 11 sections ported from prototype)
+        │   ├── about.ejs         # About MPC public page
+        │   ├── recruitment.ejs   # Careers list page (jobs from DB)
+        │   ├── job-detail.ejs    # Job detail page (breadcrumb, content, apply modal, sidebar)
+        │   ├── posts.ejs, post-detail.ejs
+        │   ├── gallery.ejs
+        │   ├── documents.ejs
+        │   ├── contact.ejs
+        │   ├── menu-page.ejs
+        │   └── 404.ejs, error.ejs
         └── partials/             # mpc-header.ejs (MPC branded), mpc-footer.ejs, header.ejs (legacy/admin), footer.ejs (legacy/admin), admin-sidebar.ejs
 ```
 
@@ -117,6 +156,7 @@ All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE I
 | `contacts` | id, full_name, email, subject, phone, message, is_read | Contact submissions |
 | `menus` | id, name_vi, name_en, slug, type, linked_post_id, is_visible, sort_order | Navigation items |
 | `menu_posts` | id, menu_id, post_id, sort_order | Junction for post_list menus (UNIQUE menu_id+post_id) |
+| `jobs` | id, title, slug, content, salary, hiring_count, deadline, thumbnail, status, title_en, content_en | Job listings (bilingual) |
 
 ### Menu Types
 
@@ -130,7 +170,8 @@ All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE I
 ### Seed Data (auto-created on first run)
 
 - Default admin: `admin` / `admin123` (or from env `ADMIN_USERNAME`/`ADMIN_PASSWORD`)
-- 5 system menus: Home (`/`), Posts (`/posts`), Gallery (`/gallery`), Documents (`/documents`), Contact (`/contact`)
+- 7 system menus: Home (`/`), About (`/about`), Recruitment (`/tuyen-dung`), Posts (`/posts`), Gallery (`/gallery`), Documents (`/documents`), Contact (`/contact`)
+- On existing databases: `initDatabase()` auto-inserts `/about` and `/tuyen-dung` menus if missing
 
 ---
 
@@ -146,6 +187,10 @@ All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE I
 | Auth | userModel | authController | — | `GET/POST /admin/login`, `POST /admin/logout` |
 | i18n | — | — | `GET /lang/:lang` | — |
 | Home | (inline in web.js) | — | `GET /` (latest 9 posts + 5 docs + 6 gallery images) | — |
+| About | (inline in web.js) | — | `GET /about` (static page with hero banner, responsive sections, bilingual) | — |
+| Recruitment | jobModel | jobController | `GET /tuyen-dung` (list published jobs), `GET /tuyen-dung/:slug` (job detail with apply modal) | Full CRUD `/admin/jobs/*` |
+
+> **Note:** "Về MPC" (`/about`) and "Tuyển dụng" (`/tuyen-dung`) are registered as `system` menus in the database and rendered via `visibleMenus` in `mpc-header.ejs`. Admin can toggle visibility and reorder them at `/admin/menus`.
 
 ---
 
@@ -281,7 +326,7 @@ view-html/
     └── Liên hệ/                  # 2 images (lien-he.png, map.png)
 ```
 
-> **Note:** Asset folder names use Vietnamese with diacritics. Sub-pages (About, Dịch vụ, Hạ tầng, Tin tức, Tuyển dụng, Liên hệ) have **images only — no HTML files yet**.
+> **Note:** Asset folder names use Vietnamese with diacritics. Sub-pages (About, Dịch vụ, Hạ tầng, Tin tức, Liên hệ) have **images only — no HTML files yet**. The `About` and `Tuyển dụng` pages have been integrated into the mini-CMS as public routes with EJS views.
 
 #### Design System
 
@@ -290,7 +335,7 @@ view-html/
 | Font | Barlow Condensed (local TTF), weights 400–700 |
 | Primary colors | Red `#DF1F28` / `#e74c3c`, Orange `#FCB248`, Navy `#2c3e7d` |
 | Text colors | Dark `#333333`, Gray `#828282`, Light gray `#BDBDBD` |
-| CSS framework | Bootstrap 5 (grid + utilities) + Bootstrap Icons + Font Awesome 6 |
+| CSS framework | Bootstrap 5 (vendored) + Bootstrap Icons (vendored) + Font Awesome 6 (vendored) — fully offline |
 | Button style | `.btn-outline` — transparent bg, 2px red border, red text, inline-flex with arrow icon |
 | Section title pattern | `<img icon-redline.svg>` + `<h2 class="title2">TIÊU ĐỀ</h2>` + optional `<a class="more-link">` |
 | Responsive breakpoints | `>2200px`, `1720–2199`, `1368–1719`, `959–1367`, `640–958`, `<639px` |
@@ -335,12 +380,15 @@ view-html/
 | Branding | **DONE** | MPC Port logo, Barlow Condensed, red/orange/navy applied to all public pages |
 | Header | **DONE** | `mpc-header.ejs` — transparent overlay, centered nav, dynamic menus, language pill |
 | Footer | **DONE** | `mpc-footer.ejs` — 4-column grid, navy background, social icons, contact info |
-| CSS framework | **DONE** | Bootstrap 5 CDN + Bootstrap Icons + Font Awesome loaded via mpc-header |
+| CSS framework | **DONE** | Bootstrap 5 + Bootstrap Icons + Font Awesome vendored in `public/vendor/` (fully offline) |
 | Landing page | **DONE** | All 11 sections ported to `home.ejs` with i18n |
-| Assets | **DONE** | Fonts, icons, logo, map-vietnam.svg copied to `public/` |
+| Assets | **DONE** | Fonts, icons, logo, map-vietnam.svg in `public/` |
 | All public pages | **DONE** | Posts, Gallery, Documents, Contact, Menu-page, 404, Error use mpc-header/mpc-footer |
 | Admin pages | **Unchanged** | Still use `header.ejs`/`footer.ejs` + `style.css` |
-| Missing pages | Pending | About, Infrastructure, Services, Recruitment sub-pages not yet built |
+| About page | **DONE** | Dedicated route `/about` and view `src/views/web/about.ejs` added |
+| Recruitment page | **DONE** | Dedicated route `/tuyen-dung` and view `src/views/web/recruitment.ejs` added |
+| Infrastructure page | **Pending** | No dedicated route/view yet |
+| Services page | **Pending** | No dedicated route/view yet |
 
 ---
 

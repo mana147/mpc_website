@@ -188,9 +188,10 @@ mini-cms/
         │   ├── admin-sidebar.ejs   # Admin sidebar navigation
         │   ├── header.ejs          # Legacy admin header
         │   └── footer.ejs          # Legacy admin footer
-        └── web/                    # 10 EJS templates (i18n enabled, mpc-header/mpc-footer)
+        └── web/                    # 11 EJS templates (i18n enabled, mpc-header/mpc-footer)
             ├── home.ejs            # Landing page (all 11 sections ported from prototype)
             ├── about.ejs           # About MPC public page
+            ├── recruitment.ejs     # Careers/Recruitment page
             ├── posts.ejs, post-detail.ejs
             ├── gallery.ejs
             ├── documents.ejs
@@ -346,7 +347,38 @@ features:
   - is_read status
 ```
 
-### 4.5 About Page
+### 4.5 Job Listings (Tuyển dụng)
+```yaml
+model: src/models/jobModel.js
+controller: src/controllers/jobController.js
+routes:
+  - GET /tuyen-dung (public list - published only)
+  - GET /tuyen-dung/:slug (public detail - apply modal + sidebar)
+  - GET /admin/jobs (admin list)
+  - GET /admin/jobs/create
+  - POST /admin/jobs/create (uploadImage middleware)
+  - GET /admin/jobs/:id/edit
+  - POST /admin/jobs/:id/edit (uploadImage middleware)
+  - POST /admin/jobs/:id/delete
+views:
+  - src/views/web/recruitment.ejs (updated - loads from DB)
+  - src/views/web/job-detail.ejs (new - ported from prototype)
+  - src/views/admin/job-list.ejs
+  - src/views/admin/job-create.ejs
+  - src/views/admin/job-edit.ejs
+css:
+  - public/css/pages/job-detail.css (ported from view-html/tuyen_dung/chi-tiet-tuyen-dung.css)
+features:
+  - Bilingual fields (title/title_en, content/content_en)
+  - Salary, hiring_count, deadline fields
+  - Thumbnail upload (optional)
+  - Status draft/published
+  - 20 seed jobs pre-loaded
+  - Apply modal (static form) on detail page
+  - Sidebar: other open positions
+```
+
+### 4.6 About Page
 ```yaml
 controller: src/controllers/pageController.js (optional)
 routes:
@@ -819,7 +851,7 @@ All 11 sections ported from `view-html/trang_chu/landing.html` with full i18n:
 | Assets | **DONE** | Fonts, icons, logo, map-vietnam.svg in `public/` |
 | All public pages | **DONE** | Posts, Gallery, Documents, Contact, Menu-page, 404, Error use mpc-header/mpc-footer |
 | Admin pages | **Unchanged** | Still use `header.ejs`/`footer.ejs` + `style.css` |
-| About page | **Done** | Dedicated route `/about` and view `src/views/web/about.ejs` added |
+| About page | **Done** | Dedicated route `/about`, view `src/views/web/about.ejs`, system menu `/about` in DB |
+| Recruitment page | **Done** | Dedicated route `/tuyen-dung`, view `src/views/web/recruitment.ejs`, system menu `/tuyen-dung` in DB |
 | Infrastructure page | **Pending** | No dedicated route/view yet |
 | Services page | **Pending** | No dedicated route/view yet |
-| Recruitment page | **Pending** | No dedicated route/view yet |

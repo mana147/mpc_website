@@ -10,7 +10,9 @@
       "Bash(node -e ':*)",
       "Bash(grep -E \"env|\\\\.js$|package\")",
       "Bash(xargs cat)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(ls database/)",
+      "Bash(node -e ' *)"
     ]
   }
 }

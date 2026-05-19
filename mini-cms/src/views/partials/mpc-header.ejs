@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= typeof title !== 'undefined' ? title : 'MPC Port' %> | MPC Port</title>
+  <link rel="icon" href="/images/logo.png" type="image/png">
+  <link rel="shortcut icon" href="/images/logo.png" type="image/png">
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/vendor/bootstrap-icons/bootstrap-icons.css">
   <link rel="stylesheet" href="/vendor/font-awesome/css/all.min.css">
@@ -35,7 +37,6 @@
             <% if (homeMenu) { %>
               <li><a href="<%= homeMenu.url || homeMenu.slug %>" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en' && homeMenu.name_en) ? homeMenu.name_en.toUpperCase() : homeMenu.name_vi.toUpperCase() %></a></li>
             <% } %>
-            <li><a href="/about" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/about') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'ABOUT MPC' : 'VỀ MPC' %></a></li>
             <% visibleMenus.forEach(menu => { %>
               <% if (menu.slug === '/') return; %>
               <%
@@ -67,6 +68,7 @@
           <% } else { %>
             <li><a href="/" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'HOME' : 'TRANG CHỦ' %></a></li>
             <li><a href="/about" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/about') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'ABOUT MPC' : 'VỀ MPC' %></a></li>
+            <li><a href="/tuyen-dung" class="<%= (typeof currentPath !== 'undefined' && currentPath === '/tuyen-dung') ? 'active' : '' %>"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'CAREERS' : 'TUYỂN DỤNG' %></a></li>
             <li><a href="/posts"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'POSTS' : 'BÀI VIẾT' %></a></li>
             <li><a href="/gallery"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'GALLERY' : 'THƯ VIỆN ẢNH' %></a></li>
             <li><a href="/documents"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'DOCUMENTS' : 'TÀI LIỆU' %></a></li>

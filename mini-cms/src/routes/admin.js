@@ -16,6 +16,7 @@ const DocumentController = require('../controllers/documentController');
 const GalleryController = require('../controllers/galleryController');
 const ContactController = require('../controllers/contactController');
 const MenuController = require('../controllers/menuController');
+const JobController = require('../controllers/jobController');
 
 // Rate limiting cho login — chặn brute force
 const rateLimit = require('express-rate-limit');
@@ -68,6 +69,14 @@ router.post('/gallery/:id/delete', GalleryController.destroy);
 router.get('/contacts', ContactController.adminIndex);
 router.get('/contacts/:id', ContactController.adminShow);
 router.post('/contacts/:id/delete', ContactController.destroy);
+
+// Jobs (Tuyển dụng)
+router.get('/jobs', JobController.adminIndex);
+router.get('/jobs/create', JobController.create);
+router.post('/jobs/create', uploadImage, JobController.store);
+router.get('/jobs/:id/edit', JobController.edit);
+router.post('/jobs/:id/edit', uploadImage, JobController.update);
+router.post('/jobs/:id/delete', JobController.destroy);
 
 // Menus
 router.get('/menus', MenuController.adminIndex);

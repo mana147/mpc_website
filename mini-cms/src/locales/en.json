@@ -13,9 +13,27 @@
     "gallery": "Gallery",
     "documents": "Documents",
     "contact": "Contact",
+    "recruitment": "Careers",
     "language": "Language"
   },
   
+  "recruitment": {
+    "banner_label": "CAREERS",
+    "banner_title": "Build your future with MPC Port",
+    "banner_subtitle": "Explore our open positions and join our team at a modern port terminal built for growth.",
+    "section_label": "RECRUITMENT",
+    "section_title": "Career Opportunities",
+    "section_desc": "At MPC Port we welcome both fresh graduates and experienced professionals. Discover roles that match your ambition and apply today.",
+    "salary_label": "Salary",
+    "hiring_label": "Hiring",
+    "deadline_label": "Deadline",
+    "apply_now": "Apply now",
+    "ready_title": "Ready to join our team?",
+    "ready_text": "Send your application documents to our recruitment team, and we will contact you with the next steps.",
+    "contact_label": "Contact Email",
+    "phone_label": "Phone"
+  },
+
   "home": {
     "welcome": "Welcome to MPC Port",
     "description": "Simple content management system for small business",
@@ -211,6 +229,18 @@
     "menu_show": "Show",
     "menu_hide": "Hide",
     "menu_system_warning": "System menus cannot be deleted or have their type/slug changed.",
-    "menu_no_content": "This page has no content yet."
+    "menu_no_content": "This page has no content yet.",
+
+    "job_management": "Recruitment Management",
+    "create_job": "Create new job listing",
+    "edit_job": "Edit job listing",
+    "job_title": "Title",
+    "job_title_en": "Title (English)",
+    "job_content": "Job Description",
+    "job_content_en": "Description (English)",
+    "job_salary": "Salary",
+    "job_count": "Openings",
+    "job_deadline": "Application Deadline",
+    "job_status": "Status"
   }
 }
