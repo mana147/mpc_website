@@ -188,8 +188,9 @@ mini-cms/
         │   ├── admin-sidebar.ejs   # Admin sidebar navigation
         │   ├── header.ejs          # Legacy admin header
         │   └── footer.ejs          # Legacy admin footer
-        └── web/                    # 9 EJS templates (i18n enabled, mpc-header/mpc-footer)
+        └── web/                    # 10 EJS templates (i18n enabled, mpc-header/mpc-footer)
             ├── home.ejs            # Landing page (all 11 sections ported from prototype)
+            ├── about.ejs           # About MPC public page
             ├── posts.ejs, post-detail.ejs
             ├── gallery.ejs
             ├── documents.ejs
@@ -345,7 +346,21 @@ features:
   - is_read status
 ```
 
-### 4.5 Menu System
+### 4.5 About Page
+```yaml
+controller: src/controllers/pageController.js (optional)
+routes:
+  - GET /about
+views:
+  - src/views/web/about.ejs
+features:
+  - Static public About page
+  - Hero banner with overlay
+  - Responsive content sections
+  - Bilingual title and content via locales
+```
+
+### 4.6 Menu System
 ```yaml
 models:
   - src/models/menuModel.js
@@ -375,7 +390,7 @@ features:
   - Global middleware loading
 ```
 
-### 4.6 Multilingual (i18n)
+### 4.7 Multilingual (i18n)
 ```yaml
 middleware: src/middlewares/languageMiddleware.js
 routes: src/routes/language.js
@@ -388,7 +403,7 @@ features:
   - Bilingual DB fields pattern
 ```
 
-### 4.7 Authentication
+### 4.8 Authentication
 ```yaml
 model: src/models/userModel.js
 controller: src/controllers/authController.js
@@ -405,7 +420,7 @@ features:
   - Default: admin / admin123
 ```
 
-### 4.8 File Upload
+### 4.9 File Upload
 ```yaml
 middleware: src/middlewares/uploadMiddleware.js
 exports:
@@ -804,7 +819,7 @@ All 11 sections ported from `view-html/trang_chu/landing.html` with full i18n:
 | Assets | **DONE** | Fonts, icons, logo, map-vietnam.svg in `public/` |
 | All public pages | **DONE** | Posts, Gallery, Documents, Contact, Menu-page, 404, Error use mpc-header/mpc-footer |
 | Admin pages | **Unchanged** | Still use `header.ejs`/`footer.ejs` + `style.css` |
-| About page | **Pending** | No dedicated route/view yet |
+| About page | **Done** | Dedicated route `/about` and view `src/views/web/about.ejs` added |
 | Infrastructure page | **Pending** | No dedicated route/view yet |
 | Services page | **Pending** | No dedicated route/view yet |
 | Recruitment page | **Pending** | No dedicated route/view yet |

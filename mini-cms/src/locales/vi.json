@@ -73,6 +73,17 @@
     "message": "Nội dung gửi",
     "message_placeholder": "Nhập nội dung bạn muốn gửi...",
     "submit": "Gửi liên hệ",
+    "send_now": "Gửi ngay",
+    "info_hotline": "Hotline",
+    "info_email": "Email",
+    "info_address": "Địa chỉ",
+    "address_line1": "Bán đảo Đình Vũ, Khu KT Đình Vũ Cát Hải,",
+    "address_line2": "Phường Đông Hải 2, Quận Hải An, Hải Phòng",
+    "full_name_required": "Vui lòng nhập họ tên",
+    "email_required": "Vui lòng nhập email",
+    "email_invalid": "Email không hợp lệ",
+    "subject_required": "Vui lòng nhập tiêu đề",
+    "message_required": "Vui lòng nhập nội dung",
     "success_message": "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể."
   },
 

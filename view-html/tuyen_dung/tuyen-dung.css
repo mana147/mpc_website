@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
+
+/* ====== Base Settings ====== */
+body {
+    font-family: 'Barlow', sans-serif;
+    background-color: #fff;
+}
+
+/* Banner Section */
+.page-banner {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 25, 75, 0.7) 0%, rgba(0, 25, 75, 0.2) 100%);
+    z-index: 1;
+}
+
+/* Intro Section */
+.section-title {
+    color: #333333;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+}
+
+.section-title::after {
+    display: none;
+}
+
+.section-desc {
+    color: #333333;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
+    max-width: 900px;
+}
+
+.job-heading {
+    color: #333333;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 44px;
+}
+
+/* Job Grid */
+.job-card {
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: none;
+    padding: 0;
+    width: 351px;
+    height: 364px;
+}
+
+.job-card:hover,
+.job-card.custom-active {
+    box-shadow: none;
+}
+
+.job-img-box {
+    position: relative;
+    height: 190px;
+    background-color: #fcf4f4;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.job-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Styled text mimicking illustration */
+.job-badge-text {
+    z-index: 2;
+    margin-left: 10px;
+}
+
+.job-badge-text .text-dark {
+    color: #333;
+    letter-spacing: -1px;
+    margin-bottom: -5px;
+    font-family: 'Barlow', sans-serif;
+}
+
+.job-badge-text .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px #555;
+    opacity: 0.8;
+    letter-spacing: -1px;
+    font-family: 'Barlow', sans-serif;
+    transform: translateY(-5px);
+}
+
+/* Mock Graphics background */
+.job-illustration {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    width: 140px;
+    height: 110px;
+    background-image:
+        radial-gradient(circle at 70% 30%, #d9534f 8px, transparent 8.5px),
+        linear-gradient(to right, #cf6e73 20px, transparent 20px),
+        linear-gradient(to bottom, #cf6e73 20px, transparent 20px),
+        linear-gradient(to top right, #fff 40%, #fae1e2 40%);
+    background-size: 100% 100%;
+    border-radius: 6px;
+    border: 3px solid #fff;
+    z-index: 1;
+    opacity: 0.9;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.02);
+}
+
+/* Job Content */
+.job-content {
+    padding: 15px 0 0 0;
+}
+
+.job-date {
+    display: block;
+    color: #b3b3b3;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.job-title {
+    color: #333;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.job-details li {
+    display: flex;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.job-details .label {
+    color: #666;
+    width: 90px;
+    flex-shrink: 0;
+}
+
+.job-details .value {
+    color: #444;
+    font-weight: 600;
+}
+
+/* Pagination */
+.custom-pagination .page-link {
+    color: #555;
+    background-color: transparent;
+    border: none;
+    font-weight: 600;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px !important;
+}
+
+.custom-pagination .page-link:hover {
+    color: #0d6efd;
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.custom-pagination .page-item.active .page-link {
+    background-color: transparent;
+    color: #222;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) and (max-width: 991px) {
+    .job-card {
+        width: 320px;
+        height: auto;
+        min-height: 364px;
+        margin: 0 auto;
+    }
+
+    .job-img-box {
+        height: 170px;
+    }
+
+    .job-content {
+        padding: 15px 10px 0 10px;
+    }
+}
+
+@media (max-width: 639px) {
+    .job-card {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+}

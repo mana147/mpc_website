@@ -1,104 +1,156 @@
 <%- include('../partials/mpc-header') %>
 
-<section class="contact-hero">
-  <h1><%= typeof t !== 'undefined' ? t.contact.title : 'THÔNG TIN CỦA QUÝ KHÁCH' %></h1>
-  <p><%= typeof t !== 'undefined' ? t.contact.subtitle : 'Hãy để lại thông tin, chúng tôi sẽ liên hệ sớm nhất' %></p>
+<section class="page-banner">
+  <div class="banner-overlay"></div>
+  <img src="/images/about/about-img1.png" alt="Contact Banner" class="banner-image">
+  <div class="hero-content">
+    <div class="hero-subtitle"><%= t.contact.subtitle %></div>
+    <h1 class="hero-title"><%= (typeof lang !== 'undefined' && lang === 'en') ? 'CONTACT' : 'LIÊN HỆ' %></h1>
+  </div>
 </section>
 
-<div class="contact-container">
-  <% if (typeof success !== 'undefined' && success) { %>
-    <div class="alert alert-success"><%= success %></div>
-  <% } %>
-  
-  <% if (typeof error !== 'undefined' && error) { %>
-    <div class="alert alert-error"><%= error %></div>
-  <% } %>
-
-  <form action="/contact" method="POST" class="contact-form">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <!-- Họ & Tên - Full width -->
-    <div class="form-group full-width">
-      <label for="full_name"><%= typeof t !== 'undefined' ? t.contact.full_name : 'Họ & Tên' %> *</label>
-      <input 
-        type="text" 
-        id="full_name" 
-        name="full_name" 
-        value="<%= formData.full_name || '' %>"
-        placeholder="<%= typeof t !== 'undefined' ? t.contact.full_name_placeholder : 'Nhập họ và tên của bạn' %>"
-        class="<%= errors.full_name ? 'input-error' : '' %>"
-      >
-      <% if (errors.full_name) { %>
-        <span class="error-text"><%= errors.full_name %></span>
-      <% } %>
+<section class="contact-section py-5">
+  <div class="container mt-4 mb-4">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-title fw-bold mb-5"><%= t.contact.title %></h2>
+        <p class="mb-5" style="font-size: 18px; color: #666;"><%= t.contact.subtitle %></p>
+      </div>
     </div>
 
-    <!-- Email - Full width -->
-    <div class="form-group full-width">
-      <label for="email"><%= typeof t !== 'undefined' ? t.contact.email : 'Địa chỉ email' %> *</label>
-      <input 
-        type="email" 
-        id="email" 
-        name="email" 
-        value="<%= formData.email || '' %>"
-        placeholder="<%= typeof t !== 'undefined' ? t.contact.email_placeholder : 'Nhập địa chỉ email' %>"
-        class="<%= errors.email ? 'input-error' : '' %>"
-      >
-      <% if (errors.email) { %>
-        <span class="error-text"><%= errors.email %></span>
-      <% } %>
-    </div>
+    <div class="row">
+      <div class="col-lg-5 mb-5 mb-lg-0 pe-lg-5">
+        <div class="contact-info-list">
+          <div class="contact-info-item mb-4 pb-2">
+            <div class="d-flex align-items-center mb-1">
+              <i class="bi bi-telephone text-danger fs-5 me-2"></i>
+              <span class="text-muted"><%= t.contact.info_hotline %></span>
+            </div>
+            <h4 class="fw-bold mb-0 text-dark" style="font-size: 28px; line-height: 40px;">(+84) 02253 260 036</h4>
+          </div>
 
-    <!-- Row: Tiêu đề + Số điện thoại -->
-    <div class="form-row">
-      <div class="form-group">
-        <label for="subject"><%= typeof t !== 'undefined' ? t.contact.subject : 'Tiêu đề' %> *</label>
-        <input 
-          type="text" 
-          id="subject" 
-          name="subject" 
-          value="<%= formData.subject || '' %>"
-          placeholder="<%= typeof t !== 'undefined' ? t.contact.subject_placeholder : 'Nhập tiêu đề' %>"
-          class="<%= errors.subject ? 'input-error' : '' %>"
-        >
-        <% if (errors.subject) { %>
-          <span class="error-text"><%= errors.subject %></span>
+          <div class="contact-info-item mb-4 pb-2">
+            <div class="d-flex align-items-center mb-1">
+              <i class="bi bi-envelope text-danger fs-5 me-2"></i>
+              <span class="text-muted"><%= t.contact.info_email %></span>
+            </div>
+            <div class="fw-medium text-dark" style="font-size: 20px; line-height: 28px;">info@mpcport.com</div>
+          </div>
+
+          <div class="contact-info-item mb-4 pb-2">
+            <div class="d-flex align-items-start mb-1">
+              <i class="bi bi-geo-alt text-danger fs-5 me-2 mt-1"></i>
+              <div>
+                <span class="text-muted d-block mb-1" style="font-size: 18px;"><%= t.contact.info_address %></span>
+                <div class="fw-medium text-dark lh-base" style="font-size: 20px; line-height: 28px;">
+                  <%= t.contact.address_line1 %><br>
+                  <%= t.contact.address_line2 %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="alert alert-success"><%= success %></div>
         <% } %>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-danger"><%= error %></div>
+        <% } %>
+
+        <form action="/contact" method="POST" class="contact-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+          <div class="mb-4">
+            <input
+              type="text"
+              class="form-control custom-input <%= errors.full_name ? 'input-error' : '' %>"
+              id="full_name"
+              name="full_name"
+              value="<%= formData.full_name || '' %>"
+              placeholder="<%= t.contact.full_name_placeholder %>"
+            >
+            <% if (errors.full_name) { %>
+              <small class="text-danger"><%= errors.full_name %></small>
+            <% } %>
+          </div>
+
+          <div class="mb-4">
+            <input
+              type="tel"
+              class="form-control custom-input <%= errors.phone ? 'input-error' : '' %>"
+              id="phone"
+              name="phone"
+              value="<%= formData.phone || '' %>"
+              placeholder="<%= t.contact.phone_placeholder %>"
+            >
+          </div>
+
+          <div class="mb-4">
+            <input
+              type="email"
+              class="form-control custom-input <%= errors.email ? 'input-error' : '' %>"
+              id="email"
+              name="email"
+              value="<%= formData.email || '' %>"
+              placeholder="<%= t.contact.email_placeholder %>"
+            >
+            <% if (errors.email) { %>
+              <small class="text-danger"><%= errors.email %></small>
+            <% } %>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="subject"><%= t.contact.subject %></label>
+              <input
+                type="text"
+                class="form-control custom-input <%= errors.subject ? 'input-error' : '' %>"
+                id="subject"
+                name="subject"
+                value="<%= formData.subject || '' %>"
+                placeholder="<%= t.contact.subject_placeholder %>"
+              >
+              <% if (errors.subject) { %>
+                <small class="text-danger"><%= errors.subject %></small>
+              <% } %>
+            </div>
+
+            <div class="form-group">
+              <label for="message"><%= t.contact.message %></label>
+              <textarea
+                class="form-control custom-input <%= errors.message ? 'input-error' : '' %>"
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="<%= t.contact.message_placeholder %>"
+                style="resize: none;"
+              ><%= formData.message || '' %></textarea>
+              <% if (errors.message) { %>
+                <small class="text-danger"><%= errors.message %></small>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-send">
+              <i class="bi bi-send-fill me-2" style="transform: rotate(45deg); display: inline-block;"></i>
+              <%= t.contact.send_now %>
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="phone"><%= typeof t !== 'undefined' ? t.contact.phone : 'Số điện thoại' %></label>
-        <input 
-          type="tel" 
-          id="phone" 
-          name="phone" 
-          value="<%= formData.phone || '' %>"
-          placeholder="<%= typeof t !== 'undefined' ? t.contact.phone_placeholder : 'Nhập số điện thoại' %>"
-        >
+    <div class="container mt-5 pt-3">
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14915.860873574398!2d106.8060391!3d20.83311095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314a65feea08b0d1%3A0x49a2952f20f8c88a!2zQ8OUTkcgVFkgQ-G7lCBQSOG6pk4gQ-G6ok5HIE1JUEVD!5e0!3m2!1svi!2s!4v1779097961358!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
-
-    <!-- Nội dung - Full width textarea -->
-    <div class="form-group full-width">
-      <label for="message"><%= typeof t !== 'undefined' ? t.contact.message : 'Nội dung gửi' %> *</label>
-      <textarea 
-        id="message" 
-        name="message" 
-        rows="6"
-        placeholder="<%= typeof t !== 'undefined' ? t.contact.message_placeholder : 'Nhập nội dung bạn muốn gửi...' %>"
-        class="<%= errors.message ? 'input-error' : '' %>"
-      ><%= formData.message || '' %></textarea>
-      <% if (errors.message) { %>
-        <span class="error-text"><%= errors.message %></span>
-      <% } %>
-    </div>
-
-    <!-- Submit button -->
-    <div class="form-actions">
-      <button type="submit" class="btn-submit">
-        <%= typeof t !== 'undefined' ? t.contact.submit : 'Gửi liên hệ' %>
-      </button>
-    </div>
-  </form>
-</div>
+  </div>
+</section>
 
 <%- include('../partials/mpc-footer') %>

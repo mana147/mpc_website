@@ -73,6 +73,17 @@
     "message": "Message",
     "message_placeholder": "Enter your message...",
     "submit": "Send Message",
+    "send_now": "Send now",
+    "info_hotline": "Hotline",
+    "info_email": "Email",
+    "info_address": "Address",
+    "address_line1": "Dinh Vu Peninsula, Dinh Vu - Cat Hai Economic Zone,",
+    "address_line2": "Dong Hai 2 Ward, Hai An District, Hai Phong",
+    "full_name_required": "Please enter your full name",
+    "email_required": "Please enter your email",
+    "email_invalid": "Invalid email address",
+    "subject_required": "Please enter a subject",
+    "message_required": "Please enter a message",
     "success_message": "Thank you for contacting us! We will respond as soon as possible."
   },
 

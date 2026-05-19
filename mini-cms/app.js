@@ -46,6 +46,7 @@ app.use(helmet({
       fontSrc:    ["'self'", "data:"],
       objectSrc:  ["'none'"],
       baseUri:    ["'self'"],
+      frameSrc:   ["'self'", 'https://www.google.com', 'https://www.google.com/maps', 'https://maps.google.com'],
     }
   },
   crossOriginEmbedderPolicy: false

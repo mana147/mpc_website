@@ -14,8 +14,13 @@ const ContactController = {
    * GET /contact - Trang liên hệ
    */
   index(req, res) {
+    const pageTitle = res.locals.lang === 'en' ? 'Contact' : 'Liên hệ';
+
     res.render('web/contact', {
-      title: 'Liên hệ',
+      title: pageTitle,
+      currentPath: '/contact',
+      pageCss: '/css/pages/contact.css',
+      pageJs: '/js/landing.js',
       formData: {},
       errors: {}
     });
@@ -27,30 +32,36 @@ const ContactController = {
   submit(req, res) {
     const { full_name, email, subject, phone, message } = req.body;
     const errors = {};
+    const t = res.locals.t || {};
+    const contactT = t.contact || {};
 
     // Validate
     if (!full_name || !full_name.trim()) {
-      errors.full_name = 'Vui lòng nhập họ tên';
+      errors.full_name = contactT.full_name_required || 'Vui lòng nhập họ tên';
     }
 
     if (!email || !email.trim()) {
-      errors.email = 'Vui lòng nhập email';
+      errors.email = contactT.email_required || 'Vui lòng nhập email';
     } else if (!isValidEmail(email)) {
-      errors.email = 'Email không hợp lệ';
+      errors.email = contactT.email_invalid || 'Email không hợp lệ';
     }
 
     if (!subject || !subject.trim()) {
-      errors.subject = 'Vui lòng nhập tiêu đề';
+      errors.subject = contactT.subject_required || 'Vui lòng nhập tiêu đề';
     }
 
     if (!message || !message.trim()) {
-      errors.message = 'Vui lòng nhập nội dung';
+      errors.message = contactT.message_required || 'Vui lòng nhập nội dung';
     }
 
     // Nếu có lỗi, render lại form
     if (Object.keys(errors).length > 0) {
+      const pageTitle = res.locals.lang === 'en' ? 'Contact' : 'Liên hệ';
+
       return res.render('web/contact', {
-        title: 'Liên hệ',
+        title: pageTitle,
+        currentPath: '/contact',
+        pageCss: '/css/pages/contact.css',
         formData: { full_name, email, subject, phone, message },
         errors
       });
