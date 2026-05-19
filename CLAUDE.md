@@ -2,8 +2,6 @@
 
 This file provides guidance to Claude Code when working with this repository. It is the **single source of truth** — all architecture, schema, conventions, and rules are here.
 
-Detailed reference (optional deep-dive): `.github/SKILL_MAP.md`. After any structural change (new feature, table, model, controller, route, middleware), update SKILL_MAP.md accordingly.
-
 ## Repository Layout
 
 - **`mini-cms/`** — Node.js/Express CMS with EJS server-rendered views and SQLite. Main application.
@@ -59,6 +57,8 @@ mini-cms/
 │   │   ├── mpc-footer.css        # MPC footer (4-column, navy background)
 │   │   └── pages/
 │   │       ├── landing.css       # Landing page specific CSS (~2000 lines, 5 breakpoints)
+│   │       ├── about.css         # About MPC page CSS
+│   │       ├── contact.css       # Contact page CSS
 │   │       ├── recruitment.css   # Recruitment list page CSS
 │   │       ├── job-detail.css    # Job detail page CSS (ported from prototype)
 │   │       └── org-chart.css     # Organization chart page CSS (CSS tree layout)
@@ -232,6 +232,43 @@ module.exports = Model;
 - CRUD: `store` (create), `update` (edit), `destroy` (delete).
 - Always check `req.uploadError` first for file upload routes.
 
+```javascript
+const Controller = {
+  index(req, res) {                                      // public list
+    res.render('web/items', { title: 'Items', items: Model.getPublished() });
+  },
+  store(req, res) {                                      // admin create
+    if (req.uploadError) {
+      req.session.error = req.uploadError;
+      return res.redirect('/admin/items/create');
+    }
+    const { title } = req.body;
+    if (!title?.trim()) {
+      req.session.error = 'Tiêu đề không được để trống';
+      return res.redirect('/admin/items/create');
+    }
+    const slug = makeUniqueSlug(slugify(title), (s) => Model.slugExists(s));
+    const thumbnail = req.file ? '/uploads/images/' + req.file.filename : null;
+    try {
+      Model.create({ title: title.trim(), slug, thumbnail, status: req.body.status || 'draft' });
+      req.session.success = 'Tạo thành công';
+      return res.redirect('/admin/items');
+    } catch (e) {
+      req.session.error = 'Có lỗi xảy ra';
+      return res.redirect('/admin/items/create');
+    }
+  },
+  destroy(req, res) {                                    // admin delete
+    const item = Model.findById(req.params.id);
+    if (!item) { req.session.error = 'Không tìm thấy'; return res.redirect('/admin/items'); }
+    safeUnlink(item.thumbnail);
+    Model.delete(req.params.id);
+    req.session.success = 'Đã xóa';
+    return res.redirect('/admin/items');
+  }
+};
+```
+
 ### Auth
 
 - **Session-based** (`express-session`, 24h expiry). Do NOT change to JWT.
@@ -271,8 +308,32 @@ const slug = makeUniqueSlug(slugify(title), (s) => Model.slugExists(s, excludeId
 ### Available in Views (res.locals)
 
 ```
-user, success, error, lang, t, __(), visibleMenus
+user, success, error, lang, t, __(), visibleMenus, csrfToken
 ```
+
+### Page CSS Override (trang không có hero banner)
+
+Các trang như `job-detail.ejs`, `org-chart.ejs` không có banner nên cần override header về solid:
+
+```css
+.mpc-header { position: relative !important; background: #ffffff !important; border-bottom: 35px solid #1c2b5e !important; }
+.nav-menu li a { color: #333333 !important; text-shadow: none !important; }
+.header-language span, .dropdown-icon { color: #333333 !important; }
+```
+
+### Admin Sidebar `activePage` Keys
+
+| activePage value | URL | Label |
+|-----------------|-----|-------|
+| `dashboard` | `/admin` | 📊 Dashboard |
+| `posts` | `/admin/posts` | 📝 Bài viết |
+| `documents` | `/admin/documents` | 📄 Tài liệu |
+| `gallery` | `/admin/gallery` | 🖼️ Thư viện ảnh |
+| `contacts` | `/admin/contacts` | 📬 Liên hệ |
+| `jobs` | `/admin/jobs` | 💼 Tuyển dụng |
+| `menus` | `/admin/menus` | 📋 Quản lý Menu |
+
+Pass via `<% const activePage = 'jobs'; %>` ở đầu mỗi admin view.
 
 ---
 
@@ -288,7 +349,7 @@ user, success, error, lang, t, __(), visibleMenus
 
 | # | Issue | Detail | File |
 |---|-------|--------|------|
-| 2 | **Orphaned files on DB error** | If model `.create()`/`.update()` throws after file upload, the file is not cleaned up. In `postController.update`, old file is deleted before DB write — DB failure leaves broken reference. | `postController.js`, `documentController.js`, `galleryController.js` |
+| 2 | **Orphaned files on DB error** | If model `.create()`/`.update()` throws after file upload, the file is not cleaned up. In `postController.update` and `jobController.update`, old file is deleted before DB write — DB failure leaves broken reference. | `postController.js`, `jobController.js`, `documentController.js`, `galleryController.js` |
 | 3 | **No edit for Documents** | Can only create + delete. No edit route, controller, or view. | `documentController.js`, `admin.js` |
 | 4 | **No edit for Gallery** | Cannot update `alt_text` after upload. No update model method, route, or view. | `galleryController.js`, `galleryModel.js` |
 | 5 | **Dashboard missing metrics** | No stats for gallery images or contacts. `ContactModel.countUnread()` exists but unused. | `adminController.js` |
@@ -309,7 +370,7 @@ user, success, error, lang, t, __(), visibleMenus
 
 ### Prototype (view-html/) — Detailed Reference
 
-The `view-html/` directory is the **static HTML/CSS/JS prototype** representing the target MPC Port website design. The CMS (`mini-cms/`) has **not yet adopted** this design.
+The `view-html/` directory is the **static HTML/CSS/JS prototype** used as design reference. The CMS (`mini-cms/`) has largely adopted this design — header, footer, landing page, and all public pages are ported.
 
 #### Folder Structure
 
@@ -445,16 +506,28 @@ This applies to schema edits in `db.js` and destructive data operations. Do NOT 
 
 1. After finishing the code task, review which sections of CLAUDE.md are affected.
 2. Edit **only** the affected sections — keep the rest untouched.
-3. Also update `.github/SKILL_MAP.md` if it exists (detailed reference).
-4. Do NOT ask for permission to update CLAUDE.md — this is a **standing instruction**.
+3. Do NOT ask for permission to update CLAUDE.md — this is a **standing instruction**.
 
 ---
 
+## MUST Do
+
+- Dùng `.get()`, `.all()`, `.run()` của better-sqlite3 — **không bao giờ `await`**
+- Export model là plain object, không phải class
+- Prefix method admin bằng `admin*` trong controller
+- Kiểm tra `req.uploadError` trước mọi xử lý trong route có upload
+- Flash message bằng `req.session.success/error` + redirect (không render trực tiếp)
+- Thêm translation vào **cả** `vi.json` và `en.json`
+- Dùng `field` + `field_en` cho nội dung song ngữ trong DB
+- Schema mới → `src/config/db.js → initDatabase()`
+- System page mới → thêm insert-if-not-exists menu trong `initDatabase()`
+- Sau mỗi thay đổi cấu trúc → cập nhật `CLAUDE.md`
+
 ## MUST NOT
 
-- Use `async/await` for database operations
-- Introduce frontend frameworks (React, Vue, etc.)
-- Change session auth to JWT
-- Modify middleware chain order in `app.js`
-- Use external ORM (Sequelize, TypeORM, etc.)
-- Create new database connection instances
+- Dùng `async/await` cho database operations
+- Thêm frontend framework (React, Vue, etc.)
+- Đổi session auth sang JWT
+- Thay đổi thứ tự middleware chain trong `app.js`
+- Dùng ORM ngoài (Sequelize, TypeORM, etc.)
+- Tạo database connection mới (luôn dùng `require('../config/db')`)

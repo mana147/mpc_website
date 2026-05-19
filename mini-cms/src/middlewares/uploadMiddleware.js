@@ -6,7 +6,13 @@
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { fileTypeFromFile } = require('file-type');
+
+let fileTypeModulePromise;
+async function detectFileType(filePath) {
+  fileTypeModulePromise ||= import('file-type');
+  const { fileTypeFromFile } = await fileTypeModulePromise;
+  return fileTypeFromFile(filePath);
+}
 
 const IMAGE_ALLOWED_MIMES = ['image/jpeg', 'image/png', 'image/webp'];
 const PDF_ALLOWED_MIMES   = ['application/pdf'];
@@ -112,7 +118,7 @@ function handleUploadError(uploadMiddleware, allowedMimes) {
       const files = req.file ? [req.file] : (req.files || []);
       for (const file of files) {
         try {
-          const detected = await fileTypeFromFile(file.path);
+          const detected = await detectFileType(file.path);
           if (!detected || !allowedMimes.includes(detected.mime)) {
             fs.unlinkSync(file.path);
             req.uploadError = 'File không hợp lệ. Nội dung không khớp định dạng được phép.';
