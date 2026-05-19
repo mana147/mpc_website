@@ -176,6 +176,27 @@
         gap: 30px;
     }
 
+    .footer-column {
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-about {
+        padding-right: 0;
+    }
+
+    .footer-menu {
+        align-items: center;
+    }
+
+    .footer-social {
+        align-items: center;
+    }
+
+    .footer-contact-list li {
+        justify-content: center;
+    }
+
     .footer-bottom .footer-container {
         flex-direction: column;
         gap: 10px;
