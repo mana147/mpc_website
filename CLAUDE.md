@@ -59,7 +59,9 @@ mini-cms/
 │   │   ├── mpc-footer.css        # MPC footer (4-column, navy background)
 │   │   └── pages/
 │   │       ├── landing.css       # Landing page specific CSS (~2000 lines, 5 breakpoints)
-│   │       └── recruitment.css   # Recruitment page specific CSS
+│   │       ├── recruitment.css   # Recruitment list page CSS
+│   │       ├── job-detail.css    # Job detail page CSS (ported from prototype)
+│   │       └── org-chart.css     # Organization chart page CSS (CSS tree layout)
 │   ├── fonts/barlow-condensed/   # Barlow Condensed TTF (6 weights)
 │   ├── images/
 │   │   ├── logo.png              # MPC Port logo
@@ -109,9 +111,9 @@ mini-cms/
     │   ├── contactModel.js       # contacts table (has countUnread — not yet wired to dashboard)
     │   ├── documentModel.js      # documents table (read-only after create, no update)
     │   ├── galleryModel.js       # gallery_images table (no update/edit for alt_text)
+    │   ├── jobModel.js           # jobs table (full CRUD + getOtherJobs for sidebar)
     │   ├── menuModel.js          # menus table
     │   ├── menuPostModel.js      # menu_posts junction (3 methods: getPostIdsByMenuId, assignPostsToMenu, removeAllPostsFromMenu)
-    │   ├── jobModel.js           # jobs table (full CRUD, getOtherJobs for sidebar)
     │   ├── postModel.js          # posts table
     │   └── userModel.js          # users table + auth (has changePassword — not yet wired to admin)
     ├── routes/
@@ -126,12 +128,19 @@ mini-cms/
     ├── utils/safeFilePath.js     # safeUnlink + safeResolve — chặn path traversal trong file ops
     └── views/
         ├── admin/                # 15 EJS templates (all hardcoded Vietnamese, no i18n)
-        │   ├── job-list.ejs, job-create.ejs, job-edit.ejs  # Job listings CRUD
-        ├── web/                  # 12 EJS templates (all use mpc-header/mpc-footer, i18n enabled)
+        │   ├── contact-detail.ejs, contact-list.ejs
+        │   ├── dashboard.ejs, login.ejs
+        │   ├── document-create.ejs, document-list.ejs
+        │   ├── gallery.ejs
+        │   ├── job-list.ejs, job-create.ejs, job-edit.ejs   # Job listings CRUD
+        │   ├── menu-form.ejs, menu-list.ejs
+        │   └── post-create.ejs, post-edit.ejs, post-list.ejs
+        ├── web/                  # 13 EJS templates (all use mpc-header/mpc-footer, i18n enabled)
         │   ├── home.ejs          # Landing page (all 11 sections ported from prototype)
         │   ├── about.ejs         # About MPC public page
+        │   ├── org-chart.ejs     # Organization chart (CSS tree, 3 Deputy branches, stats strip)
         │   ├── recruitment.ejs   # Careers list page (jobs from DB)
-        │   ├── job-detail.ejs    # Job detail page (breadcrumb, content, apply modal, sidebar)
+        │   ├── job-detail.ejs    # Job detail (breadcrumb, content, apply modal, sidebar)
         │   ├── posts.ejs, post-detail.ejs
         │   ├── gallery.ejs
         │   ├── documents.ejs
@@ -170,8 +179,9 @@ All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE I
 ### Seed Data (auto-created on first run)
 
 - Default admin: `admin` / `admin123` (or from env `ADMIN_USERNAME`/`ADMIN_PASSWORD`)
-- 7 system menus: Home (`/`), About (`/about`), Recruitment (`/tuyen-dung`), Posts (`/posts`), Gallery (`/gallery`), Documents (`/documents`), Contact (`/contact`)
-- On existing databases: `initDatabase()` auto-inserts `/about` and `/tuyen-dung` menus if missing
+- 8 system menus: Home (`/`), About (`/about`), Org Chart (`/so-do-to-chuc`), Recruitment (`/tuyen-dung`), Posts (`/posts`), Gallery (`/gallery`), Documents (`/documents`), Contact (`/contact`)
+- On existing databases: `initDatabase()` auto-inserts `/so-do-to-chuc`, `/about`, `/tuyen-dung` menus if missing
+- 20 seed job listings (ngành cảng biển, mix published/draft)
 
 ---
 
@@ -189,8 +199,9 @@ All tables defined in `src/config/db.js` → `initDatabase()` as `CREATE TABLE I
 | Home | (inline in web.js) | — | `GET /` (latest 9 posts + 5 docs + 6 gallery images) | — |
 | About | (inline in web.js) | — | `GET /about` (static page with hero banner, responsive sections, bilingual) | — |
 | Recruitment | jobModel | jobController | `GET /tuyen-dung` (list published jobs), `GET /tuyen-dung/:slug` (job detail with apply modal) | Full CRUD `/admin/jobs/*` |
+| Org Chart | (inline in web.js) | — | `GET /so-do-to-chuc` (static CSS tree: HĐQT → TGĐ → 3 Deputy branches → 11 departments) | — |
 
-> **Note:** "Về MPC" (`/about`) and "Tuyển dụng" (`/tuyen-dung`) are registered as `system` menus in the database and rendered via `visibleMenus` in `mpc-header.ejs`. Admin can toggle visibility and reorder them at `/admin/menus`.
+> **Note:** `/about`, `/so-do-to-chuc`, and `/tuyen-dung` are `system` menus in DB — rendered via `visibleMenus` in `mpc-header.ejs`. Admin controls visibility/order at `/admin/menus`.
 
 ---
 
@@ -385,8 +396,9 @@ view-html/
 | Assets | **DONE** | Fonts, icons, logo, map-vietnam.svg in `public/` |
 | All public pages | **DONE** | Posts, Gallery, Documents, Contact, Menu-page, 404, Error use mpc-header/mpc-footer |
 | Admin pages | **Unchanged** | Still use `header.ejs`/`footer.ejs` + `style.css` |
-| About page | **DONE** | Dedicated route `/about` and view `src/views/web/about.ejs` added |
-| Recruitment page | **DONE** | Dedicated route `/tuyen-dung` and view `src/views/web/recruitment.ejs` added |
+| About page | **DONE** | Route `/about`, view `about.ejs`, system menu in DB |
+| Org Chart | **DONE** | Route `/so-do-to-chuc`, view `org-chart.ejs`, CSS tree layout, system menu in DB |
+| Recruitment page | **DONE** | Route `/tuyen-dung` + `/:slug`, views `recruitment.ejs` + `job-detail.ejs`, admin CRUD `/admin/jobs`, 20 seed jobs |
 | Infrastructure page | **Pending** | No dedicated route/view yet |
 | Services page | **Pending** | No dedicated route/view yet |
 

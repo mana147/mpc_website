@@ -64,6 +64,15 @@ router.get('/about', (req, res) => {
 router.get('/tuyen-dung', JobController.index);
 router.get('/tuyen-dung/:slug', JobController.show);
 
+// Sơ đồ tổ chức
+router.get('/so-do-to-chuc', (req, res) => {
+  res.render('web/org-chart', {
+    title: res.locals.lang === 'en' ? 'Organization Chart' : 'Sơ đồ Tổ chức',
+    currentPath: '/so-do-to-chuc',
+    pageCss: '/css/pages/org-chart.css'
+  });
+});
+
 // Menu page (single_post hoặc custom)
 router.get('/menu/:slug', MenuController.showMenuPage);
 

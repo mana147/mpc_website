@@ -177,7 +177,8 @@ function initDatabase() {
     const defaultMenus = [
       { name_vi: 'Trang chủ', name_en: 'Home', slug: '/', type: 'system', sort_order: 1 },
       { name_vi: 'Về MPC', name_en: 'About MPC', slug: '/about', type: 'system', sort_order: 2 },
-      { name_vi: 'Tuyển dụng', name_en: 'Careers', slug: '/tuyen-dung', type: 'system', sort_order: 3 },
+      { name_vi: 'Sơ đồ Tổ chức', name_en: 'Organization Chart', slug: '/so-do-to-chuc', type: 'system', sort_order: 3 },
+      { name_vi: 'Tuyển dụng', name_en: 'Careers', slug: '/tuyen-dung', type: 'system', sort_order: 4 },
       { name_vi: 'Bài viết', name_en: 'Posts', slug: '/posts', type: 'system', sort_order: 4 },
       { name_vi: 'Thư viện ảnh', name_en: 'Gallery', slug: '/gallery', type: 'system', sort_order: 5 },
       { name_vi: 'Tài liệu', name_en: 'Documents', slug: '/documents', type: 'system', sort_order: 6 },
@@ -192,7 +193,7 @@ function initDatabase() {
     for (const menu of defaultMenus) {
       insertMenu.run(menu.name_vi, menu.name_en, menu.slug, menu.type, menu.sort_order);
     }
-    console.log('✅ Đã tạo 7 menu mặc định');
+    console.log('✅ Đã tạo 8 menu mặc định');
   }
 
   // Seed 20 tin tuyển dụng mẫu nếu bảng jobs trống
@@ -375,6 +376,15 @@ function initDatabase() {
   }
 
   // Đảm bảo menu /about và /tuyen-dung tồn tại (cho database cũ)
+  const existsOrgChart = db.prepare("SELECT id FROM menus WHERE slug = ?").get('/so-do-to-chuc');
+  if (!existsOrgChart) {
+    const maxOrder = db.prepare("SELECT MAX(sort_order) as m FROM menus").get().m || 0;
+    db.prepare("INSERT INTO menus (name_vi, name_en, slug, type, is_visible, sort_order) VALUES (?, ?, ?, 'system', 1, ?)").run(
+      'Sơ đồ Tổ chức', 'Organization Chart', '/so-do-to-chuc', maxOrder + 1
+    );
+    console.log('✅ Đã thêm menu Sơ đồ Tổ chức');
+  }
+
   const existsAbout = db.prepare("SELECT id FROM menus WHERE slug = ?").get('/about');
   if (!existsAbout) {
     const maxOrder = db.prepare("SELECT MAX(sort_order) as m FROM menus").get().m || 0;

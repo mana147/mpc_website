@@ -1,0 +1,227 @@
+<%- include('../partials/mpc-header') %>
+
+<!-- Banner -->
+<section class="page-banner org-banner">
+  <div class="banner-overlay"></div>
+  <img src="/images/about/about-img1.png" alt="Organization Banner" class="banner-image">
+  <div class="hero-content">
+    <div class="hero-subtitle"><%= lang === 'en' ? 'ORGANIZATION' : 'SƠ ĐỒ TỔ CHỨC' %></div>
+    <h1 class="hero-title"><%= lang === 'en' ? 'Organization Chart' : 'Sơ đồ Tổ chức' %></h1>
+    <p class="banner-text"><%= lang === 'en'
+        ? 'The organizational structure of MPC Port ensures efficient and professional port terminal operations.'
+        : 'Cơ cấu tổ chức của Cảng MPC Port đảm bảo hoạt động khai thác cảng hiệu quả và chuyên nghiệp.' %></p>
+  </div>
+</section>
+
+<!-- Org Chart Section -->
+<section class="org-section">
+  <div class="container-fluid px-0">
+    <div class="org-section-header">
+      <div class="section-redline">
+        <span class="section-label-text">
+          <%= lang === 'en' ? 'STRUCTURE' : 'CƠ CẤU TỔ CHỨC' %>
+        </span>
+      </div>
+      <h2 class="org-section-title">
+        <%= lang === 'en' ? 'Organizational Structure' : 'Sơ đồ Tổ chức Bộ máy' %>
+      </h2>
+      <p class="org-section-sub">
+        <%= lang === 'en'
+          ? 'Systematically organized with clear responsibilities across all levels.'
+          : 'Được tổ chức có hệ thống, phân công trách nhiệm rõ ràng ở các cấp.' %>
+      </p>
+    </div>
+
+    <div class="org-tree">
+
+      <!-- LEVEL 1: Board of Directors + Supervisory Board -->
+      <div class="org-level-board">
+        <div class="org-node org-node-board">
+          <div class="org-node-icon"><i class="fa-solid fa-building-columns"></i></div>
+          <div class="org-node-title">
+            <%= lang === 'en' ? 'Board of Directors' : 'Hội đồng Quản trị' %>
+          </div>
+          <div class="org-node-sub">
+            <%= lang === 'en' ? 'Shareholders — Strategic Oversight' : 'Đại hội đồng cổ đông — Định hướng chiến lược' %>
+          </div>
+        </div>
+        <div class="org-node org-node-supervisory">
+          <div class="org-node-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="org-node-title">
+            <%= lang === 'en' ? 'Supervisory Board' : 'Ban Kiểm soát' %>
+          </div>
+          <div class="org-node-sub">
+            <%= lang === 'en' ? 'Internal Audit & Control' : 'Kiểm toán nội bộ' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 2: CEO -->
+      <div class="org-level-ceo-wrap">
+        <div class="org-node org-node-ceo">
+          <div class="org-node-icon"><i class="fa-solid fa-crown"></i></div>
+          <div class="org-node-title">
+            <%= lang === 'en' ? 'General Director' : 'Tổng Giám đốc' %>
+          </div>
+          <div class="org-node-sub">
+            <%= lang === 'en' ? 'Chief Executive Officer — MPC Port' : 'Điều hành toàn bộ hoạt động Cảng MPC' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEVEL 3 + 4: Deputies + Departments -->
+      <div class="org-level-deputies">
+        <div class="org-deputies-row">
+
+          <!-- Branch 1: Operations -->
+          <div class="org-deputy-branch">
+            <div class="org-node org-node-deputy">
+              <div class="org-node-icon"><i class="fa-solid fa-anchor"></i></div>
+              <div class="org-node-title">
+                <%= lang === 'en' ? 'Deputy GD — Operations' : 'Phó TGĐ Khai thác' %>
+              </div>
+              <div class="org-node-sub">
+                <%= lang === 'en' ? 'Port Operations Division' : 'Khối Vận hành Cảng' %>
+              </div>
+            </div>
+            <div class="org-dept-list">
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-ship"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Port Operations Dept.' : 'Phòng Khai thác Cảng' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'Vessel ops, cargo handling' : 'Port Operations Department' %></div>
+                </div>
+              </div>
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-wrench"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Technical & Maintenance' : 'Phòng Kỹ thuật & Bảo trì' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'Equipment, infrastructure' : 'Technical & Maintenance Dept.' %></div>
+                </div>
+              </div>
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Safety, Health & Environment' : 'Phòng An toàn – Môi trường' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'HSE, ISPS compliance' : 'HSE & ISPS Compliance' %></div>
+                </div>
+              </div>
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-warehouse"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Yard & Warehouse Mgmt.' : 'Phòng Quản lý Kho bãi' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'Container yard, CFS' : 'Yard Management' %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch 2: Commercial -->
+          <div class="org-deputy-branch">
+            <div class="org-node org-node-deputy">
+              <div class="org-node-icon"><i class="fa-solid fa-handshake"></i></div>
+              <div class="org-node-title">
+                <%= lang === 'en' ? 'Deputy GD — Commercial' : 'Phó TGĐ Kinh doanh' %>
+              </div>
+              <div class="org-node-sub">
+                <%= lang === 'en' ? 'Commercial Division' : 'Khối Kinh doanh & Dịch vụ' %>
+              </div>
+            </div>
+            <div class="org-dept-list">
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Sales & Marketing Dept.' : 'Phòng Kinh doanh & Marketing' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'Business development' : 'Sales & Marketing Department' %></div>
+                </div>
+              </div>
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-headset"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Customer Service Dept.' : 'Phòng Dịch vụ Khách hàng' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'CRM, client support' : 'Customer Relations' %></div>
+                </div>
+              </div>
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Logistics & Customs Dept.' : 'Phòng Logistics & Hải quan' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'Import/export, customs clearance' : 'Logistics & Customs Clearance' %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch 3: Administration -->
+          <div class="org-deputy-branch">
+            <div class="org-node org-node-deputy">
+              <div class="org-node-icon"><i class="fa-solid fa-gears"></i></div>
+              <div class="org-node-title">
+                <%= lang === 'en' ? 'Deputy GD — Administration' : 'Phó TGĐ Hành chính' %>
+              </div>
+              <div class="org-node-sub">
+                <%= lang === 'en' ? 'Support & Admin Division' : 'Khối Hỗ trợ & Quản trị' %>
+              </div>
+            </div>
+            <div class="org-dept-list">
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-coins"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Finance & Accounting' : 'Phòng Tài chính – Kế toán' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'Financial management, reporting' : 'Finance & Accounting Dept.' %></div>
+                </div>
+              </div>
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Human Resources Dept.' : 'Phòng Hành chính – Nhân sự' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'HR, recruitment, training' : 'HR & Administration' %></div>
+                </div>
+              </div>
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-server"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Information Technology' : 'Phòng Công nghệ Thông tin' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'TOS, network, systems' : 'IT & TOS Systems' %></div>
+                </div>
+              </div>
+              <div class="org-node org-node-dept">
+                <div class="org-dept-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div class="org-dept-info">
+                  <div class="org-dept-name"><%= lang === 'en' ? 'Legal & Compliance' : 'Phòng Pháp lý & Tuân thủ' %></div>
+                  <div class="org-dept-en"><%= lang === 'en' ? 'Maritime law, contracts' : 'Legal & Maritime Compliance' %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end org-deputies-row -->
+      </div><!-- end org-level-deputies -->
+
+    </div><!-- end org-tree -->
+  </div>
+</section>
+
+<!-- Stats Strip -->
+<div class="org-summary">
+  <div class="org-summary-grid">
+    <div>
+      <div class="org-stat-number">3</div>
+      <div class="org-stat-label"><%= lang === 'en' ? 'Deputy Directors' : 'Phó Tổng Giám đốc' %></div>
+    </div>
+    <div>
+      <div class="org-stat-number">11</div>
+      <div class="org-stat-label"><%= lang === 'en' ? 'Departments' : 'Phòng ban' %></div>
+    </div>
+    <div>
+      <div class="org-stat-number">200<span style="font-size:28px">+</span></div>
+      <div class="org-stat-label"><%= lang === 'en' ? 'Employees' : 'Cán bộ Nhân viên' %></div>
+    </div>
+    <div>
+      <div class="org-stat-number">4</div>
+      <div class="org-stat-label"><%= lang === 'en' ? 'Operation Shifts / Day' : 'Ca làm việc / Ngày' %></div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/mpc-footer') %>
